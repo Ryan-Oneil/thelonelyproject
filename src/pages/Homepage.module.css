@@ -1,0 +1,68 @@
+html {
+    background-color: #0B0D17;
+}
+
+.top {
+    height: 49vh;
+    background-color: #0089ED;
+}
+
+.bottom {
+    height: 40vh;
+}
+
+.footer {
+    height: 5vh;
+    background-color: #0B0D17;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.centerItems {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.step {
+    text-align: center;
+}
+
+.step h1 {
+    font-weight: bold;
+    font-size: 1.4em;
+    margin: 1vh;
+}
+
+.stepsHeader {
+    font-weight: 800;
+    text-align: center;
+    margin: 3%;
+    font-size: 2em;
+}
+
+.logo {
+    color: white;
+    font-size: 2em;
+}
+
+.logoImage {
+    width: 64px;
+    height: 64px;
+}
+
+.titleFormat {
+    color: white;
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 5%;
+    margin-top: 10%;
+}
+
+.descriptionFormat {
+    color: white;
+    text-align: center;
+    font-size: 2.7em;
+}
