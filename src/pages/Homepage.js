@@ -104,7 +104,66 @@ const Homepage = () => {
       mainBody={<HeaderContent />}
       contentBody={<MainBodyContent />}
       showLogin
-    />
+    >
+      <Box as="section" bg={"#0089ED"}>
+        <Box
+          maxW="4xl"
+          mx="auto"
+          px={{ base: "6", lg: "8" }}
+          py={{ base: "16", sm: "20" }}
+          textAlign="center"
+          color={"white"}
+        >
+          <Heading size="xl" fontWeight="bold" letterSpacing="tight">
+            THE LONELY PROJECT
+          </Heading>
+          <Text
+            mt="8"
+            fontSize={{ base: "4xl", sm: "1xl", md: "5xl", lg: "6xl" }}
+            fontWeight="extrabold"
+          >
+            A new platform designed to help you get connected with like minded
+            people
+          </Text>
+        </Box>
+      </Box>
+      <Box
+        as="section"
+        maxW="8xl"
+        mx="auto"
+        py="12"
+        px={{ base: "6", md: "8" }}
+        backgroundColor={"white"}
+      >
+        <h1 className={styles.stepsHeader}>Four Simple Steps</h1>
+        <SimpleGrid
+          columns={{ base: 1, md: 2, xl: 4 }}
+          spacingX="40"
+          spacingY={{ base: "8", md: "14" }}
+        >
+          <GridStep
+            headerText={"Sign up"}
+            descriptionText={"Create an Account"}
+            icon={faSignInAlt}
+          />
+          <GridStep
+            headerText={"Profile"}
+            descriptionText={"Personalize your profile with your own touch"}
+            icon={faAddressCard}
+          />
+          <GridStep
+            headerText={"Search"}
+            descriptionText={"Search for like minded people"}
+            icon={faSearch}
+          />
+          <GridStep
+            headerText={"Connect"}
+            descriptionText={"Connect and get to know"}
+            icon={faPeopleArrows}
+          />
+        </SimpleGrid>
+      </Box>
+    </BasePublicPage>
   );
 };
 export default Homepage;
