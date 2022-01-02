@@ -7,7 +7,6 @@ export const Card = (props) => (
     py="8"
     px={{ base: "4", md: "10" }}
     shadow="base"
-    rounded={{ sm: "lg" }}
     {...props}
   />
 );
