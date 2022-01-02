@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./BasePage.module.css";
 import { Box, Button, Flex, Heading, Spacer } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { LOGIN_URL } from "../components/urls";
+import { HOMEPAGE_URL, LOGIN_URL } from "../components/urls";
 
 const BasePublicPage = ({ children, showLogin }) => {
   return (
@@ -16,9 +16,11 @@ const BasePublicPage = ({ children, showLogin }) => {
           />
         </Box>
         <Box p={"4"} className={styles.centerItems}>
-          <Heading size="xl" className={styles.logo}>
-            Lonely Project
-          </Heading>
+          <Link to={HOMEPAGE_URL}>
+            <Heading size="xl" className={styles.logo}>
+              Lonely Project
+            </Heading>
+          </Link>
         </Box>
         <Spacer />
         {showLogin && (
