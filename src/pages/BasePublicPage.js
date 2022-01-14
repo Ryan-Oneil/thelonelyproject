@@ -2,9 +2,12 @@ import React from "react";
 import styles from "./BasePage.module.css";
 import { Box, Button, Flex, Heading, Spacer } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { HOMEPAGE_URL, LOGIN_URL } from "../components/urls";
+import { DASHBOARD_URL, HOMEPAGE_URL, LOGIN_URL } from "../components/urls";
+import { useSelector } from "react-redux";
 
 const BasePublicPage = ({ children, showLogin }) => {
+  const { isAuthenticated } = useSelector((state) => state.auth);
+
   return (
     <div className={styles.main}>
       <Flex flexWrap={"wrap"}>
@@ -25,7 +28,7 @@ const BasePublicPage = ({ children, showLogin }) => {
         <Spacer />
         {showLogin && (
           <Box p="4" className={styles.centerItems} m={"auto"}>
-            <Link to={LOGIN_URL}>
+            <Link to={isAuthenticated ? DASHBOARD_URL : LOGIN_URL}>
               <Button
                 size="lg"
                 colorScheme={"#0089ED"}
@@ -33,7 +36,7 @@ const BasePublicPage = ({ children, showLogin }) => {
                 border="2px"
                 _hover={{ backgroundColor: "#0997ff" }}
               >
-                Log in
+                {isAuthenticated ? "Dashboard" : "Log in"}
               </Button>
             </Link>
           </Box>

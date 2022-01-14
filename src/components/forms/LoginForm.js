@@ -18,6 +18,9 @@ import {
 import { Link } from "react-router-dom";
 import { RESET_PASSWORD_URL } from "../urls";
 import formStyles from "./Forms.module.css";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+
+const provider = new GoogleAuthProvider();
 
 const LoginForm = () => {
   return (
@@ -29,6 +32,10 @@ const LoginForm = () => {
           bg={"#E9F1FF"}
           leftIcon={<FontAwesomeIcon icon={faGoogle} />}
           size={"lg"}
+          onClick={() => {
+            const auth = getAuth();
+            signInWithPopup(auth, provider);
+          }}
         >
           Sign in with Google
         </Button>

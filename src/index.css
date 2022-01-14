@@ -1,8 +1,5 @@
-@import url('https://fonts.googleapis.com/css?family=Sora');
-
 body {
   margin: 0;
-  font-family: 'Sora', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
