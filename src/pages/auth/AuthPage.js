@@ -47,7 +47,7 @@ const AuthPage = ({ authForm, headerText }) => {
             </Flex>
           </Stack>
         </GridItem>
-        <GridItem rowSpan={2} w={"xl"}>
+        <GridItem rowSpan={2} w={{ sm: "md", md: "xl", lg: "2xl", xl: "xl" }}>
           {authForm}
         </GridItem>
         <GridItem>

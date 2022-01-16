@@ -7,7 +7,7 @@ const PublicRoute = ({ children }) => {
   let location = useLocation();
   const redirectBack = location.state?.redirectBack;
   const { isAuthenticated } = useSelector((state) => state.auth);
-  const isUserLoggedIn = isAuthenticated !== "init";
+  const isUserLoggedIn = isAuthenticated === true;
   let redirectTo = HOMEPAGE_URL;
 
   if (isAuthenticated && redirectBack) {
