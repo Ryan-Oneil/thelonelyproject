@@ -1,0 +1,36 @@
+.main {
+    min-height: 100vh;
+    background: linear-gradient(to bottom,  #0089ED 40%, white 0%);
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    flex: 1 0 auto;
+}
+
+.footer {
+    height: 5vh;
+    background-color: #0B0D17;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.centerItems {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo {
+    color: white;
+    font-size: 2em;
+}
+
+.logoImage {
+    width: 64px;
+    height: 64px;
+}
