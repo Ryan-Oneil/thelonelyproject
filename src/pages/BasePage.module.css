@@ -34,3 +34,9 @@
     width: 64px;
     height: 64px;
 }
+
+.logoBox {
+    background-color: #2249B3;
+    padding: 5px;
+    border-radius: 10px;
+}
