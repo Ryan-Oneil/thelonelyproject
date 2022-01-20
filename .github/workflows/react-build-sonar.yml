@@ -15,6 +15,7 @@ jobs:
           fetch-depth: 0
       - uses: sonarsource/sonarqube-scan-action@master
         with:
+          projectBaseDir: thelonelyproject
           args: >
             -Dsonar.projectKey=Ryan-Oneil_Lonely-Project
         env:
