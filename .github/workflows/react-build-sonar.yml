@@ -14,6 +14,7 @@ jobs:
         with:
           fetch-depth: 0
       - uses: sonarsource/sonarqube-scan-action@master
+        run: ls
         with:
           args: >
             -Dsonar.projectKey=Ryan-Oneil_Lonely-Project
