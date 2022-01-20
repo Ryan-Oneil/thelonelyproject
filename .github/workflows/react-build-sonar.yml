@@ -14,10 +14,10 @@ jobs:
         with:
           fetch-depth: 0
       - uses: sonarsource/sonarqube-scan-action@master
-        run: ls
         with:
           args: >
             -Dsonar.projectKey=Ryan-Oneil_Lonely-Project
+            -Dsonar.verbose=true
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
