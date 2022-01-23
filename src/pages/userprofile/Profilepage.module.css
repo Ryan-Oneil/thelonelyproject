@@ -1,0 +1,14 @@
+.profileBanner {
+    background-image: url("../../assets/media/img.png");
+    background-repeat: no-repeat;
+    background-size: 100% 210px;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.profileCard {
+    border: 1px solid rgba(18, 17, 39, 0.12);
+    border-radius: 12px;
+    box-shadow: none!important;
+    width: 100%;
+}

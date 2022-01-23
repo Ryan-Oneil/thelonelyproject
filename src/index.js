@@ -5,11 +5,15 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { applyMiddleware, compose, createStore } from "@reduxjs/toolkit";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { far } from "@fortawesome/free-regular-svg-icons";
 import thunk from "redux-thunk";
 import reducers from "./reducers";
 import { Provider } from "react-redux";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+library.add(far);
 
 export const store = createStore(
   reducers,

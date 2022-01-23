@@ -1,12 +1,14 @@
 import React from "react";
-import { Flex } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import { Sidebar } from "../components/Sidebar";
 
 const BaseAppPage = ({ children }) => {
   return (
-    <Flex>
+    <Flex flexWrap={{ base: "wrap", md: "nowrap" }}>
       <Sidebar />
-      {children}
+      <Box overflow={"scroll"} maxH={"100vh"} w={"100%"}>
+        {children}
+      </Box>
     </Flex>
   );
 };
