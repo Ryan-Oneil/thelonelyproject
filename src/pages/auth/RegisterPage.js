@@ -1,7 +1,7 @@
 import React from "react";
 import { Flex, Heading, Spacer, Stack, Text } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { LOGIN_URL } from "../../components/urls";
+import { LOGIN_URL } from "../../constants/urls";
 import AuthPage from "./AuthPage";
 import RegisterForm from "../../components/forms/RegisterForm.js";
 

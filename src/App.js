@@ -6,7 +6,7 @@ import {
   REGISTER_URL,
   RESET_PASSWORD_URL,
   USER_PROFILE_URL,
-} from "./components/urls";
+} from "./constants/urls";
 import { ChakraProvider } from "@chakra-ui/react";
 import Login from "./pages/auth/Login";
 import RegisterPage from "./pages/auth/RegisterPage";
