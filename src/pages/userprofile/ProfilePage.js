@@ -23,19 +23,25 @@ const ProfilePage = () => {
   const ProfileHeader = () => {
     return (
       <Flex p={"100px 5% 0"} direction={{ base: "column", sm: "row" }}>
-        <Image
-          borderRadius="full"
-          boxSize="200px"
-          src={avatar}
-          alt={"User profile avatar"}
-          m={"auto"}
-        />
+        <VStack>
+          <Image
+            borderRadius="full"
+            boxSize="200px"
+            src={avatar}
+            alt={"User profile avatar"}
+            m={"auto"}
+          />
+          <Heading>John Doe</Heading>
+        </VStack>
+
         <Spacer />
         <Button
-          colorScheme="blue"
+          backgroundColor="rgba(97, 94, 240, 0.1)"
+          color={"#444BD3"}
           size={"lg"}
           m={"auto"}
           mt={{ base: "5", sm: "120" }}
+          _hover={{ backgroundColor: "#b6bbcd" }}
         >
           Connect
         </Button>
