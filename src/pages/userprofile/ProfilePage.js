@@ -61,7 +61,11 @@ const ProfilePage = () => {
             </Card>
             <Card p={5} className={styles.profileCard}>
               <Heading size={"md"}>Gallery</Heading>
-              <SimpleGrid pt={3} columns={4} spacing={7}>
+              <SimpleGrid
+                pt={3}
+                columns={{ base: 1, md: 2, xl: 3, "2xl": 4 }}
+                spacing={7}
+              >
                 {images.map((image) => (
                   <Image
                     src={image.url}
@@ -80,7 +84,11 @@ const ProfilePage = () => {
           >
             <Card p={5} className={styles.profileCard}>
               <Heading size={"md"}>Interests</Heading>
-              <SimpleGrid columns={2} mt={3} spacing={5}>
+              <SimpleGrid
+                columns={{ base: 2, xl: 1, "2xl": 2 }}
+                mt={3}
+                spacing={5}
+              >
                 {interests.map((interest) => (
                   <ProfileInterest
                     description={interest.description}
@@ -92,7 +100,11 @@ const ProfilePage = () => {
             </Card>
             <Card p={5} className={styles.profileCard}>
               <Heading size={"md"}>Trending Artists</Heading>
-              <SimpleGrid columns={2} mt={3} spacing={5}>
+              <SimpleGrid
+                columns={{ base: 2, xl: 1, "2xl": 2 }}
+                mt={3}
+                spacing={5}
+              >
                 {spotifyArtists.map((artist) => (
                   <ProfileInterest
                     description={artist.name}
