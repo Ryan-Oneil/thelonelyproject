@@ -10,12 +10,16 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
+      - name: Set environment variables
+          run: |
+            GIT_BRANCH=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
+            echo "GIT_BRANCH=$GIT_BRANCH" >> $GITHUB_ENV
       - uses: sonarsource/sonarqube-scan-action@master
         with:
           args: >
             -Dsonar.projectKey=Ryan-Oneil_Lonely-Project
             -Dsonar.pullrequest.key=${{github.event.number}}
-            -Dsonar.pullrequest.branch=${{ github.ref_name }}
+            -Dsonar.pullrequest.branch=${{ env.GIT_BRANCH }}
             -Dsonar.pullrequest.base=${{ github.event.pull_request.base.ref }}
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
