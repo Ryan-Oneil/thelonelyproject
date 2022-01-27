@@ -10,9 +10,6 @@ import {
   faPeopleArrows,
 } from "@fortawesome/free-solid-svg-icons";
 import BasePublicPage from "./BasePublicPage";
-import { Alert, AlertIcon, Button, VStack } from "@chakra-ui/react";
-import { Field, Formik } from "formik";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 const Homepage = () => {
   const GridStep = ({ headerText, descriptionText, icon }) => {
