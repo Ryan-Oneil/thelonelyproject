@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import { Alert, AlertIcon, Button, VStack } from "@chakra-ui/react";
+import { Field, Formik } from "formik";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 export const slice = createSlice({
   name: "auth",
   initialState: {
