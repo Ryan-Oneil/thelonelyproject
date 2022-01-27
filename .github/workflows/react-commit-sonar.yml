@@ -11,7 +11,7 @@ jobs:
       - uses: sonarsource/sonarqube-scan-action@master
         with:
           args: >
-            -Dsonar.projectKey=Ryan-Oneil_Lonely-Project
+            -Dsonar.projectKey=${{ github.event.repository.name }}
             -Dsonar.branch.name=${{ github.ref_name }}
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
