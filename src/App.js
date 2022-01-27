@@ -5,7 +5,8 @@ import {
   LOGIN_URL,
   REGISTER_URL,
   RESET_PASSWORD_URL,
-} from "./components/urls";
+  USER_PROFILE_URL,
+} from "./constants/urls";
 import { ChakraProvider } from "@chakra-ui/react";
 import Login from "./pages/auth/Login";
 import RegisterPage from "./pages/auth/RegisterPage";
@@ -16,6 +17,8 @@ import { useDispatch } from "react-redux";
 import { getAuth } from "firebase/auth";
 import { login, logout } from "./reducers/authReducer";
 import PublicRoute from "./components/PublicRoute";
+import PrivateRoute from "./components/PrivateRoute";
+import ProfilePage from "./pages/userprofile/ProfilePage";
 
 function App() {
   const dispatch = useDispatch();
@@ -62,6 +65,14 @@ function App() {
           }
         />
         <Route path={RESET_PASSWORD_URL} element={<ResetPasswordPage />} />
+        <Route
+          path={USER_PROFILE_URL}
+          element={
+            <PrivateRoute>
+              <ProfilePage />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </ChakraProvider>
   );

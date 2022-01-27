@@ -9,8 +9,9 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
+import { Card } from "../../components/Card";
 
-const AuthPage = ({ authForm, headerText }) => {
+const AuthPage = ({ children, headerText }) => {
   return (
     <BasePublicPage>
       <Container
@@ -48,7 +49,9 @@ const AuthPage = ({ authForm, headerText }) => {
           </Stack>
         </GridItem>
         <GridItem rowSpan={2} w={{ sm: "md", md: "xl", lg: "2xl", xl: "xl" }}>
-          {authForm}
+          <Card rounded={"3xl"} p={10}>
+            {children}
+          </Card>
         </GridItem>
         <GridItem>
           <img

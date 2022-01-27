@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert, AlertIcon, Button, Stack, VStack } from "@chakra-ui/react";
+import { Alert, AlertIcon, Button, VStack } from "@chakra-ui/react";
 import { Field, Formik } from "formik";
 import { LabelledInput } from "./Inputs";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";

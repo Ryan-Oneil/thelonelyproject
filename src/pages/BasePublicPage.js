@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./BasePage.module.css";
 import { Box, Button, Flex, Heading, Spacer } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { DASHBOARD_URL, HOMEPAGE_URL, LOGIN_URL } from "../components/urls";
+import { DASHBOARD_URL, HOMEPAGE_URL, LOGIN_URL } from "../constants/urls";
 import { useSelector } from "react-redux";
 
 const BasePublicPage = ({ children, showLogin }) => {
