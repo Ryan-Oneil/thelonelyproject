@@ -13,7 +13,6 @@ jobs:
       - name: Set environment variables
         run: |
             GIT_BRANCH=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
-            echo "GIT_BRANCH=$GIT_BRANCH" >> $GITHUB_ENV
       - uses: sonarsource/sonarqube-scan-action@master
         with:
           args: >
@@ -21,6 +20,7 @@ jobs:
             -Dsonar.pullrequest.key=${{github.event.number}}
             -Dsonar.pullrequest.branch=${{ env.GIT_BRANCH }}
             -Dsonar.pullrequest.base=${{ github.event.pull_request.base.ref }}
+            -Dsonar.scm.revision=${{ github.event.pull_request.head.sha }}
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
