@@ -12,7 +12,7 @@ jobs:
         with:
           args: >
             -Dsonar.projectKey=Ryan-Oneil_Lonely-Project
-            -Dsonar.branch.name=${{ github.head_ref }}
+            -Dsonar.branch.name=${{ github.ref_name }}
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
