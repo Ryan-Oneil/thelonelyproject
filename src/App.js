@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import Homepage from "./pages/Homepage";
 import {
+  CHAT_URL,
   HOMEPAGE_URL,
   LOGIN_URL,
   REGISTER_URL,
@@ -19,6 +20,7 @@ import { login, logout } from "./reducers/authReducer";
 import PublicRoute from "./components/PublicRoute";
 import PrivateRoute from "./components/PrivateRoute";
 import ProfilePage from "./pages/userprofile/ProfilePage";
+import ChatPage from "./pages/chat/ChatPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -70,6 +72,14 @@ function App() {
           element={
             <PrivateRoute>
               <ProfilePage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={CHAT_URL}
+          element={
+            <PrivateRoute>
+              <ChatPage />
             </PrivateRoute>
           }
         />
