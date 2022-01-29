@@ -6,7 +6,7 @@ const BaseAppPage = ({ children }) => {
   return (
     <Flex flexWrap={{ base: "wrap", md: "nowrap" }}>
       <Sidebar />
-      <Box overflow={"scroll"} maxH={"100vh"} w={"100%"}>
+      <Box maxH={"100vh"} w={"100%"}>
         {children}
       </Box>
     </Flex>

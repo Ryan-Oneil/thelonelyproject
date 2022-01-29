@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Box,
   Divider,
-  Heading,
   VStack,
   Input,
   InputGroup,
@@ -13,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import { useSelector } from "react-redux";
+import AvatarHeader from "./AvatarHeader";
 
 const ConversationList = () => {
   const { conversations } = useSelector((state) => state.chat);
@@ -42,9 +42,7 @@ const ConversationList = () => {
 
   return (
     <Box borderRight={"1px solid rgba(0, 0, 0, 0.2)"}>
-      <Heading fontSize={"xl"} p={5}>
-        Conversations
-      </Heading>
+      <AvatarHeader avatarName={"Ryan L"} heading={"Conversations"} p={5} />
       <Divider style={{ borderColor: "rgba(0, 0, 0, 0.2)" }} />
       <VStack p={5} spacing={4}>
         <InputGroup>
