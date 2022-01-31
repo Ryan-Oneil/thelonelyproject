@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import Homepage from "./pages/Homepage";
 import {
   CHAT_URL,
+  DASHBOARD_URL,
   HOMEPAGE_URL,
   LOGIN_URL,
   REGISTER_URL,
@@ -69,6 +70,14 @@ function App() {
         <Route path={RESET_PASSWORD_URL} element={<ResetPasswordPage />} />
         <Route
           path={USER_PROFILE_URL}
+          element={
+            <PrivateRoute>
+              <ProfilePage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={DASHBOARD_URL}
           element={
             <PrivateRoute>
               <ProfilePage />
