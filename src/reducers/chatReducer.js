@@ -25,6 +25,11 @@ export const slice = createSlice({
       },
     ],
   },
-  reducers: {},
+  reducers: {
+    messageSent(state, action) {
+      state.messages.push(action.payload);
+    },
+  },
 });
 export default slice.reducer;
+export const { messageSent } = slice.actions;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Flex,
@@ -22,13 +22,24 @@ import {
 } from "@chakra-ui/icons";
 import AvatarHeader from "./AvatarHeader";
 import ChatMessage from "./ChatMessage";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { messageSent } from "../reducers/chatReducer";
 
 const ChatConversation = (props) => {
   const padding = 5;
   const borderFormat = "1px solid rgba(0, 0, 0, 0.2)";
   const { uid } = useSelector((state) => state.auth.user);
   const { messages } = useSelector((state) => state.chat);
+  const [message, setMessage] = useState("");
+  const dispatch = useDispatch();
+
+  const sendMessage = () => {
+    if (!message) {
+      return;
+    }
+    dispatch(messageSent({ text: message, senderUid: uid }));
+    setMessage("");
+  };
 
   const ChatMenu = () => {
     return (
@@ -54,11 +65,11 @@ const ChatConversation = (props) => {
         <ChatMenu />
       </Flex>
       <VStack p={padding} h={"90%"} justifyContent={"end"}>
-        {messages.map((message) => (
+        {messages.map((chatMessage) => (
           <ChatMessage
-            key={message.id}
-            message={message.text}
-            isSender={uid === message.senderUid}
+            key={chatMessage.id}
+            message={chatMessage.text}
+            isSender={uid === chatMessage.senderUid}
           />
         ))}
         <HStack w={"100%"} pt={padding}>
@@ -69,12 +80,22 @@ const ChatConversation = (props) => {
             size={"lg"}
           />
           <InputGroup size={"lg"}>
-            <Input placeholder="Type a message" />
+            <Input
+              placeholder="Type a message"
+              value={message}
+              onChange={(event) => setMessage(event.target.value)}
+              onKeyPress={(event) => {
+                if (event.key === "Enter") {
+                  sendMessage();
+                }
+              }}
+            />
             <InputRightElement>
               <IconButton
                 icon={<ChatIcon />}
                 variant="ghost"
                 aria-label={"Send icon"}
+                onClick={sendMessage}
               />
             </InputRightElement>
           </InputGroup>
