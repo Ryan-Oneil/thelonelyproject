@@ -3,9 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 export const slice = createSlice({
   name: "chat",
   initialState: {
+    activeConversationId: 0,
     conversations: [
-      { name: "Ryan L", lastMessage: "What time?", avatarUrl: "" },
-      { name: "John D", lastMessage: "Great timing", avatarUrl: "" },
+      { id: 1, name: "Ryan L", lastMessage: "What time?", avatarUrl: "" },
+      { id: 2, name: "John D", lastMessage: "Great timing", avatarUrl: "" },
     ],
     messages: [
       {
@@ -29,7 +30,10 @@ export const slice = createSlice({
     messageSent(state, action) {
       state.messages.push(action.payload);
     },
+    changedActiveConversation(state, action) {
+      state.activeConversationId = action.payload;
+    },
   },
 });
 export default slice.reducer;
-export const { messageSent } = slice.actions;
+export const { messageSent, changedActiveConversation } = slice.actions;
