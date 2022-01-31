@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {
   Box,
+  Divider,
   Flex,
   HStack,
   IconButton,
@@ -27,7 +28,7 @@ import { messageSent } from "../reducers/chatReducer";
 
 const ChatConversation = (props) => {
   const padding = 5;
-  const borderFormat = "1px solid rgba(0, 0, 0, 0.2)";
+  const borderColor = "rgba(0, 0, 0, 0.2)";
   const { uid } = useSelector((state) => state.auth.user);
   const { messages } = useSelector((state) => state.chat);
   const [message, setMessage] = useState("");
@@ -58,12 +59,13 @@ const ChatConversation = (props) => {
   };
 
   return (
-    <Box borderRight={borderFormat} {...props}>
-      <Flex p={padding} borderBottom={borderFormat}>
+    <Box borderRight={"1px solid"} {...props} borderColor={borderColor}>
+      <Flex p={padding}>
         <AvatarHeader avatarName={"Ryan L"} heading={"Ryan L"} />
         <Spacer />
         <ChatMenu />
       </Flex>
+      <Divider style={{ borderColor }} />
       <VStack p={padding} h={"90%"} justifyContent={"end"}>
         {messages.map((chatMessage) => (
           <ChatMessage
