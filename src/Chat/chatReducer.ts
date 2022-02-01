@@ -9,6 +9,7 @@ interface Conversation {
   lastMessage: string;
   avatarUrl: string;
   messages: Array<string>;
+  attachments: Array<string>;
 }
 
 interface Message {
@@ -17,10 +18,20 @@ interface Message {
   text: string;
 }
 
+interface Attachment {
+  id: string;
+  senderUid: string;
+  type: string;
+  url: string;
+  size: bigint;
+  name: string;
+}
+
 interface Chat {
   activeConversationId: string;
   conversations: NormalizedObjects<Conversation>;
   messages: NormalizedObjects<Message>;
+  attachments: NormalizedObjects<Attachment>;
 }
 
 const initialState: Chat = {
@@ -34,6 +45,7 @@ const initialState: Chat = {
         lastMessage: "What time?",
         avatarUrl: "",
         messages: ["1", "2", "3"],
+        attachments: [],
       },
       "2": {
         id: "2",
@@ -41,6 +53,7 @@ const initialState: Chat = {
         lastMessage: "Great timing",
         avatarUrl: "",
         messages: ["1", "3"],
+        attachments: [],
       },
     },
   },
@@ -63,6 +76,10 @@ const initialState: Chat = {
         text: "Hey, how is it going?",
       },
     },
+  },
+  attachments: {
+    ids: [],
+    entities: {},
   },
 };
 

@@ -1,64 +1,13 @@
 import React from "react";
-import {
-  Box,
-  Center,
-  Divider,
-  Flex,
-  Heading,
-  IconButton,
-  Image,
-  Spacer,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileImage } from "@fortawesome/free-regular-svg-icons";
-import { DownloadIcon } from "@chakra-ui/icons";
+import { Box, Divider, Heading, Image, Text, VStack } from "@chakra-ui/react";
 import { useAppSelector } from "../../utils/hooks";
+import SharedMedia from "./SharedMedia";
 
 const ConversationInfoPanel = () => {
   const { activeConversationId } = useAppSelector((state) => state.chat);
-  const { name, avatarUrl } = useAppSelector(
+  const { name, avatarUrl, attachments } = useAppSelector(
     (state) => state.chat.conversations.entities[activeConversationId]
   );
-
-  const SharedMedia = () => {
-    return (
-      <Flex w={"100%"} alignItems={"center"} justifyContent={"space-between"}>
-        <Center
-          bg="green.100"
-          color={"green.500"}
-          w={"60px"}
-          h={"60px"}
-          borderRadius={"xl"}
-        >
-          <FontAwesomeIcon icon={faFileImage} className={"fa-2x"} />
-        </Center>
-        <Box ml={6}>
-          <Text fontWeight={"bold"} isTruncated>
-            Image.png
-          </Text>
-          <Text
-            color={"rgba(0, 0, 0, 0.4)"}
-            fontWeight={"bold"}
-            style={{ wordSpacing: 10 }}
-            isTruncated
-          >
-            PNG 2MB
-          </Text>
-        </Box>
-        <Spacer />
-        <IconButton
-          bg="rgba(97, 94, 240, 0.1)"
-          aria-label="Download Media"
-          icon={<DownloadIcon />}
-          borderRadius={"full"}
-          size={"lg"}
-          color={"#2249B3"}
-        />
-      </Flex>
-    );
-  };
 
   return (
     <Box>
@@ -85,7 +34,9 @@ const ConversationInfoPanel = () => {
         Shared Media
       </Text>
       <VStack px={6}>
-        <SharedMedia />
+        {attachments.map((attachmentId) => (
+          <SharedMedia id={attachmentId} key={attachmentId} />
+        ))}
       </VStack>
     </Box>
   );
