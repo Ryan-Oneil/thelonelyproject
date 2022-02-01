@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileImage } from "@fortawesome/free-regular-svg-icons";
 import { DownloadIcon } from "@chakra-ui/icons";
 import { useAppSelector } from "../../utils/hooks";
+import { AttachmentType } from "../enums/AttachmentType";
 
 const SharedMedia = ({ id }: { id: string }) => {
   const { name, type, size } = useAppSelector(
@@ -31,7 +32,7 @@ const SharedMedia = ({ id }: { id: string }) => {
           style={{ wordSpacing: 10 }}
           isTruncated
         >
-          {type} {size}
+          {AttachmentType[type]} {size}
         </Text>
       </Box>
       <Spacer />

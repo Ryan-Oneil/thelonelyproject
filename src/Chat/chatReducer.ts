@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import { NormalizedObjects } from "../utils/NormalizedObjects";
 import { nanoid } from "nanoid";
 import { AppDispatch } from "../index";
+import { MessageType } from "./enums/MessageType";
+import { AttachmentType } from "./enums/AttachmentType";
 
 interface Conversation {
   id: string;
@@ -16,14 +18,16 @@ interface Message {
   id: string;
   senderUid: string;
   text: string;
+  type: MessageType;
+  attachmentId: string;
 }
 
 interface Attachment {
   id: string;
   senderUid: string;
-  type: string;
+  type: AttachmentType;
   url: string;
-  size: bigint;
+  size: number;
   name: string;
 }
 
@@ -44,8 +48,8 @@ const initialState: Chat = {
         name: "Ryan L",
         lastMessage: "What time?",
         avatarUrl: "",
-        messages: ["1", "2", "3"],
-        attachments: [],
+        messages: ["1", "2", "3", "4"],
+        attachments: ["1"],
       },
       "2": {
         id: "2",
@@ -58,28 +62,50 @@ const initialState: Chat = {
     },
   },
   messages: {
-    ids: ["1", "2", "3"],
+    ids: ["1", "2", "3", "4"],
     entities: {
       "1": {
         id: "1",
         senderUid: "0",
         text: "Hello",
+        type: MessageType.TEXT,
+        attachmentId: "",
       },
       "2": {
         id: "2",
         senderUid: "0",
         text: "How are you?",
+        type: MessageType.TEXT,
+        attachmentId: "",
       },
       "3": {
         id: "3",
         senderUid: "sSJjKJ8YoCQRtbpFYiXkfR95sUs2",
         text: "Hey, how is it going?",
+        type: MessageType.TEXT,
+        attachmentId: "",
+      },
+      "4": {
+        id: "4",
+        senderUid: "sSJjKJ8YoCQRtbpFYiXkfR95sUs2",
+        text: "",
+        type: MessageType.ATTACHMENT,
+        attachmentId: "1",
       },
     },
   },
   attachments: {
-    ids: [],
-    entities: {},
+    ids: ["1"],
+    entities: {
+      "1": {
+        id: "1",
+        senderUid: "string",
+        type: AttachmentType.IMAGE,
+        url: "https://via.placeholder.com/1000x1000",
+        size: 1000,
+        name: "Image.png",
+      },
+    },
   },
 };
 
