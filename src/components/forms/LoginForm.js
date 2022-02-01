@@ -16,7 +16,7 @@ import {
   faTwitter,
 } from "@fortawesome/free-brands-svg-icons";
 import { Link } from "react-router-dom";
-import { RESET_PASSWORD_URL } from "../../constants/urls";
+import { RESET_PASSWORD_URL } from "../../utils/urls";
 import formStyles from "./Forms.module.css";
 import {
   getAuth,

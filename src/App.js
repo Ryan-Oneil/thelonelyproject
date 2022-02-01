@@ -8,7 +8,7 @@ import {
   REGISTER_URL,
   RESET_PASSWORD_URL,
   USER_PROFILE_URL,
-} from "./constants/urls";
+} from "./utils/urls";
 import { ChakraProvider } from "@chakra-ui/react";
 import Login from "./pages/auth/Login";
 import RegisterPage from "./pages/auth/RegisterPage";
@@ -21,7 +21,7 @@ import { login, logout } from "./reducers/authReducer";
 import PublicRoute from "./components/PublicRoute";
 import PrivateRoute from "./components/PrivateRoute";
 import ProfilePage from "./pages/userprofile/ProfilePage";
-import ChatPage from "./pages/chat/ChatPage";
+import ChatPage from "./Chat/pages/ChatPage";
 
 function App() {
   const dispatch = useDispatch();

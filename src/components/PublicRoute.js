@@ -1,7 +1,7 @@
 import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { HOMEPAGE_URL } from "../constants/urls";
+import { HOMEPAGE_URL } from "../utils/urls";
 
 const PublicRoute = ({ children }) => {
   let location = useLocation();

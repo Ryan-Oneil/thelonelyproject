@@ -23,16 +23,19 @@ import {
 } from "@chakra-ui/icons";
 import AvatarHeader from "./AvatarHeader";
 import ChatMessage from "./ChatMessage";
-import { useDispatch, useSelector } from "react-redux";
-import { messageSent } from "../reducers/chatReducer";
+import { messageSent } from "../chatReducer";
+import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 
-const ChatConversation = (props) => {
+const ChatConversation = () => {
   const padding = 5;
   const borderColor = "rgba(0, 0, 0, 0.2)";
-  const { uid } = useSelector((state) => state.auth.user);
-  const { messages } = useSelector((state) => state.chat);
+  const { uid } = useAppSelector((state) => state.auth.user);
+  const { activeConversationId } = useAppSelector((state) => state.chat);
+  const { messages, name, avatarUrl } = useAppSelector(
+    (state) => state.chat.conversations.entities[activeConversationId]
+  );
   const [message, setMessage] = useState("");
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const sendMessage = () => {
     if (!message) {
@@ -59,20 +62,16 @@ const ChatConversation = (props) => {
   };
 
   return (
-    <Box borderRight={"1px solid"} {...props} borderColor={borderColor}>
+    <Box borderRight={"1px solid"} flexGrow={1} borderColor={borderColor}>
       <Flex p={padding}>
-        <AvatarHeader avatarName={"Ryan L"} heading={"Ryan L"} />
+        <AvatarHeader name={name} heading={name} padding={0} url={avatarUrl} />
         <Spacer />
         <ChatMenu />
       </Flex>
       <Divider style={{ borderColor }} />
       <VStack p={padding} h={"90%"} justifyContent={"end"}>
-        {messages.map((chatMessage) => (
-          <ChatMessage
-            key={chatMessage.id}
-            message={chatMessage.text}
-            isSender={uid === chatMessage.senderUid}
-          />
+        {messages.map((id) => (
+          <ChatMessage id={id} key={id} />
         ))}
         <HStack w={"100%"} pt={padding}>
           <IconButton

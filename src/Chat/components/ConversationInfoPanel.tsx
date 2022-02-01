@@ -14,8 +14,14 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileImage } from "@fortawesome/free-regular-svg-icons";
 import { DownloadIcon } from "@chakra-ui/icons";
+import { useAppSelector } from "../../utils/hooks";
 
 const ConversationInfoPanel = () => {
+  const { activeConversationId } = useAppSelector((state) => state.chat);
+  const { name, avatarUrl } = useAppSelector(
+    (state) => state.chat.conversations.entities[activeConversationId]
+  );
+
   const SharedMedia = () => {
     return (
       <Flex w={"100%"} alignItems={"center"} justifyContent={"space-between"}>
@@ -63,13 +69,16 @@ const ConversationInfoPanel = () => {
       <Image
         borderRadius="full"
         boxSize="200px"
-        src="https://avataaars.io/?avatarStyle=Circle&topType=ShortHairDreads01&accessoriesType=Wayfarers&hairColor=Black&facialHairType=BeardLight&facialHairColor=Black&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Smile&skinColor=Light'"
+        src={avatarUrl}
+        fallbackSrc={
+          "https://avataaars.io/?avatarStyle=Circle&topType=ShortHairDreads01&accessoriesType=Wayfarers&hairColor=Black&facialHairType=BeardLight&facialHairColor=Black&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Smile&skinColor=Light'"
+        }
         alt="User profile picture"
         my={4}
         mx={20}
       />
       <Heading fontSize={"2xl"} textAlign={"center"} pb={4}>
-        Ryan L
+        {name}
       </Heading>
       <Divider style={{ borderColor: "rgba(0, 0, 0, 0.2)" }} />
       <Text p={4} fontWeight={"bold"}>

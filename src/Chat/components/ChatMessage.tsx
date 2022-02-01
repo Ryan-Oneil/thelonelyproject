@@ -1,7 +1,14 @@
 import React from "react";
 import { Box, Text } from "@chakra-ui/react";
+import { useAppSelector } from "../../utils/hooks";
 
-const ChatMessage = ({ message, isSender }) => {
+const ChatMessage = ({ id }: { id: string }) => {
+  const { text, senderUid } = useAppSelector(
+    (state) => state.chat.messages.entities[id]
+  );
+  const { uid } = useAppSelector((state) => state.auth.user);
+  const isSender = senderUid === uid;
+
   const styleProps = isSender
     ? {
         backgroundColor: "#2249B3",
@@ -18,7 +25,7 @@ const ChatMessage = ({ message, isSender }) => {
 
   return (
     <Box borderRadius={"xl"} p={2} {...styleProps}>
-      <Text isTruncated>{message}</Text>
+      <Text isTruncated>{text}</Text>
     </Box>
   );
 };
