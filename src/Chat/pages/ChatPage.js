@@ -14,7 +14,7 @@ const ChatPage = () => {
       <Flex h={"100%"}>
         <ConversationList />
         {activeConversationId && <ChatConversation />}
-        <ConversationInfoPanel />
+        {activeConversationId && <ConversationInfoPanel />}
       </Flex>
     </BaseAppPage>
   );
