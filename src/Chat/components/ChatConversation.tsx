@@ -23,7 +23,7 @@ import {
 } from "@chakra-ui/icons";
 import AvatarHeader from "./AvatarHeader";
 import ChatMessage from "./ChatMessage";
-import { messageSent } from "../chatReducer";
+import { sendMessage } from "../chatReducer";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 
 const ChatConversation = () => {
@@ -37,11 +37,11 @@ const ChatConversation = () => {
   const [message, setMessage] = useState("");
   const dispatch = useAppDispatch();
 
-  const sendMessage = () => {
+  const sendMessageToActiveConversation = () => {
     if (!message) {
       return;
     }
-    dispatch(messageSent({ text: message, senderUid: uid }));
+    dispatch(sendMessage(activeConversationId, message, uid));
     setMessage("");
   };
 
@@ -87,7 +87,7 @@ const ChatConversation = () => {
               onChange={(event) => setMessage(event.target.value)}
               onKeyPress={(event) => {
                 if (event.key === "Enter") {
-                  sendMessage();
+                  sendMessageToActiveConversation();
                 }
               }}
             />
@@ -96,7 +96,7 @@ const ChatConversation = () => {
                 icon={<ChatIcon />}
                 variant="ghost"
                 aria-label={"Send icon"}
-                onClick={sendMessage}
+                onClick={sendMessageToActiveConversation}
               />
             </InputRightElement>
           </InputGroup>

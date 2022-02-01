@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { NormalizedObjects } from "../utils/NormalizedObjects";
+import { nanoid } from "nanoid";
+import { AppDispatch } from "../index";
 
 interface Conversation {
   id: string;
@@ -64,12 +66,27 @@ const initialState: Chat = {
   },
 };
 
+export const sendMessage =
+  (conversationId: string, text: string, senderUid: string) =>
+  (dispatch: AppDispatch) => {
+    const randomId = nanoid();
+
+    return dispatch(
+      messageSent({ id: randomId, text, senderUid, conversationId })
+    );
+  };
+
 export const slice = createSlice({
   name: "chat",
   initialState,
   reducers: {
     messageSent(state, action) {
-      // state.messages.push(action.payload);
+      const { id, text, senderUid, conversationId } = action.payload;
+
+      state.messages.entities = Object.assign({}, state.messages.entities, {
+        [id]: { id, text, senderUid },
+      });
+      state.conversations.entities[conversationId].messages.push(id);
     },
     changedActiveConversation(state, action) {
       state.activeConversationId = action.payload;
