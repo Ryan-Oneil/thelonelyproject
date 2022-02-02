@@ -1,11 +1,15 @@
 import React from "react";
 import { Alert, AlertIcon, Button, VStack } from "@chakra-ui/react";
 import { Field, Formik } from "formik";
-import { LabelledInput } from "./Inputs";
+import { LabelledInput } from "../../components/forms/Inputs";
 import { sendPasswordResetEmail, getAuth } from "firebase/auth";
+import { User } from "../types/User";
 
 const ResetPasswordForm = () => {
-  const onSubmit = (formValues, { setStatus }) => {
+  const onSubmit = (
+    formValues: any,
+    { setStatus }: { setStatus: Function }
+  ) => {
     const auth = getAuth();
     return sendPasswordResetEmail(auth, formValues.email.trim())
       .then(() =>
@@ -19,8 +23,11 @@ const ResetPasswordForm = () => {
       });
   };
 
-  const validate = (values) => {
-    const errors = {};
+  const validate = (values: any) => {
+    const errors: User = {
+      email: "",
+      password: "",
+    };
 
     if (!values.email) {
       errors.email = "Email is required";

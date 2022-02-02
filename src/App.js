@@ -10,16 +10,16 @@ import {
   USER_PROFILE_URL,
 } from "./utils/urls";
 import { ChakraProvider } from "@chakra-ui/react";
-import Login from "./pages/auth/Login";
-import RegisterPage from "./pages/auth/RegisterPage";
-import ResetPasswordPage from "./pages/auth/ResetPasswordPage";
+import Login from "./Auth/pages/Login";
+import RegisterPage from "./Auth/pages/RegisterPage";
+import ResetPasswordPage from "./Auth/pages/ResetPasswordPage";
 import { initializeApp } from "firebase/app";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getAuth } from "firebase/auth";
-import { login, logout } from "./reducers/authReducer";
-import PublicRoute from "./components/PublicRoute";
-import PrivateRoute from "./components/PrivateRoute";
+import { login, logout } from "./Auth/authReducer";
+import PublicRoute from "./Auth/components/PublicRoute";
+import PrivateRoute from "./Auth/components/PrivateRoute";
 import ProfilePage from "./pages/userprofile/ProfilePage";
 import ChatPage from "./Chat/pages/ChatPage";
 
