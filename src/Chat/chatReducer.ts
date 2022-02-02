@@ -48,8 +48,8 @@ const initialState: Chat = {
         name: "Ryan L",
         lastMessage: "What time?",
         avatarUrl: "",
-        messages: ["1", "2", "3", "4"],
-        attachments: ["1"],
+        messages: ["1", "2", "3", "4", "5"],
+        attachments: ["1", "2"],
       },
       "2": {
         id: "2",
@@ -92,10 +92,17 @@ const initialState: Chat = {
         type: MessageType.ATTACHMENT,
         attachmentId: "1",
       },
+      "5": {
+        id: "5",
+        senderUid: "",
+        text: "",
+        type: MessageType.ATTACHMENT,
+        attachmentId: "2",
+      },
     },
   },
   attachments: {
-    ids: ["1"],
+    ids: ["1", "2"],
     entities: {
       "1": {
         id: "1",
@@ -104,6 +111,14 @@ const initialState: Chat = {
         url: "https://via.placeholder.com/1000x1000",
         size: 1000,
         name: "Image.png",
+      },
+      "2": {
+        id: "2",
+        senderUid: "",
+        type: AttachmentType.VIDEO,
+        url: "",
+        size: 1000,
+        name: "video.mp4",
       },
     },
   },

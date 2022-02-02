@@ -35,6 +35,11 @@ const ChatMessage = ({ id }: { id: string }) => {
       attachment.type === AttachmentType.IMAGE
     ) {
       return <ImageModal imageUrl={attachment.url} />;
+    } else if (
+      type === MessageType.ATTACHMENT &&
+      attachment.type === AttachmentType.VIDEO
+    ) {
+      return <video src={attachment.url} muted controls height={200} />;
     }
     return <Text isTruncated>{text}</Text>;
   };
