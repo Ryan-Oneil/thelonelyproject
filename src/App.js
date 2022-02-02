@@ -1,12 +1,14 @@
 import { Route, Routes } from "react-router-dom";
 import Homepage from "./pages/Homepage";
 import {
+  CHAT_URL,
+  DASHBOARD_URL,
   HOMEPAGE_URL,
   LOGIN_URL,
   REGISTER_URL,
   RESET_PASSWORD_URL,
   USER_PROFILE_URL,
-} from "./constants/urls";
+} from "./utils/urls";
 import { ChakraProvider } from "@chakra-ui/react";
 import Login from "./pages/auth/Login";
 import RegisterPage from "./pages/auth/RegisterPage";
@@ -19,6 +21,7 @@ import { login, logout } from "./reducers/authReducer";
 import PublicRoute from "./components/PublicRoute";
 import PrivateRoute from "./components/PrivateRoute";
 import ProfilePage from "./pages/userprofile/ProfilePage";
+import ChatPage from "./Chat/pages/ChatPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -70,6 +73,22 @@ function App() {
           element={
             <PrivateRoute>
               <ProfilePage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={DASHBOARD_URL}
+          element={
+            <PrivateRoute>
+              <ProfilePage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={CHAT_URL}
+          element={
+            <PrivateRoute>
+              <ChatPage />
             </PrivateRoute>
           }
         />

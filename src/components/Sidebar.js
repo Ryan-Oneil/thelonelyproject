@@ -19,7 +19,7 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import React, { useState } from "react";
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
-import { CHAT_URL, USER_PROFILE_URL } from "../constants/urls";
+import { CHAT_URL, USER_PROFILE_URL } from "../utils/urls";
 import { HamburgerIcon } from "@chakra-ui/icons";
 
 export const Sidebar = () => {

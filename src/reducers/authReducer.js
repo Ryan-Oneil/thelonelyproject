@@ -7,7 +7,7 @@ export const slice = createSlice({
     user: {
       name: "",
       avatar: "",
-      id: "",
+      uid: "",
     },
     role: "",
   },
