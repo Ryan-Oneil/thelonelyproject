@@ -1,11 +1,11 @@
 import React from "react";
 import { Flex, Heading, Stack } from "@chakra-ui/react";
 import AuthPage from "./AuthPage";
-import ResetPasswordForm from "../../components/forms/ResetPasswordForm";
+import ResetPasswordForm from "../components/ResetPasswordForm";
 
 const ResetPasswordPage = () => {
   return (
-    <AuthPage headerText={"Sign in to"}>
+    <AuthPage>
       <Flex direction={"row"}>
         <Stack spacing={4}>
           <Heading fontSize={"xl"} fontWeight={"medium"}>

@@ -1,5 +1,5 @@
 import React from "react";
-import BasePublicPage from "../BasePublicPage";
+import BasePublicPage from "../../pages/BasePublicPage";
 import {
   Container,
   Flex,
@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { Card } from "../../components/Card";
 
-const AuthPage = ({ children, headerText }) => {
+const AuthPage = ({ children }: { children: React.ReactNode }) => {
   return (
     <BasePublicPage>
       <Container
@@ -30,7 +30,7 @@ const AuthPage = ({ children, headerText }) => {
                 fontSize={{ base: "3xl", sm: "4xl", md: "5xl", lg: "5xl" }}
                 fontWeight={"bold"}
               >
-                {headerText}
+                Sign in to
               </Text>
               <Text fontSize={{ base: "2xl", sm: "2xl", md: "2xl", lg: "3xl" }}>
                 The Lonely Project

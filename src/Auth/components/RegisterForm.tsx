@@ -1,11 +1,19 @@
 import React from "react";
 import { Alert, AlertIcon, Button, VStack } from "@chakra-ui/react";
 import { Field, Formik } from "formik";
-import { LabelledInput } from "./Inputs";
+import { LabelledInput } from "../../components/forms/Inputs";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { User } from "../types/User";
+
+interface SignupValues extends User {
+  passwordConfirmed: string;
+}
 
 const RegisterForm = () => {
-  const onSubmit = (formValues, { setStatus }) => {
+  const onSubmit = (
+    formValues: User,
+    { setStatus }: { setStatus: Function }
+  ) => {
     const auth = getAuth();
     return createUserWithEmailAndPassword(
       auth,
@@ -16,8 +24,8 @@ const RegisterForm = () => {
     });
   };
 
-  const validate = (values) => {
-    const errors = {};
+  const validate = (values: SignupValues) => {
+    const errors = { email: "", password: "", passwordConfirmed: "" };
 
     if (!values.email) {
       errors.email = "Email is required";

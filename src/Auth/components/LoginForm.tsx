@@ -17,7 +17,6 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { Link } from "react-router-dom";
 import { RESET_PASSWORD_URL } from "../../utils/urls";
-import formStyles from "./Forms.module.css";
 import {
   getAuth,
   signInWithPopup,
@@ -25,12 +24,16 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { Field, Formik } from "formik";
-import { LabelledInput } from "./Inputs";
+import { LabelledInput } from "../../components/forms/Inputs";
+import { User } from "../types/User";
 
 const provider = new GoogleAuthProvider();
 
 const LoginForm = () => {
-  const onSubmit = (formValues, { setStatus }) => {
+  const onSubmit = (
+    formValues: User,
+    { setStatus }: { setStatus: Function }
+  ) => {
     const auth = getAuth();
     return signInWithEmailAndPassword(
       auth,
@@ -41,8 +44,11 @@ const LoginForm = () => {
     });
   };
 
-  const validate = (values) => {
-    const errors = {};
+  const validate = (values: User) => {
+    const errors: User = {
+      email: "",
+      password: "",
+    };
 
     if (!values.email) {
       errors.email = "Email is required";
@@ -135,7 +141,7 @@ const LoginForm = () => {
               <Stack mt={"5%"}>
                 <Link
                   to={RESET_PASSWORD_URL}
-                  className={formStyles.resetPasswordLink}
+                  style={{ textAlign: "end", color: "#4285F4" }}
                 >
                   Forgot Password?
                 </Link>

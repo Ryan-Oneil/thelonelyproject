@@ -1,4 +1,4 @@
-import authReducer from "./authReducer";
+import authReducer from "../Auth/authReducer";
 import { combineReducers } from "@reduxjs/toolkit";
 import userProfileReducer from "./userProfileReducer";
 import chatReducer from "../Chat/chatReducer";

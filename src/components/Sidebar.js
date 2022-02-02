@@ -9,6 +9,7 @@ import {
   DrawerCloseButton,
   Text,
   HStack,
+  Tooltip,
 } from "@chakra-ui/react";
 import styles from "../pages/BasePage.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -21,6 +22,7 @@ import React, { useState } from "react";
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
 import { CHAT_URL, USER_PROFILE_URL } from "../utils/urls";
 import { HamburgerIcon } from "@chakra-ui/icons";
+import LogoutButton from "../Auth/components/LogoutButton";
 
 export const Sidebar = () => {
   const [showDrawer, setShowDrawer] = useState(false);
@@ -29,25 +31,27 @@ export const Sidebar = () => {
     { url: CHAT_URL, icon: faComment, title: "Chats" },
   ];
 
-  const NavItem = ({ url, icon, text }) => {
+  const NavItem = ({ url, icon, text, label }) => {
     let resolved = useResolvedPath(url);
     let match = useMatch({ path: resolved.pathname, end: true });
 
     return (
       <Link to={url}>
         <HStack>
-          <IconButton
-            variant="outline"
-            aria-label={icon}
-            fontSize="20px"
-            icon={
-              <FontAwesomeIcon
-                icon={icon}
-                color={match ? "#2249B3" : "black"}
-                className={"fa-2x"}
-              />
-            }
-          />
+          <Tooltip label={label}>
+            <IconButton
+              variant="ghost"
+              aria-label={icon}
+              fontSize="20px"
+              icon={
+                <FontAwesomeIcon
+                  icon={icon}
+                  color={match ? "#2249B3" : "black"}
+                  className={"fa-2x"}
+                />
+              }
+            />
+          </Tooltip>
           {text && <Text>{text}</Text>}
         </HStack>
       </Link>
@@ -56,15 +60,19 @@ export const Sidebar = () => {
 
   const NavMenu = ({ showTitle }) => {
     return (
-      <VStack spacing={10} mt={20}>
+      <VStack spacing={10} mt={20} h={"100%"}>
         {urls.map((navItem) => (
           <NavItem
             url={navItem.url}
             icon={navItem.icon}
             key={navItem.url}
             text={showTitle ? navItem.title : ""}
+            label={navItem.title}
           />
         ))}
+        <Box mt={"auto!important"} mb={"150px!important"}>
+          <LogoutButton />
+        </Box>
       </VStack>
     );
   };
