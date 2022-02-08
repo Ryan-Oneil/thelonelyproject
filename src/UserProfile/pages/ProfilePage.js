@@ -1,6 +1,6 @@
 import React from "react";
-import BaseAppPage from "../BaseAppPage";
-import styles from "./Profilepage.module.css";
+import BaseAppPage from "../../pages/BaseAppPage";
+import styles from "../../pages/userprofile/Profilepage.module.css";
 import {
   Box,
   Button,
