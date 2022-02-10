@@ -67,8 +67,8 @@ const SetupProfileForm = () => {
               <Image
                 borderRadius="full"
                 boxSize="200px"
-                src="https://bit.ly/dan-abramov"
-                alt="Dan Abramov"
+                src="https://avataaars.io/?avatarStyle=Circle&topType=ShortHairDreads01&accessoriesType=Wayfarers&hairColor=Black&facialHairType=BeardLight&facialHairColor=Black&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Smile&skinColor=Light"
+                alt="Profile picture"
               />
               <Center>
                 <Field

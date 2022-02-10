@@ -60,7 +60,7 @@ export const slice = createSlice({
     profileCompleted(state, action) {
       state.name = action.payload.name;
       state.about = action.payload.about;
-      state.avatar = action.payload.avatar;
+      // state.avatar = action.payload.avatar;
     },
   },
 });
