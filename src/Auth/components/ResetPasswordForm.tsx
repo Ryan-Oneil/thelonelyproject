@@ -1,6 +1,6 @@
 import React from "react";
 import { Alert, AlertIcon, Button, VStack } from "@chakra-ui/react";
-import { Field, Formik } from "formik";
+import { Field, Formik, FormikErrors } from "formik";
 import { LabelledInput } from "../../components/forms/Inputs";
 import { sendPasswordResetEmail, getAuth } from "firebase/auth";
 import { User } from "../types/User";
@@ -24,10 +24,7 @@ const ResetPasswordForm = () => {
   };
 
   const validate = (values: any) => {
-    const errors: User = {
-      email: "",
-      password: "",
-    };
+    let errors: FormikErrors<User> = {};
 
     if (!values.email) {
       errors.email = "Email is required";

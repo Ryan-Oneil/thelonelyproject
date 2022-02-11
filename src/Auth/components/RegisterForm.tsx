@@ -1,6 +1,6 @@
 import React from "react";
 import { Alert, AlertIcon, Button, VStack } from "@chakra-ui/react";
-import { Field, Formik } from "formik";
+import { Field, Formik, FormikErrors } from "formik";
 import { LabelledInput } from "../../components/forms/Inputs";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { User } from "../types/User";
@@ -25,7 +25,7 @@ const RegisterForm = () => {
   };
 
   const validate = (values: SignupValues) => {
-    const errors = { email: "", password: "", passwordConfirmed: "" };
+    let errors: FormikErrors<SignupValues> = {};
 
     if (!values.email) {
       errors.email = "Email is required";

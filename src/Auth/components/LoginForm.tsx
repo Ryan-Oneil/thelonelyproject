@@ -23,7 +23,7 @@ import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { Field, Formik } from "formik";
+import { Field, Formik, FormikErrors } from "formik";
 import { LabelledInput } from "../../components/forms/Inputs";
 import { User } from "../types/User";
 
@@ -45,10 +45,7 @@ const LoginForm = () => {
   };
 
   const validate = (values: User) => {
-    const errors: User = {
-      email: "",
-      password: "",
-    };
+    let errors: FormikErrors<User> = {};
 
     if (!values.email) {
       errors.email = "Email is required";

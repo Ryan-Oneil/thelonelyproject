@@ -1,6 +1,5 @@
 import React from "react";
-import BaseAppPage from "../BaseAppPage";
-import styles from "./Profilepage.module.css";
+import BaseAppPage from "../../pages/BaseAppPage";
 import {
   Box,
   Button,
@@ -13,12 +12,20 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { Card } from "../../components/Card";
-import ProfileInterest from "../../components/ProfileInterest";
-import { useSelector } from "react-redux";
+import ProfileInterest from "../components/ProfileInterest";
+import { useAppSelector } from "../../utils/hooks";
 
 const ProfilePage = () => {
-  const { avatar, images, interests, aboutMe, prompts, spotifyArtists } =
-    useSelector((state) => state.profile);
+  const { avatar, images, interests, about, prompts, spotifyArtists, name } =
+    useAppSelector((state) => state.profile);
+
+  const cardStyle = {
+    border: "1px solid rgba(18, 17, 39, 0.12)",
+    borderRadius: " 12px",
+    boxShadow: "none!important",
+    width: "100%",
+    p: 5,
+  };
 
   const ProfileHeader = () => {
     return (
@@ -31,7 +38,7 @@ const ProfilePage = () => {
             alt={"User profile avatar"}
             m={"auto"}
           />
-          <Heading>John Doe</Heading>
+          <Heading>{name}</Heading>
         </VStack>
 
         <Spacer />
@@ -51,7 +58,13 @@ const ProfilePage = () => {
 
   return (
     <BaseAppPage>
-      <Box className={styles.profileBanner}>
+      <Box
+        backgroundImage={require("../../assets/media/img.png")}
+        backgroundRepeat={"no-repeat"}
+        backgroundSize={"100% 210px"}
+        flexWrap={"wrap"}
+        w={"100%"}
+      >
         <ProfileHeader />
         <SimpleGrid
           columns={{ base: 1, lg: 2 }}
@@ -61,11 +74,11 @@ const ProfilePage = () => {
           spacing={10}
         >
           <VStack pt={10} spacing={10}>
-            <Card p={5} className={styles.profileCard}>
+            <Card {...cardStyle}>
               <Heading size={"md"}>About me</Heading>
-              <Text pt={3}>{aboutMe}</Text>
+              <Text pt={3}>{about}</Text>
             </Card>
-            <Card p={5} className={styles.profileCard}>
+            <Card {...cardStyle}>
               <Heading size={"md"}>Gallery</Heading>
               <SimpleGrid
                 pt={3}
@@ -88,7 +101,7 @@ const ProfilePage = () => {
             spacing={10}
             columns={{ base: 1, xl: 2 }}
           >
-            <Card p={5} className={styles.profileCard}>
+            <Card {...cardStyle}>
               <Heading size={"md"}>Interests</Heading>
               <SimpleGrid
                 columns={{ base: 2, xl: 1, "2xl": 2 }}
@@ -98,13 +111,13 @@ const ProfilePage = () => {
                 {interests.map((interest) => (
                   <ProfileInterest
                     description={interest.description}
-                    icon={interest.icon}
+                    iconName={interest.icon}
                     key={interest.description}
                   />
                 ))}
               </SimpleGrid>
             </Card>
-            <Card p={5} className={styles.profileCard}>
+            <Card {...cardStyle}>
               <Heading size={"md"}>Trending Artists</Heading>
               <SimpleGrid
                 columns={{ base: 2, xl: 1, "2xl": 2 }}
@@ -114,14 +127,14 @@ const ProfilePage = () => {
                 {spotifyArtists.map((artist) => (
                   <ProfileInterest
                     description={artist.name}
-                    icon={artist.iconUrl}
+                    iconName={artist.iconUrl}
                     key={artist.iconUrl}
                   />
                 ))}
               </SimpleGrid>
             </Card>
             {prompts.map((prompt) => (
-              <Card p={5} className={styles.profileCard}>
+              <Card {...cardStyle}>
                 <Heading size={"md"}>{prompt.title}</Heading>
                 <Text pt={3}>{prompt.description}</Text>
               </Card>

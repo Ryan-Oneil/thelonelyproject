@@ -5,6 +5,7 @@ import {
   DASHBOARD_URL,
   HOMEPAGE_URL,
   LOGIN_URL,
+  PROFILE_SETUP_URL,
   REGISTER_URL,
   RESET_PASSWORD_URL,
   USER_PROFILE_URL,
@@ -20,8 +21,10 @@ import { getAuth } from "firebase/auth";
 import { login, logout } from "./Auth/authReducer";
 import PublicRoute from "./Auth/components/PublicRoute";
 import PrivateRoute from "./Auth/components/PrivateRoute";
-import ProfilePage from "./pages/userprofile/ProfilePage";
+import ProfilePage from "./UserProfile/pages/ProfilePage";
 import ChatPage from "./Chat/pages/ChatPage";
+import { RegisterStatus } from "./Auth/enums/RegisterStatus";
+import SetupProfilePage from "./UserProfile/pages/SetupProfilePage";
 
 function App() {
   const dispatch = useDispatch();
@@ -39,8 +42,14 @@ function App() {
   useEffect(() => {
     getAuth().onAuthStateChanged((authUser) => {
       if (authUser) {
-        const { displayName, email, uid } = authUser;
-        dispatch(login({ displayName, email, uid }));
+        const { email, uid } = authUser;
+        const token = authUser.getIdTokenResult();
+
+        token.then((idToken) => {
+          const registeredStatus =
+            idToken.claims.registeredStatus || RegisterStatus.NOT_REGISTERED;
+          dispatch(login({ registeredStatus, user: { email, uid } }));
+        });
       } else {
         dispatch(logout());
       }
@@ -89,6 +98,14 @@ function App() {
           element={
             <PrivateRoute>
               <ChatPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={PROFILE_SETUP_URL}
+          element={
+            <PrivateRoute>
+              <SetupProfilePage />
             </PrivateRoute>
           }
         />

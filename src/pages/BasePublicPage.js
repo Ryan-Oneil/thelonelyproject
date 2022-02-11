@@ -14,11 +14,13 @@ const BasePublicPage = ({ children, showLogin = false }) => {
     <div className={styles.main}>
       <Flex flexWrap={"wrap"}>
         <Box p="4">
-          <img
-            src={require("../assets/media/logo.png")}
-            alt={"Lonely project logo"}
-            className={styles.logoImage}
-          />
+          <Link to={HOMEPAGE_URL}>
+            <img
+              src={require("../assets/media/logo.png")}
+              alt={"Lonely project logo"}
+              className={styles.logoImage}
+            />
+          </Link>
         </Box>
         <Box p={"4"} className={styles.centerItems}>
           <Link to={HOMEPAGE_URL}>
