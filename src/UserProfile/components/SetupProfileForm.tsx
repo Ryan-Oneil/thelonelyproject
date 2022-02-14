@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Alert,
   AlertIcon,
@@ -14,32 +14,27 @@ import {
   TextAreaInput,
 } from "../../components/forms/Inputs";
 import { useAppDispatch } from "../../utils/hooks";
-import { profileCompleted } from "../userProfileReducer";
-
-interface ProfileValues {
-  name: string;
-  about: string;
-  avatar?: File;
-}
+import { createUserProfile } from "../userProfileReducer";
+import { BaseProfile } from "../types/Profile";
+import { getAuth } from "firebase/auth";
 
 const SetupProfileForm = () => {
   const dispatch = useAppDispatch();
+  const [avatarUrl, setAvatarUrl] = useState(
+    "https://avataaars.io/?avatarStyle=Circle&topType=ShortHairDreads01&accessoriesType=Wayfarers&hairColor=Black&facialHairType=BeardLight&facialHairColor=Black&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Smile&skinColor=Light"
+  );
 
   const onSubmit = (
-    formValues: ProfileValues,
+    formValues: BaseProfile,
     { setStatus }: { setStatus: Function }
   ) => {
-    dispatch(
-      profileCompleted({
-        name: formValues.name,
-        about: formValues.about,
-        avatar: "",
-      })
-    );
+    return dispatch(createUserProfile(formValues))
+      .then(() => getAuth().currentUser?.getIdToken(true))
+      .catch((error) => setStatus({ type: "error", message: error.message }));
   };
 
-  const validate = (values: ProfileValues) => {
-    let errors: FormikErrors<ProfileValues> = {};
+  const validate = (values: BaseProfile) => {
+    let errors: FormikErrors<BaseProfile> = {};
 
     if (!values.name) {
       errors.name = "Please enter a name";
@@ -52,14 +47,21 @@ const SetupProfileForm = () => {
       initialValues={{
         name: "",
         about: "",
-        avatar: undefined,
+        avatar: "",
       }}
       onSubmit={onSubmit}
       validate={validate}
     >
       {(props) => {
-        const { isSubmitting, handleSubmit, isValid, errors, status, touched } =
-          props;
+        const {
+          isSubmitting,
+          handleSubmit,
+          isValid,
+          errors,
+          status,
+          touched,
+          setFieldValue,
+        } = props;
 
         return (
           <form onSubmit={handleSubmit}>
@@ -67,16 +69,29 @@ const SetupProfileForm = () => {
               <Image
                 borderRadius="full"
                 boxSize="200px"
-                src="https://avataaars.io/?avatarStyle=Circle&topType=ShortHairDreads01&accessoriesType=Wayfarers&hairColor=Black&facialHairType=BeardLight&facialHairColor=Black&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Smile&skinColor=Light"
+                src={avatarUrl}
                 alt="Profile picture"
               />
               <Center>
                 <Field
-                  name="avatar"
                   as={FileInput}
                   buttonText={"Choose profile picture"}
                   error={errors.avatar}
                   touched={touched.avatar}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                    const file = event.currentTarget.files?.item(0);
+
+                    if (file) {
+                      let reader = new FileReader();
+
+                      reader.onloadend = () => {
+                        // @ts-ignore
+                        setAvatarUrl(reader.result);
+                      };
+                      reader.readAsDataURL(file);
+                      setFieldValue("avatar", file);
+                    }
+                  }}
                 />
               </Center>
               <Field

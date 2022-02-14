@@ -1,16 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { apiPostCall } from "../apis/api";
+import {
+  USER_PROFILE_CREATE_ENDPOINT,
+  USER_PROFILE_UPLOAD_PICTURE_ENDPOINT,
+} from "../apis/endpoints";
+import { BaseProfile, UserProfile } from "./types/Profile";
+import { AppDispatch } from "../index";
 
-type UserProfileState = {
-  name: string;
-  avatar: string;
-  about: string;
-  images: Array<any>;
-  interests: Array<any>;
-  prompts: Array<any>;
-  spotifyArtists: Array<any>;
-};
-
-const initialState: UserProfileState = {
+const initialState: UserProfile = {
   name: "",
   avatar:
     "https://avataaars.io/?avatarStyle=Circle&topType=ShortHairDreads01&accessoriesType=Wayfarers&hairColor=Black&facialHairType=BeardLight&facialHairColor=Black&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Smile&skinColor=Light'",
@@ -60,9 +57,31 @@ export const slice = createSlice({
     profileCompleted(state, action) {
       state.name = action.payload.name;
       state.about = action.payload.about;
-      // state.avatar = action.payload.avatar;
+    },
+    profilePictureChanged(state, action) {
+      state.avatar = action.payload;
     },
   },
 });
 export default slice.reducer;
-export const { profileCompleted } = slice.actions;
+export const { profileCompleted, profilePictureChanged } = slice.actions;
+
+export const createUserProfile =
+  (profile: BaseProfile) => (dispatch: AppDispatch) => {
+    return apiPostCall(USER_PROFILE_CREATE_ENDPOINT, profile).then(() => {
+      if (profile.avatar) {
+        dispatch(uploadProfilePicture(profile.avatar as File));
+      }
+      dispatch(profileCompleted(profile));
+    });
+  };
+
+export const uploadProfilePicture =
+  (picture: File) => (dispatch: AppDispatch) => {
+    let postData = new FormData();
+    postData.append("file", picture, picture.name);
+
+    return apiPostCall(USER_PROFILE_UPLOAD_PICTURE_ENDPOINT, postData).then(
+      (response) => dispatch(profilePictureChanged(response.data))
+    );
+  };
