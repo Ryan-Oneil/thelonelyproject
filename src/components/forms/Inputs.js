@@ -26,7 +26,14 @@ export const FileInput = (props) => {
   return (
     <FormControl isInvalid={error && touched}>
       <Button onClick={() => ref.current.click()}>{buttonText}</Button>
-      <Input size="lg" {...props} type={"file"} ref={ref} display={"none"} />
+      <Input
+        size="lg"
+        {...props}
+        type={"file"}
+        ref={ref}
+        display={"none"}
+        value={""}
+      />
       {error && touched && <FormErrorMessage>{error}</FormErrorMessage>}
     </FormControl>
   );

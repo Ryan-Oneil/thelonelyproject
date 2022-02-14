@@ -46,8 +46,10 @@ function App() {
         const token = authUser.getIdTokenResult();
 
         token.then((idToken) => {
-          const registeredStatus =
-            idToken.claims.registeredStatus || RegisterStatus.NOT_REGISTERED;
+          const registeredStatus = idToken.claims.role
+            ? RegisterStatus.REGISTERED
+            : RegisterStatus.NOT_REGISTERED;
+
           dispatch(login({ registeredStatus, user: { email, uid } }));
         });
       } else {
