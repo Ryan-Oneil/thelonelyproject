@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { apiPostCall } from "../apis/api";
+import { apiGetCall, apiPostCall } from "../apis/api";
 import {
   USER_PROFILE_CREATE_ENDPOINT,
+  USER_PROFILE_INFO_ENDPOINT,
   USER_PROFILE_UPLOAD_PICTURE_ENDPOINT,
 } from "../apis/endpoints";
 import { BaseProfile, UserProfile } from "./types/Profile";
@@ -61,10 +62,16 @@ export const slice = createSlice({
     profilePictureChanged(state, action) {
       state.avatar = action.payload;
     },
+    fetchedProfile(state, action) {
+      state.avatar = action.payload.avatar;
+      state.name = action.payload.name;
+      state.about = action.payload.about;
+    },
   },
 });
 export default slice.reducer;
-export const { profileCompleted, profilePictureChanged } = slice.actions;
+export const { profileCompleted, profilePictureChanged, fetchedProfile } =
+  slice.actions;
 
 export const createUserProfile =
   (profile: BaseProfile) => (dispatch: AppDispatch) => {
@@ -83,5 +90,15 @@ export const uploadProfilePicture =
 
     return apiPostCall(USER_PROFILE_UPLOAD_PICTURE_ENDPOINT, postData).then(
       (response) => dispatch(profilePictureChanged(response.data))
+    );
+  };
+
+export const fetchUserProfile =
+  (userId = "") =>
+  (dispatch: AppDispatch) => {
+    return apiGetCall(`${USER_PROFILE_INFO_ENDPOINT}/${userId}`).then(
+      (response) => {
+        return dispatch(fetchedProfile(response.data));
+      }
     );
   };

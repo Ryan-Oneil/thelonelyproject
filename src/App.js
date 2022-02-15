@@ -86,7 +86,16 @@ function App() {
               <ProfilePage />
             </PrivateRoute>
           }
-        />
+        >
+          <Route
+            path={`:userId`}
+            element={
+              <PrivateRoute>
+                <ProfilePage />
+              </PrivateRoute>
+            }
+          />
+        </Route>
         <Route
           path={DASHBOARD_URL}
           element={

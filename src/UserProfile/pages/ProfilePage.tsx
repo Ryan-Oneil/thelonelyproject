@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import BaseAppPage from "../../pages/BaseAppPage";
 import {
   Box,
@@ -13,11 +13,17 @@ import {
 } from "@chakra-ui/react";
 import { Card } from "../../components/Card";
 import ProfileInterest from "../components/ProfileInterest";
-import { useAppSelector } from "../../utils/hooks";
+import { useAppDispatch, useAppSelector } from "../../utils/hooks";
+import { useParams } from "react-router-dom";
+import { fetchUserProfile } from "../userProfileReducer";
 
 const ProfilePage = () => {
+  const userId = useAppSelector((state) => state.auth.user.uid);
   const { avatar, images, interests, about, prompts, spotifyArtists, name } =
     useAppSelector((state) => state.profile);
+  const params = useParams();
+  const dispatch = useAppDispatch();
+  const profileId = params.userId || userId;
 
   const cardStyle = {
     border: "1px solid rgba(18, 17, 39, 0.12)",
@@ -26,6 +32,10 @@ const ProfilePage = () => {
     width: "100%",
     p: 5,
   };
+
+  useEffect(() => {
+    dispatch(fetchUserProfile(profileId));
+  }, []);
 
   const ProfileHeader = () => {
     return (
@@ -37,6 +47,9 @@ const ProfilePage = () => {
             src={avatar}
             alt={"User profile avatar"}
             m={"auto"}
+            fallbackSrc={
+              "https://avataaars.io/?avatarStyle=Circle&topType=ShortHairDreads01&accessoriesType=Wayfarers&hairColor=Black&facialHairType=BeardLight&facialHairColor=Black&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Smile&skinColor=Light"
+            }
           />
           <Heading>{name}</Heading>
         </VStack>
