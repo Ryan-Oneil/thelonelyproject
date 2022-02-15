@@ -13,13 +13,14 @@ import {
   LabelledInput,
   TextAreaInput,
 } from "../../components/forms/Inputs";
-import { useAppDispatch } from "../../utils/hooks";
+import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 import { createUserProfile } from "../userProfileReducer";
 import { BaseProfile } from "../types/Profile";
 import { getAuth } from "firebase/auth";
 
 const SetupProfileForm = () => {
   const dispatch = useAppDispatch();
+  const userId = useAppSelector((state) => state.auth.user.uid);
   const [avatarUrl, setAvatarUrl] = useState(
     "https://avataaars.io/?avatarStyle=Circle&topType=ShortHairDreads01&accessoriesType=Wayfarers&hairColor=Black&facialHairType=BeardLight&facialHairColor=Black&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Smile&skinColor=Light"
   );
@@ -28,7 +29,7 @@ const SetupProfileForm = () => {
     formValues: BaseProfile,
     { setStatus }: { setStatus: Function }
   ) => {
-    return dispatch(createUserProfile(formValues))
+    return dispatch(createUserProfile(formValues, userId))
       .then(() => getAuth().currentUser?.getIdToken(true))
       .catch((error) => setStatus({ type: "error", message: error.message }));
   };
@@ -47,7 +48,7 @@ const SetupProfileForm = () => {
       initialValues={{
         name: "",
         about: "",
-        avatar: "",
+        avatar: undefined,
       }}
       onSubmit={onSubmit}
       validate={validate}

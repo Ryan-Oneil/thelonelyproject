@@ -11,26 +11,26 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { Card } from "../../components/Card";
 import ProfileInterest from "../components/ProfileInterest";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 import { useParams } from "react-router-dom";
 import { fetchUserProfile } from "../userProfileReducer";
+import AboutSection from "../components/AboutSection";
+import ProfilePicture from "../components/ProfilePicture";
+import ProfileCard from "../components/ProfileCard";
 
-const ProfilePage = () => {
+const ProfilePage = ({ enableEdit = true }) => {
   const userId = useAppSelector((state) => state.auth.user.uid);
-  const { avatar, images, interests, about, prompts, spotifyArtists, name } =
-    useAppSelector((state) => state.profile);
   const params = useParams();
   const dispatch = useAppDispatch();
   const profileId = params.userId || userId;
-
-  const cardStyle = {
-    border: "1px solid rgba(18, 17, 39, 0.12)",
-    borderRadius: " 12px",
-    boxShadow: "none!important",
-    width: "100%",
-    p: 5,
+  const { images, interests, prompts, spotifyArtists } = useAppSelector(
+    (state) => state.profile.users.entities[userId]
+  ) || {
+    images: [],
+    interests: [],
+    prompts: [],
+    spotifyArtists: [],
   };
 
   useEffect(() => {
@@ -40,20 +40,7 @@ const ProfilePage = () => {
   const ProfileHeader = () => {
     return (
       <Flex p={"100px 5% 0"} direction={{ base: "column", sm: "row" }}>
-        <VStack>
-          <Image
-            borderRadius="full"
-            boxSize="200px"
-            src={avatar}
-            alt={"User profile avatar"}
-            m={"auto"}
-            fallbackSrc={
-              "https://avataaars.io/?avatarStyle=Circle&topType=ShortHairDreads01&accessoriesType=Wayfarers&hairColor=Black&facialHairType=BeardLight&facialHairColor=Black&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Smile&skinColor=Light"
-            }
-          />
-          <Heading>{name}</Heading>
-        </VStack>
-
+        <ProfilePicture userId={userId} editMode={enableEdit} />
         <Spacer />
         <Button
           backgroundColor="rgba(97, 94, 240, 0.1)"
@@ -87,11 +74,8 @@ const ProfilePage = () => {
           spacing={10}
         >
           <VStack pt={10} spacing={10}>
-            <Card {...cardStyle}>
-              <Heading size={"md"}>About me</Heading>
-              <Text pt={3}>{about}</Text>
-            </Card>
-            <Card {...cardStyle}>
+            <AboutSection userId={userId} editMode={enableEdit} />
+            <ProfileCard>
               <Heading size={"md"}>Gallery</Heading>
               <SimpleGrid
                 pt={3}
@@ -107,14 +91,14 @@ const ProfilePage = () => {
                   />
                 ))}
               </SimpleGrid>
-            </Card>
+            </ProfileCard>
           </VStack>
           <SimpleGrid
             pt={{ base: 0, lg: 10 }}
             spacing={10}
             columns={{ base: 1, xl: 2 }}
           >
-            <Card {...cardStyle}>
+            <ProfileCard>
               <Heading size={"md"}>Interests</Heading>
               <SimpleGrid
                 columns={{ base: 2, xl: 1, "2xl": 2 }}
@@ -129,8 +113,8 @@ const ProfilePage = () => {
                   />
                 ))}
               </SimpleGrid>
-            </Card>
-            <Card {...cardStyle}>
+            </ProfileCard>
+            <ProfileCard>
               <Heading size={"md"}>Trending Artists</Heading>
               <SimpleGrid
                 columns={{ base: 2, xl: 1, "2xl": 2 }}
@@ -145,12 +129,12 @@ const ProfilePage = () => {
                   />
                 ))}
               </SimpleGrid>
-            </Card>
+            </ProfileCard>
             {prompts.map((prompt) => (
-              <Card {...cardStyle}>
+              <ProfileCard>
                 <Heading size={"md"}>{prompt.title}</Heading>
                 <Text pt={3}>{prompt.description}</Text>
-              </Card>
+              </ProfileCard>
             ))}
           </SimpleGrid>
         </SimpleGrid>
