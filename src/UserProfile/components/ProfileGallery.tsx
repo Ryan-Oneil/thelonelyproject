@@ -1,9 +1,18 @@
 import React from "react";
-import { Center, Heading, Image, SimpleGrid } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  Heading,
+  IconButton,
+  Image,
+  SimpleGrid,
+  Tooltip,
+} from "@chakra-ui/react";
 import ProfileCard from "./ProfileCard";
-import { useAppSelector } from "../../utils/hooks";
-import { AddIcon } from "@chakra-ui/icons";
+import { useAppDispatch, useAppSelector } from "../../utils/hooks";
+import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
 import FileUploader from "./FileUploader";
+import { deleteProfileMedia, uploadProfileMedia } from "../userProfileReducer";
 
 const ProfileGallery = ({
   userId,
@@ -15,29 +24,58 @@ const ProfileGallery = ({
   const medias =
     useAppSelector((state) => state.profile.users.entities[userId]?.medias) ||
     [];
+  const dispatch = useAppDispatch();
 
   return (
     <ProfileCard>
-      <Heading size={"md"}>Gallery</Heading>
+      <Heading size={"md"} pb={3}>
+        Gallery
+      </Heading>
       <SimpleGrid
-        pt={3}
-        columns={{ base: 1, md: 2, xl: 3, "2xl": 4 }}
+        columns={{ base: 1, md: 2, xl: 3 }}
         spacing={2}
+        maxH={"40vh"}
+        overflow={"auto"}
       >
         {medias.map((image) => (
-          <Image
-            src={image.url}
-            borderRadius={"lg"}
-            width={"100%"}
-            key={image.url}
-            draggable={false}
-            userSelect={"none"}
-          />
+          <Box position="relative" key={image.id}>
+            <Image
+              src={image.url}
+              borderRadius={"lg"}
+              width={"100%"}
+              draggable={false}
+              userSelect={"none"}
+              maxH={180}
+              objectFit="cover"
+            />
+            {editMode && (
+              <Tooltip label={"Delete"}>
+                <IconButton
+                  isRound
+                  bg="white"
+                  size="sm"
+                  _hover={{ transform: "scale(1.1)" }}
+                  sx={{ ":hover > svg": { transform: "scale(1.1)" } }}
+                  transition="all 0.15s ease"
+                  icon={
+                    <DeleteIcon transition="all 0.15s ease" color={"red"} />
+                  }
+                  position="absolute"
+                  top="1"
+                  right="1"
+                  aria-label={"Delete media"}
+                  onClick={() => dispatch(deleteProfileMedia(image.id, userId))}
+                />
+              </Tooltip>
+            )}
+          </Box>
         ))}
         {editMode && (
           <FileUploader
             accept={"image/*"}
-            uploadAction={(file: File) => console.log(file)}
+            uploadAction={(file: File) =>
+              dispatch(uploadProfileMedia(file, userId))
+            }
           >
             <Center
               bg={"#fafafa"}
@@ -45,6 +83,8 @@ const ProfileGallery = ({
               border={"1px dashed #d9d9d9"}
               cursor={"pointer"}
               _hover={{ borderColor: "#b6bbcd" }}
+              minH={150}
+              minW={150}
             >
               <AddIcon />
             </Center>

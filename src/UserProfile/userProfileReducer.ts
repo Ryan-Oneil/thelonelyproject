@@ -1,8 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { apiGetCall, apiPostCall, apiPutCall } from "../apis/api";
+import {
+  apiDeleteCall,
+  apiGetCall,
+  apiPostCall,
+  apiPutCall,
+} from "../apis/api";
 import {
   USER_PROFILE_CREATE_ENDPOINT,
   USER_PROFILE_INFO_ENDPOINT,
+  USER_PROFILE_MEDIA_DELETE_ENDPOINT,
+  USER_PROFILE_MEDIA_UPLOAD_ENDPOINT,
   USER_PROFILE_UPDATE_ABOUT_ENDPOINT,
   USER_PROFILE_UPLOAD_PICTURE_ENDPOINT,
 } from "../apis/endpoints";
@@ -93,11 +100,29 @@ export const slice = createSlice({
         ...action.payload.updates,
       };
     },
+    profileMediaDeleted(state, action) {
+      const { userId, mediaId } = action.payload;
+
+      state.users.entities[userId].medias = state.users.entities[
+        userId
+      ].medias.filter((media) => media.id !== mediaId);
+    },
+    profileMediaUploaded(state, action) {
+      const { userId, medias } = action.payload;
+
+      state.users.entities[userId].medias =
+        state.users.entities[userId].medias.concat(medias);
+    },
   },
 });
 export default slice.reducer;
-export const { profilePictureChanged, fetchedProfile, profileUpdate } =
-  slice.actions;
+export const {
+  profilePictureChanged,
+  fetchedProfile,
+  profileUpdate,
+  profileMediaDeleted,
+  profileMediaUploaded,
+} = slice.actions;
 
 export const createUserProfile =
   (profile: BaseProfile, userId: string) => (dispatch: AppDispatch) => {
@@ -133,5 +158,23 @@ export const updateProfileAbout =
   (userId: string, about: string) => (dispatch: AppDispatch) => {
     return apiPutCall(USER_PROFILE_UPDATE_ABOUT_ENDPOINT, { about }).then(() =>
       dispatch(profileUpdate({ id: userId, changes: { about } }))
+    );
+  };
+
+export const deleteProfileMedia =
+  (mediaId: number, userId: string) => (dispatch: AppDispatch) => {
+    return apiDeleteCall(
+      `${USER_PROFILE_MEDIA_DELETE_ENDPOINT}/${mediaId}`
+    ).then(() => dispatch(profileMediaDeleted({ mediaId, userId })));
+  };
+
+export const uploadProfileMedia =
+  (media: File, userId: string) => (dispatch: AppDispatch) => {
+    let postData = new FormData();
+    postData.append("file", media, media.name);
+
+    return apiPostCall(USER_PROFILE_MEDIA_UPLOAD_ENDPOINT, postData).then(
+      (response) =>
+        dispatch(profileMediaUploaded({ userId, medias: response.data }))
     );
   };
