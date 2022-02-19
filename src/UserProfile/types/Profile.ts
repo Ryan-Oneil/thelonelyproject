@@ -7,7 +7,7 @@ export interface BaseProfile {
 export interface UserProfile extends BaseProfile {
   userId: string;
   profilePictureUrl: string;
-  images: Array<any>;
+  medias: Array<any>;
   interests: Array<any>;
   prompts: Array<any>;
   spotifyArtists: Array<any>;

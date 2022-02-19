@@ -24,7 +24,7 @@ const initialState: UserProfileState = {
         profilePictureUrl:
           "https://avataaars.io/?avatarStyle=Circle&topType=ShortHairDreads01&accessoriesType=Wayfarers&hairColor=Black&facialHairType=BeardLight&facialHairColor=Black&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Smile&skinColor=Light'",
         about: "Hey I'm a cool person doing cool things",
-        images: [
+        medias: [
           { url: "https://via.placeholder.com/150" },
           { url: "https://via.placeholder.com/150" },
           { url: "https://via.placeholder.com/150" },
@@ -79,7 +79,6 @@ export const slice = createSlice({
       const user = {
         ...state.users.entities[id],
         ...action.payload,
-        images: [],
         interests: [],
         prompts: [],
         spotifyArtists: [],

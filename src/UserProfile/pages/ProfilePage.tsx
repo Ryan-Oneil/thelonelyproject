@@ -5,7 +5,6 @@ import {
   Button,
   Flex,
   Heading,
-  Image,
   SimpleGrid,
   Spacer,
   Text,
@@ -18,16 +17,16 @@ import { fetchUserProfile } from "../userProfileReducer";
 import AboutSection from "../components/AboutSection";
 import ProfilePicture from "../components/ProfilePicture";
 import ProfileCard from "../components/ProfileCard";
+import ProfileGallery from "../components/ProfileGallery";
 
 const ProfilePage = ({ enableEdit = true }) => {
   const userId = useAppSelector((state) => state.auth.user.uid);
   const params = useParams();
   const dispatch = useAppDispatch();
   const profileId = params.userId || userId;
-  const { images, interests, prompts, spotifyArtists } = useAppSelector(
+  const { interests, prompts, spotifyArtists } = useAppSelector(
     (state) => state.profile.users.entities[userId]
   ) || {
-    images: [],
     interests: [],
     prompts: [],
     spotifyArtists: [],
@@ -75,23 +74,7 @@ const ProfilePage = ({ enableEdit = true }) => {
         >
           <VStack pt={10} spacing={10}>
             <AboutSection userId={userId} editMode={enableEdit} />
-            <ProfileCard>
-              <Heading size={"md"}>Gallery</Heading>
-              <SimpleGrid
-                pt={3}
-                columns={{ base: 1, md: 2, xl: 3, "2xl": 4 }}
-                spacing={7}
-              >
-                {images.map((image) => (
-                  <Image
-                    src={image.url}
-                    borderRadius={"lg"}
-                    width={"100%"}
-                    key={image.url}
-                  />
-                ))}
-              </SimpleGrid>
-            </ProfileCard>
+            <ProfileGallery userId={userId} editMode={enableEdit} />
           </VStack>
           <SimpleGrid
             pt={{ base: 0, lg: 10 }}

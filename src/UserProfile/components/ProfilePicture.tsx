@@ -1,15 +1,9 @@
-import React, { useRef } from "react";
-import {
-  Box,
-  Heading,
-  IconButton,
-  Image,
-  Input,
-  VStack,
-} from "@chakra-ui/react";
+import React from "react";
+import { Box, Heading, IconButton, Image, VStack } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 import { EditIcon } from "@chakra-ui/icons";
 import { uploadProfilePicture } from "../userProfileReducer";
+import FileUploader from "./FileUploader";
 
 const ProfilePicture = ({
   userId,
@@ -22,7 +16,6 @@ const ProfilePicture = ({
     (state) => state.profile.users.entities[userId]
   ) || { name: "", profilePictureUrl: "" };
   const dispatch = useAppDispatch();
-  const ref = useRef<HTMLInputElement>(null);
 
   return (
     <VStack>
@@ -35,7 +28,12 @@ const ProfilePicture = ({
           alt={"User profile avatar"}
         />
         {editMode && (
-          <>
+          <FileUploader
+            accept={"image/*"}
+            uploadAction={(file: File) =>
+              dispatch(uploadProfilePicture(file, userId))
+            }
+          >
             <IconButton
               isRound
               bg="white"
@@ -49,23 +47,8 @@ const ProfilePicture = ({
               bottom="4"
               right="4"
               aria-label={"Upload new profile picture"}
-              onClick={() => ref?.current?.click()}
             />
-            <Input
-              accept="image/*"
-              size="lg"
-              type={"file"}
-              ref={ref}
-              display={"none"}
-              onChange={(event) => {
-                const file = event.currentTarget.files?.item(0);
-
-                if (file) {
-                  dispatch(uploadProfilePicture(file, userId));
-                }
-              }}
-            />
-          </>
+          </FileUploader>
         )}
       </Box>
 
