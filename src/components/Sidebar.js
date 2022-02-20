@@ -12,23 +12,18 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import styles from "../pages/BasePage.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faComment,
-  faComments,
-  faUserCircle,
-} from "@fortawesome/free-regular-svg-icons";
 import React, { useState } from "react";
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
 import { CHAT_URL, USER_PROFILE_URL } from "../utils/urls";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import LogoutButton from "../Auth/components/LogoutButton";
+import { FaRegComment, FaRegComments, FaRegUserCircle } from "react-icons/fa";
 
 export const Sidebar = () => {
   const [showDrawer, setShowDrawer] = useState(false);
   const urls = [
-    { url: USER_PROFILE_URL, icon: faUserCircle, title: "Profile" },
-    { url: CHAT_URL, icon: faComment, title: "Chats" },
+    { url: USER_PROFILE_URL, icon: <FaRegUserCircle />, title: "Profile" },
+    { url: CHAT_URL, icon: <FaRegComment />, title: "Chats" },
   ];
 
   const NavItem = ({ url, icon, text, label }) => {
@@ -44,11 +39,9 @@ export const Sidebar = () => {
               aria-label={icon}
               fontSize="20px"
               icon={
-                <FontAwesomeIcon
-                  icon={icon}
-                  color={match ? "#2249B3" : "black"}
-                  className={"fa-2x"}
-                />
+                <Box color={match ? "#2249B3" : "black"} fontSize={"4xl"}>
+                  {icon}
+                </Box>
               }
             />
           </Tooltip>
@@ -86,11 +79,7 @@ export const Sidebar = () => {
         display={{ base: "none", md: "block" }}
       >
         <div className={styles.logoBox}>
-          <FontAwesomeIcon
-            icon={faComments}
-            className={"fa-3x"}
-            color={"white"}
-          />
+          <FaRegComments size={52} color={"white"} />
         </div>
         <NavMenu />
       </Box>

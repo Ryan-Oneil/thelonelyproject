@@ -1,15 +1,20 @@
 import React from "react";
 import styles from "./Homepage.module.css";
-import { Box, Heading, SimpleGrid, Stack, Text } from "@chakra-ui/react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faSignInAlt,
-  faCircle,
-  faAddressCard,
-  faSearch,
-  faPeopleArrows,
-} from "@fortawesome/free-solid-svg-icons";
+  Box,
+  Circle,
+  Heading,
+  SimpleGrid,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import BasePublicPage from "./BasePublicPage";
+import {
+  FaAddressCard,
+  FaPeopleArrows,
+  FaSearch,
+  FaSignInAlt,
+} from "react-icons/fa";
 
 const Homepage = () => {
   const GridStep = ({ headerText, descriptionText, icon }) => {
@@ -19,12 +24,9 @@ const Homepage = () => {
         align={"center"}
         textAlign={"center"}
       >
-        <Box fontSize="4xl">
-          <span className="fa-layers fa-fw fa-2x">
-            <FontAwesomeIcon icon={faCircle} color="#F4F5F7" />
-            <FontAwesomeIcon icon={icon} transform="shrink-8" />
-          </span>
-        </Box>
+        <Circle fontSize="5xl" bg={"#F4F5F7"} size={20}>
+          {icon}
+        </Circle>
         <Stack spacing="1">
           <Text fontWeight="extrabold" fontSize="lg">
             {headerText}
@@ -76,22 +78,22 @@ const Homepage = () => {
           <GridStep
             headerText={"Sign up"}
             descriptionText={"Create an Account"}
-            icon={faSignInAlt}
+            icon={<FaSignInAlt />}
           />
           <GridStep
             headerText={"Profile"}
             descriptionText={"Personalize your profile with your own touch"}
-            icon={faAddressCard}
+            icon={<FaAddressCard />}
           />
           <GridStep
             headerText={"Search"}
             descriptionText={"Search for like minded people"}
-            icon={faSearch}
+            icon={<FaSearch />}
           />
           <GridStep
             headerText={"Connect"}
             descriptionText={"Connect and get to know"}
-            icon={faPeopleArrows}
+            icon={<FaPeopleArrows />}
           />
         </SimpleGrid>
       </Box>
