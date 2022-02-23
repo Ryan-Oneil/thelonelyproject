@@ -10,7 +10,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import ProfileInterest from "../components/ProfileInterest";
+import AvatarTag from "../components/AvatarTag";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 import { useParams } from "react-router-dom";
 import { fetchUserProfile } from "../userProfileReducer";
@@ -18,16 +18,17 @@ import AboutSection from "../components/AboutSection";
 import ProfilePicture from "../components/ProfilePicture";
 import ProfileCard from "../components/ProfileCard";
 import ProfileGallery from "../components/ProfileGallery";
+import ProfileInterests from "../components/ProfileInterests";
 
-const ProfilePage = ({ enableEdit = true }) => {
+const ProfilePage = () => {
   const userId = useAppSelector((state) => state.auth.user.uid);
   const params = useParams();
   const dispatch = useAppDispatch();
   const profileId = params.userId || userId;
-  const { interests, prompts, spotifyArtists } = useAppSelector(
+  const enableEdit = profileId === userId;
+  const { prompts, spotifyArtists } = useAppSelector(
     (state) => state.profile.users.entities[userId]
   ) || {
-    interests: [],
     prompts: [],
     spotifyArtists: [],
   };
@@ -81,22 +82,7 @@ const ProfilePage = ({ enableEdit = true }) => {
             spacing={10}
             columns={{ base: 1, xl: 2 }}
           >
-            <ProfileCard>
-              <Heading size={"md"}>Interests</Heading>
-              <SimpleGrid
-                columns={{ base: 2, xl: 1, "2xl": 2 }}
-                mt={3}
-                spacing={5}
-              >
-                {interests.map((interest) => (
-                  <ProfileInterest
-                    description={interest.description}
-                    iconName={interest.icon}
-                    key={interest.description}
-                  />
-                ))}
-              </SimpleGrid>
-            </ProfileCard>
+            <ProfileInterests userId={userId} editMode={enableEdit} />
             <ProfileCard>
               <Heading size={"md"}>Trending Artists</Heading>
               <SimpleGrid
@@ -105,11 +91,7 @@ const ProfilePage = ({ enableEdit = true }) => {
                 spacing={5}
               >
                 {spotifyArtists.map((artist) => (
-                  <ProfileInterest
-                    description={artist.name}
-                    iconName={artist.iconUrl}
-                    key={artist.iconUrl}
-                  />
+                  <AvatarTag description={artist.name} key={artist.iconUrl} />
                 ))}
               </SimpleGrid>
             </ProfileCard>

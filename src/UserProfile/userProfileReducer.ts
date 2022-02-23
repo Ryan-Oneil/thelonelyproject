@@ -8,6 +8,7 @@ import {
 import {
   USER_PROFILE_CREATE_ENDPOINT,
   USER_PROFILE_INFO_ENDPOINT,
+  USER_PROFILE_INTERESTS_ENDPOINT,
   USER_PROFILE_MEDIA_DELETE_ENDPOINT,
   USER_PROFILE_MEDIA_UPLOAD_ENDPOINT,
   USER_PROFILE_UPDATE_ABOUT_ENDPOINT,
@@ -16,61 +17,35 @@ import {
 import { BaseProfile, UserProfile } from "./types/Profile";
 import { AppDispatch } from "../index";
 import { NormalizedObjects } from "../utils/NormalizedObjects";
+import { CategoryInterest, Interest } from "./types/Interest";
+import { normalize, schema } from "normalizr";
 
 type UserProfileState = {
   users: NormalizedObjects<UserProfile>;
+  interestCategories: NormalizedObjects<CategoryInterest>;
+  interests: NormalizedObjects<Interest>;
 };
 
 const initialState: UserProfileState = {
   users: {
-    ids: ["1"],
-    entities: {
-      "1": {
-        userId: "1",
-        name: "",
-        profilePictureUrl:
-          "https://avataaars.io/?avatarStyle=Circle&topType=ShortHairDreads01&accessoriesType=Wayfarers&hairColor=Black&facialHairType=BeardLight&facialHairColor=Black&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Smile&skinColor=Light'",
-        about: "Hey I'm a cool person doing cool things",
-        medias: [
-          { url: "https://via.placeholder.com/150" },
-          { url: "https://via.placeholder.com/150" },
-          { url: "https://via.placeholder.com/150" },
-          { url: "https://via.placeholder.com/150" },
-          { url: "https://via.placeholder.com/150" },
-          { url: "https://via.placeholder.com/150" },
-          { url: "https://via.placeholder.com/150" },
-          { url: "https://via.placeholder.com/150" },
-        ],
-        interests: [
-          { icon: "user", description: "Walking" },
-          { icon: "user", description: "Walking" },
-          { icon: "user", description: "Walking" },
-          { icon: "user", description: "Walking" },
-          { icon: "user", description: "Walking" },
-          { icon: "user", description: "Walking" },
-        ],
-        prompts: [
-          {
-            title: "Interesting fact about me",
-            description: "I built this project!",
-          },
-          {
-            title: "A me day is",
-            description: "Chilling on the couch with Netflix",
-          },
-        ],
-        spotifyArtists: [
-          { iconUrl: "user", name: "Artist Name" },
-          { iconUrl: "user", name: "Artist Name" },
-          { iconUrl: "user", name: "Artist Name" },
-          { iconUrl: "user", name: "Artist Name" },
-          { iconUrl: "user", name: "Artist Name" },
-          { iconUrl: "user", name: "Artist Name" },
-        ],
-      },
-    },
+    ids: [],
+    entities: {},
+  },
+  interestCategories: {
+    ids: [],
+    entities: {},
+  },
+  interests: {
+    ids: [],
+    entities: {},
   },
 };
+
+const interest = new schema.Entity("interests");
+const interestCategory = new schema.Entity("categories", {
+  interests: [interest],
+});
+const categoryList = new schema.Array(interestCategory);
 
 export const slice = createSlice({
   name: "userProfile",
@@ -86,7 +61,11 @@ export const slice = createSlice({
       const user = {
         ...state.users.entities[id],
         ...action.payload,
-        interests: [],
+        interests: [
+          { id: 1, description: "Foot Ball" },
+          { id: 2, description: "Games" },
+          { id: 3, description: "Study" },
+        ],
         prompts: [],
         spotifyArtists: [],
       };
@@ -113,6 +92,20 @@ export const slice = createSlice({
       state.users.entities[userId].medias =
         state.users.entities[userId].medias.concat(medias);
     },
+    fetchedInterests(state, action) {
+      const data = normalize(action.payload, categoryList);
+      const categories = {
+        ids: [...data.result],
+        entities: data.entities.categories,
+      };
+
+      state.interestCategories =
+        categories as NormalizedObjects<CategoryInterest>;
+      state.interests = {
+        ids: [],
+        entities: data.entities.interests,
+      } as NormalizedObjects<Interest>;
+    },
   },
 });
 export default slice.reducer;
@@ -122,6 +115,7 @@ export const {
   profileUpdate,
   profileMediaDeleted,
   profileMediaUploaded,
+  fetchedInterests,
 } = slice.actions;
 
 export const createUserProfile =
@@ -178,3 +172,9 @@ export const uploadProfileMedia =
         dispatch(profileMediaUploaded({ userId, medias: response.data }))
     );
   };
+
+export const fetchInterestsByCategory = () => (dispatch: AppDispatch) => {
+  return apiGetCall(USER_PROFILE_INTERESTS_ENDPOINT).then((response) =>
+    dispatch(fetchedInterests(response.data))
+  );
+};

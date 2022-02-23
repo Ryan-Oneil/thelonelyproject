@@ -6,3 +6,4 @@ export const USER_PROFILE_MEDIA_DELETE_ENDPOINT =
   "/user/profile/gallery/delete";
 export const USER_PROFILE_MEDIA_UPLOAD_ENDPOINT =
   "/user/profile/gallery/upload";
+export const USER_PROFILE_INTERESTS_ENDPOINT = "/user/profile/interests";
