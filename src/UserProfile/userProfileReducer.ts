@@ -46,6 +46,13 @@ const interestCategory = new schema.Entity("categories", {
   interests: [interest],
 });
 const categoryList = new schema.Array(interestCategory);
+const userEntity = new schema.Entity(
+  "user",
+  {
+    interests: [interest],
+  },
+  { idAttribute: "userId" }
+);
 
 export const slice = createSlice({
   name: "userProfile",
@@ -56,22 +63,13 @@ export const slice = createSlice({
         action.payload.url;
     },
     fetchedProfile(state, action) {
-      const id = action.payload.userId;
+      const data = normalize(action.payload, userEntity);
 
-      const user = {
-        ...state.users.entities[id],
-        ...action.payload,
-        interests: [
-          { id: 1, description: "Foot Ball" },
-          { id: 2, description: "Games" },
-          { id: 3, description: "Study" },
-        ],
-        prompts: [],
-        spotifyArtists: [],
-      };
-      state.users.entities = Object.assign({}, state.users.entities, {
-        [id]: user,
-      });
+      state.users.entities = Object.assign(
+        {},
+        state.users.entities,
+        data.entities.user
+      );
     },
     profileUpdate(state, action) {
       state.users.entities[action.payload.id] = {

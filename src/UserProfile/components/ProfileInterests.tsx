@@ -37,6 +37,8 @@ const ProfileInterests = ({
   const interestCategoriesIds = useAppSelector(
     (state) => state.profile.interestCategories.ids
   );
+  const interests = useAppSelector((state) => state.profile.interests.entities);
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useAppDispatch();
 
@@ -51,25 +53,17 @@ const ProfileInterests = ({
       (state) => state.profile.interestCategories.entities[id]
     );
 
-    const interests = useAppSelector(
-      (state) => state.profile.interests.entities
-    );
-
     return (
       <>
         <Heading size={"md"}>Outdoors</Heading>
         <SimpleGrid minChildWidth="80px" my={3} spacing={5}>
-          {category.interests.map((interestId) => {
-            const interestDescription = interests[interestId].description;
-
-            return (
-              <SelectAbleAvatarTag
-                description={interestDescription}
-                key={interestId}
-                defaultSelected
-              />
-            );
-          })}
+          {category.interests.map((interestId) => (
+            <SelectAbleAvatarTag
+              description={interests[interestId].description}
+              key={interestId}
+              defaultSelected
+            />
+          ))}
         </SimpleGrid>
         <Divider />
       </>
@@ -95,10 +89,10 @@ const ProfileInterests = ({
         </Flex>
 
         <SimpleGrid columns={{ base: 2, xl: 1, "2xl": 2 }} mt={3} spacing={5}>
-          {userInterests.map((interest) => (
+          {userInterests.map((interestId) => (
             <AvatarTag
-              description={interest.description}
-              key={interest.description}
+              description={interests[interestId].description}
+              key={interestId}
             />
           ))}
         </SimpleGrid>
