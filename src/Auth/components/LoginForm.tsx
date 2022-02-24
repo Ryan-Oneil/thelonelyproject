@@ -9,12 +9,6 @@ import {
   Tooltip,
   VStack,
 } from "@chakra-ui/react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faGoogle,
-  faMicrosoft,
-  faTwitter,
-} from "@fortawesome/free-brands-svg-icons";
 import { Link } from "react-router-dom";
 import { RESET_PASSWORD_URL } from "../../utils/urls";
 import {
@@ -26,6 +20,7 @@ import {
 import { Field, Formik, FormikErrors } from "formik";
 import { LabelledInput } from "../../components/forms/Inputs";
 import { User } from "../types/User";
+import { FaGoogle, FaMicrosoft, FaTwitter } from "react-icons/fa";
 
 const provider = new GoogleAuthProvider();
 
@@ -58,12 +53,12 @@ const LoginForm = () => {
 
   return (
     <Stack spacing="6">
-      <Flex mt="10" columns={3} spa="3" justifyContent={"space-between"}>
+      <Flex mt="10" justifyContent={"space-between"}>
         <Button
           color="#4285F4"
           w={"70%"}
           bg={"#E9F1FF"}
-          leftIcon={<FontAwesomeIcon icon={faGoogle} />}
+          leftIcon={<FaGoogle />}
           size={"lg"}
           onClick={() => {
             const auth = getAuth();
@@ -74,7 +69,7 @@ const LoginForm = () => {
         </Button>
         <Tooltip label={"Sign in with Microsoft"}>
           <IconButton
-            icon={<FontAwesomeIcon icon={faMicrosoft} />}
+            icon={<FaMicrosoft />}
             aria-label={"Microsoft Logo"}
             size={"lg"}
           />
@@ -82,7 +77,7 @@ const LoginForm = () => {
         <Tooltip label={"Sign in with Twitter"}>
           <IconButton
             color="#00acee"
-            icon={<FontAwesomeIcon icon={faTwitter} />}
+            icon={<FaTwitter />}
             aria-label={"Twitter logo"}
             size={"lg"}
           />

@@ -1,12 +1,13 @@
 export interface BaseProfile {
   name: string;
-  avatar: string | File;
+  avatar?: File;
   about: string;
 }
 
 export interface UserProfile extends BaseProfile {
-  avatar: string;
-  images: Array<any>;
+  userId: string;
+  profilePictureUrl: string;
+  medias: Array<any>;
   interests: Array<any>;
   prompts: Array<any>;
   spotifyArtists: Array<any>;

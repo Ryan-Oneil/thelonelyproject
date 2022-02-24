@@ -26,7 +26,7 @@ const ConversationList = () => {
       <Divider style={{ borderColor: "rgba(0, 0, 0, 0.2)" }} />
       <VStack p={5} spacing={4}>
         <InputGroup>
-          <InputLeftElement pointer={"none"} children={<SearchIcon />} />
+          <InputLeftElement children={<SearchIcon />} />
           <Input variant="filled" placeholder="Search" />
         </InputGroup>
         {ids.map((id) => (
