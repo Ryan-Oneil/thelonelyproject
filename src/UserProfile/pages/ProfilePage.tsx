@@ -7,7 +7,6 @@ import {
   Heading,
   SimpleGrid,
   Spacer,
-  Text,
   VStack,
 } from "@chakra-ui/react";
 import AvatarTag from "../components/AvatarTag";
@@ -19,6 +18,7 @@ import ProfilePicture from "../components/ProfilePicture";
 import ProfileCard from "../components/ProfileCard";
 import ProfileGallery from "../components/ProfileGallery";
 import ProfileInterests from "../components/ProfileInterests";
+import ProfilePrompts from "../components/ProfilePrompts";
 
 const ProfilePage = () => {
   const userId = useAppSelector((state) => state.auth.user.uid);
@@ -26,10 +26,9 @@ const ProfilePage = () => {
   const dispatch = useAppDispatch();
   const profileId = params.userId || userId;
   const enableEdit = profileId === userId;
-  const { prompts, spotifyArtists } = useAppSelector(
+  const { spotifyArtists } = useAppSelector(
     (state) => state.profile.users.entities[userId]
   ) || {
-    prompts: [],
     spotifyArtists: [],
   };
 
@@ -95,12 +94,7 @@ const ProfilePage = () => {
                 ))}
               </SimpleGrid>
             </ProfileCard>
-            {prompts.map((prompt) => (
-              <ProfileCard>
-                <Heading size={"md"}>{prompt.title}</Heading>
-                <Text pt={3}>{prompt.description}</Text>
-              </ProfileCard>
-            ))}
+            <ProfilePrompts userId={userId} editMode={enableEdit} />
           </SimpleGrid>
         </SimpleGrid>
       </Box>

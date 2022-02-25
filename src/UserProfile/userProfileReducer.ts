@@ -6,15 +6,17 @@ import {
   apiPutCall,
 } from "../apis/api";
 import {
+  USER_PROFILE_ADD_INTEREST_ENDPOINT,
   USER_PROFILE_CREATE_ENDPOINT,
   USER_PROFILE_INFO_ENDPOINT,
   USER_PROFILE_INTERESTS_ENDPOINT,
   USER_PROFILE_MEDIA_DELETE_ENDPOINT,
   USER_PROFILE_MEDIA_UPLOAD_ENDPOINT,
+  USER_PROFILE_REMOVE_INTEREST_ENDPOINT,
   USER_PROFILE_UPDATE_ABOUT_ENDPOINT,
   USER_PROFILE_UPLOAD_PICTURE_ENDPOINT,
 } from "../apis/endpoints";
-import { BaseProfile, UserProfile } from "./types/Profile";
+import { BaseProfile, Prompt, UserProfile } from "./types/Profile";
 import { AppDispatch } from "../index";
 import { NormalizedObjects } from "../utils/NormalizedObjects";
 import { CategoryInterest, Interest } from "./types/Interest";
@@ -24,6 +26,7 @@ type UserProfileState = {
   users: NormalizedObjects<UserProfile>;
   interestCategories: NormalizedObjects<CategoryInterest>;
   interests: NormalizedObjects<Interest>;
+  prompts: NormalizedObjects<Prompt>;
 };
 
 const initialState: UserProfileState = {
@@ -39,6 +42,10 @@ const initialState: UserProfileState = {
     ids: [],
     entities: {},
   },
+  prompts: {
+    ids: [],
+    entities: {},
+  },
 };
 
 const interest = new schema.Entity("interests");
@@ -46,10 +53,12 @@ const interestCategory = new schema.Entity("categories", {
   interests: [interest],
 });
 const categoryList = new schema.Array(interestCategory);
+const prompts = new schema.Entity("prompts", {}, { idAttribute: "promptId" });
 const userEntity = new schema.Entity(
   "user",
   {
     interests: [interest],
+    prompts: [prompts],
   },
   { idAttribute: "userId" }
 );
@@ -65,10 +74,26 @@ export const slice = createSlice({
     fetchedProfile(state, action) {
       const data = normalize(action.payload, userEntity);
 
+      const fetchedData = {
+        users: data.entities.user,
+        interests: data.entities.interests,
+        prompts: data.entities.prompts,
+      };
+
       state.users.entities = Object.assign(
         {},
         state.users.entities,
-        data.entities.user
+        fetchedData.users
+      );
+      state.interests.entities = Object.assign(
+        {},
+        state.interests.entities,
+        fetchedData.interests
+      );
+      state.prompts.entities = Object.assign(
+        {},
+        state.prompts.entities,
+        fetchedData.prompts
       );
     },
     profileUpdate(state, action) {
@@ -104,6 +129,18 @@ export const slice = createSlice({
         entities: data.entities.interests,
       } as NormalizedObjects<Interest>;
     },
+    addedInterest(state, action) {
+      const { userId, interestId } = action.payload;
+
+      state.users.entities[userId].interests.push(interestId);
+    },
+    removedInterest(state, action) {
+      const { userId, interestId } = action.payload;
+
+      state.users.entities[userId].interests = state.users.entities[
+        userId
+      ].interests.filter((id) => id !== interestId);
+    },
   },
 });
 export default slice.reducer;
@@ -114,6 +151,8 @@ export const {
   profileMediaDeleted,
   profileMediaUploaded,
   fetchedInterests,
+  addedInterest,
+  removedInterest,
 } = slice.actions;
 
 export const createUserProfile =
@@ -176,3 +215,17 @@ export const fetchInterestsByCategory = () => (dispatch: AppDispatch) => {
     dispatch(fetchedInterests(response.data))
   );
 };
+
+export const addInterestToProfile =
+  (userId: string, interestId: number) => (dispatch: AppDispatch) => {
+    return apiPostCall(USER_PROFILE_ADD_INTEREST_ENDPOINT, {
+      id: interestId,
+    }).then((response) => dispatch(addedInterest({ userId, interestId })));
+  };
+
+export const removeInterestFromProfile =
+  (userId: string, interestId: number) => (dispatch: AppDispatch) => {
+    return apiDeleteCall(
+      `${USER_PROFILE_REMOVE_INTEREST_ENDPOINT}/${interestId}`
+    ).then((response) => dispatch(removedInterest({ userId, interestId })));
+  };

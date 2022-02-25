@@ -1,6 +1,6 @@
 export type Interest = {
   id?: number;
-  description: string;
+  name: string;
   iconName: any;
 };
 

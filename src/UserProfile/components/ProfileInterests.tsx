@@ -21,7 +21,11 @@ import {
 import AvatarTag, { SelectAbleAvatarTag } from "./AvatarTag";
 import ProfileCard from "./ProfileCard";
 import { EditIcon } from "@chakra-ui/icons";
-import { fetchInterestsByCategory } from "../userProfileReducer";
+import {
+  addInterestToProfile,
+  fetchInterestsByCategory,
+  removeInterestFromProfile,
+} from "../userProfileReducer";
 
 const ProfileInterests = ({
   userId,
@@ -59,9 +63,15 @@ const ProfileInterests = ({
         <SimpleGrid minChildWidth="80px" my={3} spacing={5}>
           {category.interests.map((interestId) => (
             <SelectAbleAvatarTag
-              description={interests[interestId].description}
+              description={interests[interestId].name}
               key={interestId}
-              defaultSelected
+              defaultSelected={userInterests.includes(interestId)}
+              onSelected={() =>
+                dispatch(addInterestToProfile(userId, interestId))
+              }
+              onDeselected={() =>
+                dispatch(removeInterestFromProfile(userId, interestId))
+              }
             />
           ))}
         </SimpleGrid>
@@ -91,7 +101,7 @@ const ProfileInterests = ({
         <SimpleGrid columns={{ base: 2, xl: 1, "2xl": 2 }} mt={3} spacing={5}>
           {userInterests.map((interestId) => (
             <AvatarTag
-              description={interests[interestId].description}
+              description={interests[interestId].name}
               key={interestId}
             />
           ))}
