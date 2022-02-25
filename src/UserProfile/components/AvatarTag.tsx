@@ -7,7 +7,8 @@ interface AvatarProps extends TagProps {
 }
 
 interface SelectAbleProps extends AvatarProps {
-  onSelected?: Function;
+  onSelected: Function;
+  onDeselected: Function;
   defaultSelected?: boolean;
 }
 
@@ -27,6 +28,7 @@ const AvatarTag = (props: AvatarProps) => {
 export const SelectAbleAvatarTag = ({
   description,
   onSelected,
+  onDeselected,
   defaultSelected,
 }: SelectAbleProps) => {
   const [isActive, setActive] = useState(defaultSelected);
@@ -36,6 +38,11 @@ export const SelectAbleAvatarTag = ({
   };
 
   const onClick = () => {
+    if (isActive) {
+      onDeselected();
+    } else {
+      onSelected();
+    }
     setActive((prevState) => !prevState);
   };
 

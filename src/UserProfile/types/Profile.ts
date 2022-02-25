@@ -12,3 +12,9 @@ export interface UserProfile extends BaseProfile {
   prompts: Array<any>;
   spotifyArtists: Array<any>;
 }
+
+export type Prompt = {
+  promptId: number;
+  promptName: string;
+  text: string;
+};
