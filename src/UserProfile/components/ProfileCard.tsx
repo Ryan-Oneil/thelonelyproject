@@ -1,7 +1,8 @@
 import React from "react";
-import { Card } from "../../components/Card";
+import { Card } from "../../Base/components/Card";
+import { BoxProps } from "@chakra-ui/react";
 
-const ProfileCard = ({ children }: { children: React.ReactNode }) => {
+const ProfileCard = (props: BoxProps) => {
   const cardStyle = {
     border: "1px solid rgba(18, 17, 39, 0.12)",
     borderRadius: " 12px",
@@ -10,6 +11,10 @@ const ProfileCard = ({ children }: { children: React.ReactNode }) => {
     p: 5,
   };
 
-  return <Card {...cardStyle}>{children}</Card>;
+  return (
+    <Card {...cardStyle} {...props}>
+      {props.children}
+    </Card>
+  );
 };
 export default ProfileCard;

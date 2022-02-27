@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router-dom";
-import Homepage from "./pages/Homepage";
 import {
   CHAT_URL,
   DASHBOARD_URL,
@@ -25,6 +24,7 @@ import ProfilePage from "./UserProfile/pages/ProfilePage";
 import ChatPage from "./Chat/pages/ChatPage";
 import { RegisterStatus } from "./Auth/enums/RegisterStatus";
 import SetupProfilePage from "./UserProfile/pages/SetupProfilePage";
+import Homepage from "./Base/pages/Homepage";
 
 function App() {
   const dispatch = useDispatch();

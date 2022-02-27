@@ -2,9 +2,9 @@ import React from "react";
 import styles from "./BasePage.module.css";
 import { Box, Button, Flex, Heading, Spacer } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { DASHBOARD_URL, HOMEPAGE_URL, LOGIN_URL } from "../utils/urls";
 import { useSelector } from "react-redux";
-import { AuthStage } from "../Auth/enums/AuthStages";
+import { AuthStage } from "../../Auth/enums/AuthStages";
+import { DASHBOARD_URL, HOMEPAGE_URL, LOGIN_URL } from "../../utils/urls";
 
 const BasePublicPage = ({ children, showLogin = false }) => {
   const { status } = useSelector((state) => state.auth);
@@ -16,7 +16,7 @@ const BasePublicPage = ({ children, showLogin = false }) => {
         <Box p="4">
           <Link to={HOMEPAGE_URL}>
             <img
-              src={require("../assets/media/logo.png")}
+              src={require("../../assets/media/logo.png")}
               alt={"Lonely project logo"}
               className={styles.logoImage}
             />

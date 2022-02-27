@@ -12,7 +12,7 @@ import {
   FileInput,
   LabelledInput,
   TextAreaInput,
-} from "../../components/forms/Inputs";
+} from "../../Base/components/forms/Inputs";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 import { createUserProfile } from "../userProfileReducer";
 import { BaseProfile } from "../types/Profile";

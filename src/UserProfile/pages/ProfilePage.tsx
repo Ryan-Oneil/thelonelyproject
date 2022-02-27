@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import BaseAppPage from "../../pages/BaseAppPage";
 import {
   Box,
   Button,
@@ -19,6 +18,7 @@ import ProfileCard from "../components/ProfileCard";
 import ProfileGallery from "../components/ProfileGallery";
 import ProfileInterests from "../components/ProfileInterests";
 import ProfilePrompts from "../components/ProfilePrompts";
+import BaseAppPage from "../../Base/pages/BaseAppPage";
 
 const ProfilePage = () => {
   const userId = useAppSelector((state) => state.auth.user.uid);

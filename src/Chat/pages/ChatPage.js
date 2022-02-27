@@ -1,10 +1,10 @@
 import React from "react";
-import BaseAppPage from "../../pages/BaseAppPage";
 import { Flex } from "@chakra-ui/react";
 import ConversationList from "../components/ConversationList";
 import ChatConversation from "../components/ChatConversation";
 import ConversationInfoPanel from "../components/ConversationInfoPanel";
 import { useAppSelector } from "../../utils/hooks";
+import BaseAppPage from "../../Base/pages/BaseAppPage";
 
 const ChatPage = () => {
   const { activeConversationId } = useAppSelector((state) => state.chat);

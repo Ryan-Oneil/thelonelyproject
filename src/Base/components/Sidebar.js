@@ -14,9 +14,9 @@ import {
 import styles from "../pages/BasePage.module.css";
 import React, { useState } from "react";
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
-import { CHAT_URL, USER_PROFILE_URL } from "../utils/urls";
+import { CHAT_URL, USER_PROFILE_URL } from "../../utils/urls";
 import { HamburgerIcon } from "@chakra-ui/icons";
-import LogoutButton from "../Auth/components/LogoutButton";
+import LogoutButton from "../../Auth/components/LogoutButton";
 import { FaRegComment, FaRegComments, FaRegUserCircle } from "react-icons/fa";
 
 export const Sidebar = () => {
