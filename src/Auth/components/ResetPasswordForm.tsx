@@ -1,7 +1,7 @@
 import React from "react";
 import { Alert, AlertIcon, Button, VStack } from "@chakra-ui/react";
 import { Field, Formik, FormikErrors } from "formik";
-import { LabelledInput } from "../../components/forms/Inputs";
+import { LabelledInput } from "../../Base/components/forms/Inputs";
 import { sendPasswordResetEmail, getAuth } from "firebase/auth";
 import { User } from "../types/User";
 

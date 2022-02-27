@@ -18,7 +18,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { Field, Formik, FormikErrors } from "formik";
-import { LabelledInput } from "../../components/forms/Inputs";
+import { LabelledInput } from "../../Base/components/forms/Inputs";
 import { User } from "../types/User";
 import { FaGoogle, FaMicrosoft, FaTwitter } from "react-icons/fa";
 

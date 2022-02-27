@@ -1,5 +1,4 @@
 import React from "react";
-import BasePublicPage from "../../pages/BasePublicPage";
 import {
   Container,
   Flex,
@@ -9,7 +8,8 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { Card } from "../../components/Card";
+import { Card } from "../../Base/components/Card";
+import BasePublicPage from "../../Base/pages/BasePublicPage";
 
 const AuthPage = ({ children }: { children: React.ReactNode }) => {
   return (
