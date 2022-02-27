@@ -7,11 +7,14 @@ import {
 } from "../apis/api";
 import {
   USER_PROFILE_ADD_INTEREST_ENDPOINT,
+  USER_PROFILE_ADD_PROMPT_ENDPOINT,
   USER_PROFILE_CREATE_ENDPOINT,
+  USER_PROFILE_DELETE_PROMPT_ENDPOINT,
   USER_PROFILE_INFO_ENDPOINT,
   USER_PROFILE_INTERESTS_ENDPOINT,
   USER_PROFILE_MEDIA_DELETE_ENDPOINT,
   USER_PROFILE_MEDIA_UPLOAD_ENDPOINT,
+  USER_PROFILE_PROMPTS_ENDPOINT,
   USER_PROFILE_REMOVE_INTEREST_ENDPOINT,
   USER_PROFILE_UPDATE_ABOUT_ENDPOINT,
   USER_PROFILE_UPLOAD_PICTURE_ENDPOINT,
@@ -58,7 +61,6 @@ const userEntity = new schema.Entity(
   "user",
   {
     interests: [interest],
-    prompts: [prompts],
   },
   { idAttribute: "userId" }
 );
@@ -141,6 +143,27 @@ export const slice = createSlice({
         userId
       ].interests.filter((id) => id !== interestId);
     },
+    fetchedPrompts(state, action) {
+      const data = normalize(action.payload, new schema.Array(prompts));
+      const promptsNorm = {
+        ids: [...data.result],
+        entities: data.entities.prompts,
+      };
+
+      state.prompts = promptsNorm as NormalizedObjects<Prompt>;
+    },
+    addedPrompt(state, action) {
+      const { userId, promptId, text, promptName } = action.payload;
+
+      state.users.entities[userId].prompts.push({ promptId, promptName, text });
+    },
+    deletedPrompt(state, action) {
+      const { userId, promptId } = action.payload;
+
+      state.users.entities[userId].prompts = state.users.entities[
+        userId
+      ].prompts.filter((prompt) => prompt.promptId !== promptId);
+    },
   },
 });
 export default slice.reducer;
@@ -153,6 +176,9 @@ export const {
   fetchedInterests,
   addedInterest,
   removedInterest,
+  fetchedPrompts,
+  addedPrompt,
+  deletedPrompt,
 } = slice.actions;
 
 export const createUserProfile =
@@ -220,12 +246,32 @@ export const addInterestToProfile =
   (userId: string, interestId: number) => (dispatch: AppDispatch) => {
     return apiPostCall(USER_PROFILE_ADD_INTEREST_ENDPOINT, {
       id: interestId,
-    }).then((response) => dispatch(addedInterest({ userId, interestId })));
+    }).then(() => dispatch(addedInterest({ userId, interestId })));
   };
 
 export const removeInterestFromProfile =
   (userId: string, interestId: number) => (dispatch: AppDispatch) => {
     return apiDeleteCall(
       `${USER_PROFILE_REMOVE_INTEREST_ENDPOINT}/${interestId}`
-    ).then((response) => dispatch(removedInterest({ userId, interestId })));
+    ).then(() => dispatch(removedInterest({ userId, interestId })));
+  };
+
+export const fetchProfilePrompts = () => (dispatch: AppDispatch) => {
+  return apiGetCall(USER_PROFILE_PROMPTS_ENDPOINT).then((response) =>
+    dispatch(fetchedPrompts(response.data))
+  );
+};
+
+export const addPromptToProfile =
+  (prompt: Prompt, userId: string) => (dispatch: AppDispatch) => {
+    return apiPostCall(USER_PROFILE_ADD_PROMPT_ENDPOINT, prompt).then(() =>
+      dispatch(addedPrompt({ ...prompt, userId }))
+    );
+  };
+
+export const deletePromptFromProfile =
+  (userId: string, promptId: number) => (dispatch: AppDispatch) => {
+    return apiDeleteCall(
+      `${USER_PROFILE_DELETE_PROMPT_ENDPOINT}/${promptId}`
+    ).then(() => dispatch(deletedPrompt({ userId, promptId })));
   };

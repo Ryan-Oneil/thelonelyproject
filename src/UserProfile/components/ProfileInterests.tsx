@@ -1,13 +1,11 @@
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 import {
-  Button,
   Divider,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
   DrawerContent,
-  DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
   Flex,
@@ -84,7 +82,9 @@ const ProfileInterests = ({
     <>
       <ProfileCard>
         <Flex>
-          <Heading size={"md"}>Interests</Heading>
+          <Heading size={"md"} m={"auto"}>
+            Interests
+          </Heading>
           <Spacer />
           {editMode && (
             <Tooltip label={"Edit Interests"}>
@@ -118,13 +118,6 @@ const ProfileInterests = ({
               <InterestCategory id={id} key={id} />
             ))}
           </DrawerBody>
-
-          <DrawerFooter>
-            <Button variant="outline" mr={3} onClick={onClose}>
-              Cancel
-            </Button>
-            <Button colorScheme="blue">Save</Button>
-          </DrawerFooter>
         </DrawerContent>
       </Drawer>
     </>

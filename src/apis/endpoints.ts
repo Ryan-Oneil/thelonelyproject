@@ -10,3 +10,7 @@ export const USER_PROFILE_INTERESTS_ENDPOINT = "/user/profile/interests";
 export const USER_PROFILE_ADD_INTEREST_ENDPOINT = "/user/profile/interest";
 export const USER_PROFILE_REMOVE_INTEREST_ENDPOINT =
   USER_PROFILE_ADD_INTEREST_ENDPOINT;
+export const USER_PROFILE_PROMPTS_ENDPOINT = "/user/profile/prompts";
+export const USER_PROFILE_ADD_PROMPT_ENDPOINT = "/user/profile/prompt";
+export const USER_PROFILE_DELETE_PROMPT_ENDPOINT =
+  USER_PROFILE_ADD_PROMPT_ENDPOINT;
