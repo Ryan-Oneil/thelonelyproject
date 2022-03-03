@@ -6,6 +6,7 @@ import {
   apiPutCall,
 } from "../apis/api";
 import {
+  GET_POTENTIAL_MATCHES,
   USER_PROFILE_ADD_INTEREST_ENDPOINT,
   USER_PROFILE_ADD_PROMPT_ENDPOINT,
   USER_PROFILE_CREATE_ENDPOINT,
@@ -16,6 +17,7 @@ import {
   USER_PROFILE_MEDIA_UPLOAD_ENDPOINT,
   USER_PROFILE_PROMPTS_ENDPOINT,
   USER_PROFILE_REMOVE_INTEREST_ENDPOINT,
+  USER_PROFILE_SEND_CONNECTION_REQUEST,
   USER_PROFILE_UPDATE_ABOUT_ENDPOINT,
   USER_PROFILE_UPLOAD_PICTURE_ENDPOINT,
 } from "../apis/endpoints";
@@ -64,6 +66,7 @@ const userEntity = new schema.Entity(
   },
   { idAttribute: "userId" }
 );
+const userList = new schema.Array(userEntity);
 
 export const slice = createSlice({
   name: "userProfile",
@@ -164,6 +167,12 @@ export const slice = createSlice({
         userId
       ].prompts.filter((prompt) => prompt.promptId !== promptId);
     },
+    fetchedProfiles(state, action) {
+      const data = normalize(action.payload, userList);
+      const users = { entities: data.entities.user, ids: data.result };
+
+      state.users = Object.assign({}, state.users, users);
+    },
   },
 });
 export default slice.reducer;
@@ -179,6 +188,7 @@ export const {
   fetchedPrompts,
   addedPrompt,
   deletedPrompt,
+  fetchedProfiles,
 } = slice.actions;
 
 export const createUserProfile =
@@ -275,3 +285,15 @@ export const deletePromptFromProfile =
       `${USER_PROFILE_DELETE_PROMPT_ENDPOINT}/${promptId}`
     ).then(() => dispatch(deletedPrompt({ userId, promptId })));
   };
+
+export const getPotentialMatches = () => (dispatch: AppDispatch) => {
+  return apiGetCall(GET_POTENTIAL_MATCHES).then((response) =>
+    dispatch(fetchedProfiles(response.data))
+  );
+};
+
+export const connectWithUser = (userId: string) => {
+  return apiPostCall(
+    USER_PROFILE_SEND_CONNECTION_REQUEST.replace("%s", userId)
+  );
+};

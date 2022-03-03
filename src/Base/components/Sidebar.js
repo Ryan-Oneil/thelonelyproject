@@ -14,8 +14,12 @@ import {
 import styles from "../pages/BasePage.module.css";
 import React, { useState } from "react";
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
-import { CHAT_URL, USER_PROFILE_URL } from "../../utils/urls";
-import { HamburgerIcon } from "@chakra-ui/icons";
+import {
+  CHAT_URL,
+  PROFILE_FIND_MATCHES,
+  USER_PROFILE_URL,
+} from "../../utils/urls";
+import { HamburgerIcon, SearchIcon } from "@chakra-ui/icons";
 import LogoutButton from "../../Auth/components/LogoutButton";
 import { FaRegComment, FaRegComments, FaRegUserCircle } from "react-icons/fa";
 
@@ -23,6 +27,7 @@ export const Sidebar = () => {
   const [showDrawer, setShowDrawer] = useState(false);
   const urls = [
     { url: USER_PROFILE_URL, icon: <FaRegUserCircle />, title: "Profile" },
+    { url: PROFILE_FIND_MATCHES, icon: <SearchIcon />, title: "Find Matches" },
     { url: CHAT_URL, icon: <FaRegComment />, title: "Chats" },
   ];
 

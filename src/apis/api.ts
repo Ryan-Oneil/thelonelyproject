@@ -28,7 +28,7 @@ export const apiGetCall = async (
 
 export const apiPostCall = async (
   endpoint: string,
-  data: any,
+  data?: any,
   options?: AxiosRequestConfig
 ) => {
   return baseApi.post(endpoint, data, options);
