@@ -23,5 +23,4 @@ yarn-debug.log*
 yarn-error.log*
 .idea/*
 package-lock.json
-package-lock.json
 .idea/sonarlint/issuestore/index.pb

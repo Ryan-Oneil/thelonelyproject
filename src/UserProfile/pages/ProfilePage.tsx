@@ -39,7 +39,7 @@ const ProfilePage = () => {
   const ProfileHeader = () => {
     return (
       <Flex p={"100px 5% 0"} direction={{ base: "column", sm: "row" }}>
-        <ProfilePicture userId={userId} editMode={enableEdit} />
+        <ProfilePicture userId={profileId} editMode={enableEdit} />
         <Spacer />
         <Button
           backgroundColor="rgba(97, 94, 240, 0.1)"
@@ -73,15 +73,15 @@ const ProfilePage = () => {
           spacing={10}
         >
           <VStack pt={10} spacing={10}>
-            <AboutSection userId={userId} editMode={enableEdit} />
-            <ProfileGallery userId={userId} editMode={enableEdit} />
+            <AboutSection userId={profileId} editMode={enableEdit} />
+            <ProfileGallery userId={profileId} editMode={enableEdit} />
           </VStack>
           <SimpleGrid
             pt={{ base: 0, lg: 10 }}
             spacing={10}
             columns={{ base: 1, xl: 2 }}
           >
-            <ProfileInterests userId={userId} editMode={enableEdit} />
+            <ProfileInterests userId={profileId} editMode={enableEdit} />
             <ProfileCard>
               <Heading size={"md"}>Trending Artists</Heading>
               <SimpleGrid
@@ -94,7 +94,7 @@ const ProfilePage = () => {
                 ))}
               </SimpleGrid>
             </ProfileCard>
-            <ProfilePrompts userId={userId} editMode={enableEdit} />
+            <ProfilePrompts userId={profileId} editMode={enableEdit} />
           </SimpleGrid>
         </SimpleGrid>
       </Box>

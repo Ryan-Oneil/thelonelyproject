@@ -14,3 +14,5 @@ export const USER_PROFILE_PROMPTS_ENDPOINT = "/user/profile/prompts";
 export const USER_PROFILE_ADD_PROMPT_ENDPOINT = "/user/profile/prompt";
 export const USER_PROFILE_DELETE_PROMPT_ENDPOINT =
   USER_PROFILE_ADD_PROMPT_ENDPOINT;
+export const GET_POTENTIAL_MATCHES = "/user/profiles";
+export const USER_PROFILE_SEND_CONNECTION_REQUEST = "/user/profile/%s/connect";

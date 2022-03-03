@@ -4,6 +4,7 @@ import {
   DASHBOARD_URL,
   HOMEPAGE_URL,
   LOGIN_URL,
+  PROFILE_FIND_MATCHES,
   PROFILE_SETUP_URL,
   REGISTER_URL,
   RESET_PASSWORD_URL,
@@ -25,6 +26,7 @@ import ChatPage from "./Chat/pages/ChatPage";
 import { RegisterStatus } from "./Auth/enums/RegisterStatus";
 import SetupProfilePage from "./UserProfile/pages/SetupProfilePage";
 import Homepage from "./Base/pages/Homepage";
+import FindMatchPage from "./UserProfile/pages/FindMatchPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -117,6 +119,14 @@ function App() {
           element={
             <PrivateRoute>
               <SetupProfilePage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={PROFILE_FIND_MATCHES}
+          element={
+            <PrivateRoute>
+              <FindMatchPage />
             </PrivateRoute>
           }
         />
