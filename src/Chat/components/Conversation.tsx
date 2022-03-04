@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 import { changedActiveConversation } from "../chatReducer";
 
 const Conversation = ({ id }: { id: string }) => {
-  const { name, avatarUrl, lastMessage } = useAppSelector(
+  const { name, messages, icon } = useAppSelector(
     (state) => state.chat.conversations.entities[id]
   );
   const { activeConversationId } = useAppSelector((state) => state.chat);
@@ -23,12 +23,12 @@ const Conversation = ({ id }: { id: string }) => {
       onClick={() => dispatch(changedActiveConversation(id))}
     >
       <Flex>
-        <Avatar name={name} src={avatarUrl} />
+        <Avatar name={name} src={icon} />
         <Box ml={3}>
           <Text fontWeight={"bold"} isTruncated>
             {name}
           </Text>
-          <Text isTruncated>{lastMessage}</Text>
+          <Text isTruncated>{messages[0] ? messages[0] : "Say Hi!"}</Text>
         </Box>
       </Flex>
     </Box>

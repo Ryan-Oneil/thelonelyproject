@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Box,
   Divider,
@@ -9,11 +9,17 @@ import {
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import AvatarHeader from "./AvatarHeader";
-import { useAppSelector } from "../../utils/hooks";
+import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 import Conversation from "./Conversation";
+import { fetchConversations } from "../chatReducer";
 
 const ConversationList = () => {
   const { ids } = useAppSelector((state) => state.chat.conversations);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchConversations());
+  }, []);
 
   return (
     <Box borderRight={"1px solid rgba(0, 0, 0, 0.2)"}>

@@ -59,13 +59,9 @@ const interestCategory = new schema.Entity("categories", {
 });
 const categoryList = new schema.Array(interestCategory);
 const prompts = new schema.Entity("prompts", {}, { idAttribute: "promptId" });
-const userEntity = new schema.Entity(
-  "user",
-  {
-    interests: [interest],
-  },
-  { idAttribute: "userId" }
-);
+export const userEntity = new schema.Entity("user", {
+  interests: [interest],
+});
 const userList = new schema.Array(userEntity);
 
 export const slice = createSlice({

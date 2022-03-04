@@ -5,7 +5,7 @@ import SharedMedia from "./SharedMedia";
 
 const ConversationInfoPanel = () => {
   const { activeConversationId } = useAppSelector((state) => state.chat);
-  const { name, avatarUrl, attachments } = useAppSelector(
+  const { name, icon, attachments } = useAppSelector(
     (state) => state.chat.conversations.entities[activeConversationId]
   );
 
@@ -18,7 +18,7 @@ const ConversationInfoPanel = () => {
       <Image
         borderRadius="full"
         boxSize="200px"
-        src={avatarUrl}
+        src={icon}
         fallbackSrc={
           "https://avataaars.io/?avatarStyle=Circle&topType=ShortHairDreads01&accessoriesType=Wayfarers&hairColor=Black&facialHairType=BeardLight&facialHairColor=Black&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Smile&skinColor=Light'"
         }
@@ -34,7 +34,7 @@ const ConversationInfoPanel = () => {
         Shared Media
       </Text>
       <VStack px={6}>
-        {attachments.map((attachmentId) => (
+        {[].map((attachmentId) => (
           <SharedMedia id={attachmentId} key={attachmentId} />
         ))}
       </VStack>

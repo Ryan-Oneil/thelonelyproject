@@ -6,14 +6,14 @@ import { AttachmentType } from "../enums/AttachmentType";
 import ImageModal from "./ImageModal";
 
 const ChatMessage = ({ id }: { id: string }) => {
-  const { text, senderUid, type, attachmentId } = useAppSelector(
+  const { content, senderId, type, attachmentId } = useAppSelector(
     (state) => state.chat.messages.entities[id]
   );
   const { uid } = useAppSelector((state) => state.auth.user);
   const attachment = useAppSelector(
     (state) => state.chat.attachments.entities[attachmentId]
   );
-  const isSender = senderUid === uid;
+  const isSender = senderId === uid;
 
   const styleProps = isSender
     ? {
@@ -41,7 +41,7 @@ const ChatMessage = ({ id }: { id: string }) => {
     ) {
       return <video src={attachment.url} muted controls height={200} />;
     }
-    return <Text isTruncated>{text}</Text>;
+    return <Text isTruncated>{content}</Text>;
   };
 
   return (

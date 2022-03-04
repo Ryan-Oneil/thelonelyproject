@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Divider,
@@ -23,7 +23,7 @@ import {
 } from "@chakra-ui/icons";
 import AvatarHeader from "./AvatarHeader";
 import ChatMessage from "./ChatMessage";
-import { sendMessage } from "../chatReducer";
+import { fetchChatMessages, sendMessage } from "../chatReducer";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 
 const ChatConversation = () => {
@@ -31,14 +31,18 @@ const ChatConversation = () => {
   const borderColor = "rgba(0, 0, 0, 0.2)";
   const { uid } = useAppSelector((state) => state.auth.user);
   const { activeConversationId } = useAppSelector((state) => state.chat);
-  const { messages, name, avatarUrl } = useAppSelector(
+  const { messages, name, icon } = useAppSelector(
     (state) => state.chat.conversations.entities[activeConversationId]
   );
   const [message, setMessage] = useState("");
   const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    dispatch(fetchChatMessages(activeConversationId));
+  }, []);
+
   const sendMessageToActiveConversation = () => {
-    if (!message) {
+    if (!message || !message.trim()) {
       return;
     }
     dispatch(sendMessage(activeConversationId, message, uid));
@@ -64,7 +68,7 @@ const ChatConversation = () => {
   return (
     <Box borderRight={"1px solid"} flexGrow={1} borderColor={borderColor}>
       <Flex p={padding}>
-        <AvatarHeader name={name} heading={name} padding={0} url={avatarUrl} />
+        <AvatarHeader name={name} heading={name} padding={0} url={icon} />
         <Spacer />
         <ChatMenu />
       </Flex>
