@@ -11,22 +11,22 @@ import {
   USER_PROFILE_URL,
 } from "./utils/urls";
 import { ChakraProvider } from "@chakra-ui/react";
-import Login from "./Auth/pages/Login";
-import RegisterPage from "./Auth/pages/RegisterPage";
-import ResetPasswordPage from "./Auth/pages/ResetPasswordPage";
 import { initializeApp } from "firebase/app";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getAuth } from "firebase/auth";
-import { login, logout } from "./Auth/authReducer";
-import PublicRoute from "./Auth/components/PublicRoute";
-import PrivateRoute from "./Auth/components/PrivateRoute";
-import ProfilePage from "./UserProfile/pages/ProfilePage";
-import ChatPage from "./Chat/pages/ChatPage";
-import { RegisterStatus } from "./Auth/enums/RegisterStatus";
-import SetupProfilePage from "./UserProfile/pages/SetupProfilePage";
 import Homepage from "./Base/pages/Homepage";
-import FindMatchPage from "./UserProfile/pages/FindMatchPage";
+import PublicRoute from "./features/Auth/components/PublicRoute";
+import RegisterPage from "./features/Auth/pages/RegisterPage";
+import ResetPasswordPage from "./features/Auth/pages/ResetPasswordPage";
+import PrivateRoute from "./features/Auth/components/PrivateRoute";
+import ProfilePage from "./features/UserProfile/pages/ProfilePage";
+import ChatPage from "./features/Chat/pages/ChatPage";
+import SetupProfilePage from "./features/UserProfile/pages/SetupProfilePage";
+import FindMatchPage from "./features/UserProfile/pages/FindMatchPage";
+import { RegisterStatus } from "./features/Auth/enums/RegisterStatus";
+import { login, logout } from "./features/Auth/authReducer";
+import Login from "./features/Auth/pages/Login";
 
 function App() {
   const dispatch = useDispatch();

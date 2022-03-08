@@ -7,9 +7,9 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
-import authReducer from "./Auth/authReducer";
-import userProfileReducer from "./UserProfile/userProfileReducer";
-import chatReducer from "./Chat/chatReducer";
+import authReducer from "./features/Auth/authReducer";
+import userProfileReducer from "./features/UserProfile/userProfileReducer";
+import chatReducer from "./features/Chat/chatReducer";
 
 const reducers = combineReducers({
   auth: authReducer,

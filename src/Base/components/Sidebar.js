@@ -20,8 +20,8 @@ import {
   USER_PROFILE_URL,
 } from "../../utils/urls";
 import { HamburgerIcon, SearchIcon } from "@chakra-ui/icons";
-import LogoutButton from "../../Auth/components/LogoutButton";
 import { FaRegComment, FaRegComments, FaRegUserCircle } from "react-icons/fa";
+import LogoutButton from "../../features/Auth/components/LogoutButton";
 
 export const Sidebar = () => {
   const [showDrawer, setShowDrawer] = useState(false);
