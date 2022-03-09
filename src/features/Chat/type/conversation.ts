@@ -1,5 +1,6 @@
 import { ConversationType } from "../enums/ConversationType";
-import { Message } from "../chatReducer";
+import { Message } from "./message";
+import { UserProfile } from "../../UserProfile/types/Profile";
 
 export type conversation = {
   id: string;
@@ -8,5 +9,5 @@ export type conversation = {
   type: ConversationType;
   messages: Array<Message>;
   attachments: Array<string>;
-  participants: Array<string>;
+  participants: Array<UserProfile>;
 };

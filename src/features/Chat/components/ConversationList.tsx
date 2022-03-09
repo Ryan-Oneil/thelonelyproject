@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Box,
   Divider,
@@ -36,7 +36,7 @@ const ConversationList = () => {
           <Input variant="filled" placeholder="Search" />
         </InputGroup>
         {conversationsQuery.data.map((conversation: conversation) => (
-          <Conversation {...conversation} />
+          <Conversation {...conversation} key={conversation.id} />
         ))}
       </VStack>
     </Box>

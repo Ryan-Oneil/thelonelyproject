@@ -8,12 +8,10 @@ import { BrowserRouter } from "react-router-dom";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import authReducer from "./features/Auth/authReducer";
-import chatReducer from "./features/Chat/chatReducer";
 import { DefaultOptions, QueryClient, QueryClientProvider } from "react-query";
 
 const reducers = combineReducers({
   auth: authReducer,
-  chat: chatReducer,
 });
 
 export const store = configureStore({

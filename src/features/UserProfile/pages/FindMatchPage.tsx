@@ -25,9 +25,10 @@ const FindMatchPage = () => {
         <TabPanels>
           <TabPanel>
             <SimpleGrid spacing={2} minChildWidth={"300px"}>
-              {matchQuery.data.map((user: UserProfile) => (
-                <ProfileMatchCard {...user} />
-              ))}
+              {matchQuery.isSuccess &&
+                matchQuery.data.map((user: UserProfile) => (
+                  <ProfileMatchCard {...user} />
+                ))}
             </SimpleGrid>
           </TabPanel>
         </TabPanels>

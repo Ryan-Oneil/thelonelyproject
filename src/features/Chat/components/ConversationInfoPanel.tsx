@@ -1,19 +1,33 @@
 import React from "react";
-import { Box, Divider, Heading, Image, Text, VStack } from "@chakra-ui/react";
-import { useAppSelector } from "../../../utils/hooks";
+import {
+  Box,
+  CloseButton,
+  Divider,
+  Flex,
+  Heading,
+  Image,
+  Spacer,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import SharedMedia from "./SharedMedia";
 
-const ConversationInfoPanel = () => {
-  const { activeConversationId } = useAppSelector((state) => state.chat);
-  const { name, icon, attachments } = useAppSelector(
-    (state) => state.chat.conversations.entities[activeConversationId]
-  );
+type props = {
+  name: string;
+  icon: string;
+  onClose: Function;
+};
 
+const ConversationInfoPanel = ({ name, icon, onClose }: props) => {
   return (
     <Box>
-      <Heading fontSize={"xl"} m={"auto"} p={8}>
-        Info
-      </Heading>
+      <Flex p={6}>
+        <Heading fontSize={"xl"} m={"auto"}>
+          Info
+        </Heading>
+        <Spacer />
+        <CloseButton size="lg" m={"auto"} onClick={() => onClose()} />
+      </Flex>
       <Divider style={{ borderColor: "rgba(0, 0, 0, 0.2)" }} />
       <Image
         borderRadius="full"

@@ -8,9 +8,6 @@ export const useStomp = () => {
   if (!stompClient) {
     stompClient = new Client({
       brokerURL: "ws://localhost:8080/ws",
-      debug: function (str) {
-        console.log(str);
-      },
       beforeConnect: () => {
         return getAuth()
           .currentUser?.getIdToken()
