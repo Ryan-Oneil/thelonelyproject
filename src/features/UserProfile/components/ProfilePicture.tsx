@@ -1,21 +1,15 @@
 import React from "react";
 import { Box, Heading, IconButton, Image, VStack } from "@chakra-ui/react";
-import { useAppDispatch, useAppSelector } from "../../../utils/hooks";
+import { useAppSelector } from "../../../utils/hooks";
 import { EditIcon } from "@chakra-ui/icons";
-import { uploadProfilePicture } from "../userProfileReducer";
 import FileUploader from "./FileUploader";
+import { UserProfile } from "../types/Profile";
+import { useUploadProfilePicture } from "../api/updateUserProfile";
 
-const ProfilePicture = ({
-  userId,
-  editMode,
-}: {
-  userId: string;
-  editMode: boolean;
-}) => {
-  const { name, profilePictureUrl } = useAppSelector(
-    (state) => state.profile.users.entities[userId]
-  ) || { name: "", profilePictureUrl: "" };
-  const dispatch = useAppDispatch();
+const ProfilePicture = ({ id, name, profilePictureUrl }: UserProfile) => {
+  const currentId = useAppSelector((state) => state.auth.user.uid);
+  const editMode = currentId === id;
+  const profilePicture = useUploadProfilePicture();
 
   return (
     <VStack>
@@ -30,9 +24,7 @@ const ProfilePicture = ({
         {editMode && (
           <FileUploader
             accept={"image/*"}
-            uploadAction={(file: File) =>
-              dispatch(uploadProfilePicture(file, userId))
-            }
+            uploadAction={(file: File) => profilePicture.mutate(file)}
           >
             <IconButton
               isRound

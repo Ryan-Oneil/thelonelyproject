@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Center,
   IconButton,
@@ -14,54 +14,30 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
-import {
-  addPromptToProfile,
-  deletePromptFromProfile,
-  fetchProfilePrompts,
-} from "../userProfileReducer";
 import EditableCard from "./EditableCard";
-import { useAppDispatch, useAppSelector } from "../../../utils/hooks";
+import { useAppSelector } from "../../../utils/hooks";
+import { Prompt, UserProfile } from "../types/Profile";
+import { usePrompts } from "../api/getPrompts";
+import { useAddPrompt, useDeletePrompt } from "../api/updateUserProfile";
 
-const ProfilePrompts = ({
-  userId,
-  editMode,
-}: {
-  userId: string;
-  editMode: boolean;
-}) => {
-  const userPrompts =
-    useAppSelector((state) => state.profile.users.entities[userId]?.prompts) ||
-    [];
-  const { ids } = useAppSelector((state) => state.profile.prompts);
-  const userPromptIds = userPrompts.map((prompt) => prompt.promptId);
-  const unusedPromptIds = ids.filter((id) => !userPromptIds.includes(id));
+const ProfilePrompts = ({ id, prompts = [] }: UserProfile) => {
+  const currentId = useAppSelector((state) => state.auth.user.uid);
+  const editMode = currentId === id;
+  const promptsQuery = usePrompts();
+  const deletePrompt = useDeletePrompt();
+
+  const userPromptIds = prompts.map((prompt) => prompt.promptId);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    if (editMode) {
-      dispatch(fetchProfilePrompts());
-    }
-  }, []);
-
-  const SelectablePrompt = ({ id }: { id: number }) => {
-    const { promptName } = useAppSelector(
-      (state) => state.profile.prompts.entities[id]
-    );
+  const SelectablePrompt = ({ promptId, promptName }: Prompt) => {
+    const prompt = useAddPrompt();
 
     const addPrompt = (promptAnswer: string) => {
       if (!promptAnswer) {
         return;
       }
-
-      dispatch(
-        addPromptToProfile(
-          { promptId: id, text: promptAnswer, promptName },
-          userId
-        )
-      );
+      prompt.mutate({ promptId, text: promptAnswer, promptName });
     };
-
     return (
       <EditableCard
         title={promptName}
@@ -74,7 +50,7 @@ const ProfilePrompts = ({
 
   return (
     <>
-      {userPrompts.map((prompt) => (
+      {prompts.map((prompt) => (
         <EditableCard
           defaultValue={prompt.text}
           title={prompt.promptName}
@@ -86,15 +62,13 @@ const ProfilePrompts = ({
                 aria-label={"Delete prompt"}
                 icon={<DeleteIcon />}
                 colorScheme={"red"}
-                onClick={() =>
-                  dispatch(deletePromptFromProfile(userId, prompt.promptId))
-                }
+                onClick={() => deletePrompt.mutate(prompt.promptId)}
               />
             </Tooltip>
           }
         />
       ))}
-      {editMode && unusedPromptIds.length > 0 && (
+      {editMode && promptsQuery.data.lenght !== userPromptIds.length && (
         <>
           <Center
             bg={"#fafafa"}
@@ -116,9 +90,14 @@ const ProfilePrompts = ({
               <ModalCloseButton />
               <ModalBody>
                 <SimpleGrid spacing={10} minChildWidth={300} mb={4}>
-                  {unusedPromptIds.map((id) => (
-                    <SelectablePrompt id={parseInt(id)} key={id} />
-                  ))}
+                  {promptsQuery.data
+                    .filter(
+                      (prompt: Prompt) =>
+                        !userPromptIds.includes(prompt.promptId)
+                    )
+                    .map((prompt: Prompt) => (
+                      <SelectablePrompt {...prompt} />
+                    ))}
                 </SimpleGrid>
               </ModalBody>
             </ModalContent>

@@ -14,6 +14,7 @@ type messageProps = {
 const ChatMessage = ({ content, senderId, type, timestamp }: messageProps) => {
   const { uid } = useAppSelector((state) => state.auth.user);
   const isSender = senderId === undefined || senderId === uid;
+  const date = new Date(timestamp);
 
   const styleProps = isSender
     ? {
@@ -41,7 +42,9 @@ const ChatMessage = ({ content, senderId, type, timestamp }: messageProps) => {
   return (
     <Box borderRadius={"xl"} p={2} {...styleProps}>
       <MessageContent />
-      <Text>{new Date(timestamp).toUTCString()}</Text>
+      <Text pl={2} textAlign={"right"}>{`${date.getHours()}:${
+        date.getMinutes() < 10 ? "0" : ""
+      }${date.getMinutes()}`}</Text>
     </Box>
   );
 };

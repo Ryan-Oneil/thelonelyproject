@@ -1,26 +1,19 @@
 import React from "react";
-import { useAppDispatch, useAppSelector } from "../../../utils/hooks";
-import { updateProfileAbout } from "../userProfileReducer";
+import { useAppSelector } from "../../../utils/hooks";
 import EditableCard from "./EditableCard";
+import { UserProfile } from "../types/Profile";
+import { useUpdateProfileAbout } from "../api/updateUserProfile";
 
-const AboutSection = ({
-  userId,
-  editMode,
-}: {
-  userId: string;
-  editMode: boolean;
-}) => {
-  const { about } =
-    useAppSelector((state) => state.profile.users.entities[userId]) || "";
-  const dispatch = useAppDispatch();
+const AboutSection = ({ id, about }: UserProfile) => {
+  const currentId = useAppSelector((state) => state.auth.user.uid);
+  const editMode = currentId === id;
+  const updateAbout = useUpdateProfileAbout();
 
   return (
     <EditableCard
       defaultValue={about}
       title={"About me"}
-      submitAction={(nextValue: string) =>
-        dispatch(updateProfileAbout(userId, nextValue))
-      }
+      submitAction={(nextValue: string) => updateAbout.mutate(nextValue)}
       showEditControls={editMode}
       key={about}
     />

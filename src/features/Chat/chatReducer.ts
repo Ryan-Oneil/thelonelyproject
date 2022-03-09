@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import { nanoid } from "nanoid";
 import { MessageType } from "./enums/MessageType";
 import { normalize, schema } from "normalizr";
-import { userEntity } from "../UserProfile/userProfileReducer";
 import { ConversationType } from "./enums/ConversationType";
 import {
   CHAT_GET_CONVERSATIONS,
@@ -63,7 +62,7 @@ const initialState: Chat = {
 };
 
 const conversation = new schema.Entity("conversation", {
-  participants: [userEntity],
+  participants: [new schema.Entity("user")],
 });
 
 const conversationList = new schema.Array(conversation);

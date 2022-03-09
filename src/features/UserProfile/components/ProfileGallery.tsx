@@ -9,22 +9,20 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import ProfileCard from "./ProfileCard";
-import { useAppDispatch, useAppSelector } from "../../../utils/hooks";
+import { useAppSelector } from "../../../utils/hooks";
 import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
 import FileUploader from "./FileUploader";
-import { deleteProfileMedia, uploadProfileMedia } from "../userProfileReducer";
+import { UserProfile } from "../types/Profile";
+import {
+  useDeleteProfileMedia,
+  useUploadProfileMedia,
+} from "../api/updateUserProfile";
 
-const ProfileGallery = ({
-  userId,
-  editMode,
-}: {
-  userId: string;
-  editMode: boolean;
-}) => {
-  const medias =
-    useAppSelector((state) => state.profile.users.entities[userId]?.medias) ||
-    [];
-  const dispatch = useAppDispatch();
+const ProfileGallery = ({ id, medias = [] }: UserProfile) => {
+  const uploadMedia = useUploadProfileMedia();
+  const deleteMedia = useDeleteProfileMedia();
+  const currentId = useAppSelector((state) => state.auth.user.uid);
+  const editMode = currentId === id;
 
   return (
     <ProfileCard>
@@ -64,7 +62,7 @@ const ProfileGallery = ({
                   top="1"
                   right="1"
                   aria-label={"Delete media"}
-                  onClick={() => dispatch(deleteProfileMedia(image.id, userId))}
+                  onClick={() => deleteMedia.mutate(image.id)}
                 />
               </Tooltip>
             )}
@@ -73,9 +71,7 @@ const ProfileGallery = ({
         {editMode && (
           <FileUploader
             accept={"image/*"}
-            uploadAction={(file: File) =>
-              dispatch(uploadProfileMedia(file, userId))
-            }
+            uploadAction={(file: File) => uploadMedia.mutate(file)}
           >
             <Center
               bg={"#fafafa"}

@@ -11,15 +11,16 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useAppSelector } from "../../../utils/hooks";
 import { Link } from "react-router-dom";
 import { USER_PROFILE_URL } from "../../../utils/urls";
+import { UserProfile } from "../types/Profile";
 
-const ProfileMatchCard = ({ userId }: { userId: string }) => {
-  const { name, profilePictureUrl, about } = useAppSelector(
-    (state) => state.profile.users.entities[userId]
-  );
-
+const ProfileMatchCard = ({
+  id,
+  name,
+  profilePictureUrl,
+  about,
+}: UserProfile) => {
   return (
     <Center py={6}>
       <Box
@@ -55,7 +56,7 @@ const ProfileMatchCard = ({ userId }: { userId: string }) => {
             </Heading>
             <Text color={"gray.500"}>{about}</Text>
           </Stack>
-          <Link to={`${USER_PROFILE_URL}/${userId}`}>
+          <Link to={`${USER_PROFILE_URL}/${id}`}>
             <Button
               w={"full"}
               bg={useColorModeValue("#151f21", "gray.900")}

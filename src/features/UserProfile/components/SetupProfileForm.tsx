@@ -8,19 +8,16 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { Field, Formik, FormikErrors } from "formik";
-import { createUserProfile } from "../userProfileReducer";
 import { BaseProfile } from "../types/Profile";
 import { getAuth } from "firebase/auth";
-import { useAppDispatch, useAppSelector } from "../../../utils/hooks";
 import {
   FileInput,
   LabelledInput,
   TextAreaInput,
 } from "../../../Base/components/forms/Inputs";
+import { createUserProfile } from "../api/updateUserProfile";
 
 const SetupProfileForm = () => {
-  const dispatch = useAppDispatch();
-  const userId = useAppSelector((state) => state.auth.user.uid);
   const [avatarUrl, setAvatarUrl] = useState(
     "https://avataaars.io/?avatarStyle=Circle&topType=ShortHairDreads01&accessoriesType=Wayfarers&hairColor=Black&facialHairType=BeardLight&facialHairColor=Black&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Smile&skinColor=Light"
   );
@@ -29,7 +26,7 @@ const SetupProfileForm = () => {
     formValues: BaseProfile,
     { setStatus }: { setStatus: Function }
   ) => {
-    return dispatch(createUserProfile(formValues, userId))
+    return createUserProfile(formValues)
       .then(() => getAuth().currentUser?.getIdToken(true))
       .catch((error) => setStatus({ type: "error", message: error.message }));
   };

@@ -113,7 +113,16 @@ function App() {
               <ChatPage />
             </PrivateRoute>
           }
-        />
+        >
+          <Route
+            path={":chatId"}
+            element={
+              <PrivateRoute>
+                <ChatPage />
+              </PrivateRoute>
+            }
+          />
+        </Route>
         <Route
           path={PROFILE_SETUP_URL}
           element={

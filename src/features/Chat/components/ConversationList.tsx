@@ -6,20 +6,20 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  Spinner,
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import AvatarHeader from "./AvatarHeader";
-import { useAppDispatch, useAppSelector } from "../../../utils/hooks";
+import { useConversations } from "../api/getConversations";
+import { conversation } from "../type/conversation";
 import Conversation from "./Conversation";
-import { fetchConversations } from "../chatReducer";
 
 const ConversationList = () => {
-  const { ids } = useAppSelector((state) => state.chat.conversations);
-  const dispatch = useAppDispatch();
+  const conversationsQuery = useConversations();
 
-  useEffect(() => {
-    dispatch(fetchConversations());
-  }, []);
+  if (conversationsQuery.isLoading) {
+    return <Spinner size="xl" />;
+  }
 
   return (
     <Box borderRight={"1px solid rgba(0, 0, 0, 0.2)"}>
@@ -35,8 +35,8 @@ const ConversationList = () => {
           <InputLeftElement children={<SearchIcon />} />
           <Input variant="filled" placeholder="Search" />
         </InputGroup>
-        {ids.map((id: string) => (
-          <Conversation id={id} key={id} />
+        {conversationsQuery.data.map((conversation: conversation) => (
+          <Conversation {...conversation} />
         ))}
       </VStack>
     </Box>

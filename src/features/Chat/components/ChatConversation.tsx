@@ -27,11 +27,13 @@ import { fetchChatMessages, Message } from "../chatReducer";
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks";
 import { useStomp } from "../../../hooks/useStomp";
 import { MessageType } from "../enums/MessageType";
+import { useParams } from "react-router-dom";
 
 const ChatConversation = () => {
   const padding = 5;
   const borderColor = "rgba(0, 0, 0, 0.2)";
-  const { activeConversationId } = useAppSelector((state) => state.chat);
+  const params = useParams();
+  const activeConversationId = params.chatId as string;
   const { messages, name, icon } = useAppSelector(
     (state) => state.chat.conversations.entities[activeConversationId]
   );

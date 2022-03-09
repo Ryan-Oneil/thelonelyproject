@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Box,
   Button,
@@ -10,36 +10,26 @@ import {
 } from "@chakra-ui/react";
 import AvatarTag from "../components/AvatarTag";
 import { useParams } from "react-router-dom";
-import { fetchUserProfile } from "../userProfileReducer";
 import AboutSection from "../components/AboutSection";
 import ProfilePicture from "../components/ProfilePicture";
 import ProfileCard from "../components/ProfileCard";
 import ProfileGallery from "../components/ProfileGallery";
 import ProfileInterests from "../components/ProfileInterests";
 import ProfilePrompts from "../components/ProfilePrompts";
-import { useAppDispatch, useAppSelector } from "../../../utils/hooks";
+import { useAppSelector } from "../../../utils/hooks";
 import BaseAppPage from "../../../Base/pages/BaseAppPage";
+import { useUserProfile } from "../api/getUserProfile";
 
 const ProfilePage = () => {
   const userId = useAppSelector((state) => state.auth.user.uid);
   const params = useParams();
-  const dispatch = useAppDispatch();
   const profileId = params.userId || userId;
-  const enableEdit = profileId === userId;
-  const { spotifyArtists } = useAppSelector(
-    (state) => state.profile.users.entities[userId]
-  ) || {
-    spotifyArtists: [],
-  };
-
-  useEffect(() => {
-    dispatch(fetchUserProfile(profileId));
-  }, []);
+  const userProfileQuery = useUserProfile(profileId);
 
   const ProfileHeader = () => {
     return (
       <Flex p={"100px 5% 0"} direction={{ base: "column", sm: "row" }}>
-        <ProfilePicture userId={profileId} editMode={enableEdit} />
+        <ProfilePicture {...userProfileQuery.data} />
         <Spacer />
         <Button
           backgroundColor="rgba(97, 94, 240, 0.1)"
@@ -73,15 +63,15 @@ const ProfilePage = () => {
           spacing={10}
         >
           <VStack pt={10} spacing={10}>
-            <AboutSection userId={profileId} editMode={enableEdit} />
-            <ProfileGallery userId={profileId} editMode={enableEdit} />
+            <AboutSection {...userProfileQuery.data} />
+            <ProfileGallery {...userProfileQuery.data} />
           </VStack>
           <SimpleGrid
             pt={{ base: 0, lg: 10 }}
             spacing={10}
             columns={{ base: 1, xl: 2 }}
           >
-            <ProfileInterests userId={profileId} editMode={enableEdit} />
+            <ProfileInterests {...userProfileQuery.data} />
             <ProfileCard>
               <Heading size={"md"}>Trending Artists</Heading>
               <SimpleGrid
@@ -89,12 +79,12 @@ const ProfilePage = () => {
                 mt={3}
                 spacing={5}
               >
-                {spotifyArtists.map((artist) => (
-                  <AvatarTag description={artist.name} key={artist.iconUrl} />
+                {[{ name: "Test", url: "" }].map((artist) => (
+                  <AvatarTag description={artist.name} key={artist.url} />
                 ))}
               </SimpleGrid>
             </ProfileCard>
-            <ProfilePrompts userId={profileId} editMode={enableEdit} />
+            <ProfilePrompts {...userProfileQuery.data} />
           </SimpleGrid>
         </SimpleGrid>
       </Box>

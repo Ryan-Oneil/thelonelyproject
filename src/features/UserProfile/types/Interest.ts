@@ -1,5 +1,5 @@
 export type Interest = {
-  id?: number;
+  id: number;
   name: string;
   iconName: any;
 };
@@ -7,5 +7,5 @@ export type Interest = {
 export type CategoryInterest = {
   id: number;
   name: string;
-  interests: Array<number>;
+  interests: Array<Interest>;
 };

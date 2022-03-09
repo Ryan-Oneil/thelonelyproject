@@ -8,9 +8,11 @@ import BaseAppPage from "../../../Base/pages/BaseAppPage";
 import { useStomp } from "../../../hooks/useStomp";
 import { Conversation, sentMessage } from "../chatReducer";
 import { IMessage } from "@stomp/stompjs";
+import { useParams } from "react-router-dom";
 
 const ChatPage = () => {
-  const { activeConversationId } = useAppSelector((state) => state.chat);
+  const params = useParams();
+  const activeConversationId = params.chatId;
   const userId = useAppSelector((state) => state.auth.user.uid);
   const client = useStomp();
   const dispatch = useAppDispatch();

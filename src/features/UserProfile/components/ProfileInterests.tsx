@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../../utils/hooks";
+import React from "react";
+import { useAppSelector } from "../../../utils/hooks";
 import {
   Divider,
   Drawer,
@@ -19,57 +19,35 @@ import {
 import AvatarTag, { SelectAbleAvatarTag } from "./AvatarTag";
 import ProfileCard from "./ProfileCard";
 import { EditIcon } from "@chakra-ui/icons";
+import { UserProfile } from "../types/Profile";
+import { useInterests } from "../api/getInterests";
+import { CategoryInterest, Interest } from "../types/Interest";
 import {
-  addInterestToProfile,
-  fetchInterestsByCategory,
-  removeInterestFromProfile,
-} from "../userProfileReducer";
+  useAddProfileInterest,
+  useDeleteProfileInterest,
+} from "../api/updateUserProfile";
 
-const ProfileInterests = ({
-  userId,
-  editMode,
-}: {
-  userId: string;
-  editMode: boolean;
-}) => {
-  const userInterests =
-    useAppSelector(
-      (state) => state.profile.users.entities[userId]?.interests
-    ) || [];
-  const interestCategoriesIds = useAppSelector(
-    (state) => state.profile.interestCategories.ids
-  );
-  const interests = useAppSelector((state) => state.profile.interests.entities);
-
+const ProfileInterests = ({ id, interests = [] }: UserProfile) => {
+  const currentId = useAppSelector((state) => state.auth.user.uid);
+  const editMode = currentId === id;
+  const addInterest = useAddProfileInterest();
+  const deleteInterest = useDeleteProfileInterest();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const dispatch = useAppDispatch();
+  const interestQuery = useInterests();
+  const userInterestIds = interests.map((interest) => interest.id);
 
-  useEffect(() => {
-    if (editMode) {
-      dispatch(fetchInterestsByCategory());
-    }
-  }, []);
-
-  const InterestCategory = ({ id }: { id: string }) => {
-    const category = useAppSelector(
-      (state) => state.profile.interestCategories.entities[id]
-    );
-
+  const InterestCategory = ({ name, interests }: CategoryInterest) => {
     return (
       <>
-        <Heading size={"md"}>Outdoors</Heading>
+        <Heading size={"md"}>{name}</Heading>
         <SimpleGrid minChildWidth="80px" my={3} spacing={5}>
-          {category.interests.map((interestId) => (
+          {interests.map((interest: Interest) => (
             <SelectAbleAvatarTag
-              description={interests[interestId].name}
-              key={interestId}
-              defaultSelected={userInterests.includes(interestId)}
-              onSelected={() =>
-                dispatch(addInterestToProfile(userId, interestId))
-              }
-              onDeselected={() =>
-                dispatch(removeInterestFromProfile(userId, interestId))
-              }
+              description={interest.name}
+              key={interest.id}
+              defaultSelected={userInterestIds.includes(interest.id)}
+              onSelected={() => addInterest.mutate(interest.id)}
+              onDeselected={() => deleteInterest.mutate(interest.id)}
             />
           ))}
         </SimpleGrid>
@@ -99,11 +77,8 @@ const ProfileInterests = ({
         </Flex>
 
         <SimpleGrid columns={{ base: 2, xl: 1, "2xl": 2 }} mt={3} spacing={5}>
-          {userInterests.map((interestId) => (
-            <AvatarTag
-              description={interests[interestId].name}
-              key={interestId}
-            />
+          {interests.map((interest: Interest) => (
+            <AvatarTag description={interest.name} key={interest.id} />
           ))}
         </SimpleGrid>
       </ProfileCard>
@@ -114,9 +89,10 @@ const ProfileInterests = ({
           <DrawerHeader>Interests</DrawerHeader>
 
           <DrawerBody>
-            {interestCategoriesIds.map((id) => (
-              <InterestCategory id={id} key={id} />
-            ))}
+            {interestQuery.isSuccess &&
+              interestQuery.data.map((category: CategoryInterest) => (
+                <InterestCategory {...category} />
+              ))}
           </DrawerBody>
         </DrawerContent>
       </Drawer>

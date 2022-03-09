@@ -43,11 +43,6 @@ export const slice = createSlice({
       state.user.role = action.payload;
     },
   },
-  extraReducers: {
-    "userProfile/profileCompleted": (state, action) => {
-      state.registeredStatus = RegisterStatus.REGISTERED;
-    },
-  },
 });
 export default slice.reducer;
 export const { login, logout, setUserRole } = slice.actions;

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   SimpleGrid,
   Tab,
@@ -8,17 +8,12 @@ import {
   Tabs,
 } from "@chakra-ui/react";
 import ProfileMatchCard from "../components/ProfileMatchCard";
-import { getPotentialMatches } from "../userProfileReducer";
-import { useAppDispatch, useAppSelector } from "../../../utils/hooks";
 import BaseAppPage from "../../../Base/pages/BaseAppPage";
+import { useMatches } from "../api/getMatches";
+import { UserProfile } from "../types/Profile";
 
 const FindMatchPage = () => {
-  const dispatch = useAppDispatch();
-  const matchProfileIds = useAppSelector((state) => state.profile.users.ids);
-
-  useEffect(() => {
-    dispatch(getPotentialMatches());
-  }, []);
+  const matchQuery = useMatches();
 
   return (
     <BaseAppPage>
@@ -30,8 +25,8 @@ const FindMatchPage = () => {
         <TabPanels>
           <TabPanel>
             <SimpleGrid spacing={2} minChildWidth={"300px"}>
-              {matchProfileIds.map((id) => (
-                <ProfileMatchCard userId={id} key={id} />
+              {matchQuery.data.map((user: UserProfile) => (
+                <ProfileMatchCard {...user} />
               ))}
             </SimpleGrid>
           </TabPanel>
