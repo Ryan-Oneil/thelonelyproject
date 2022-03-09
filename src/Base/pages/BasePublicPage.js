@@ -3,7 +3,7 @@ import styles from "./BasePage.module.css";
 import { Box, Button, Flex, Heading, Spacer } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { AuthStage } from "../../Auth/enums/AuthStages";
+import { AuthStage } from "../../features/Auth/enums/AuthStages";
 import { DASHBOARD_URL, HOMEPAGE_URL, LOGIN_URL } from "../../utils/urls";
 
 const BasePublicPage = ({ children, showLogin = false }) => {

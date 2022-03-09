@@ -16,3 +16,5 @@ export const USER_PROFILE_DELETE_PROMPT_ENDPOINT =
   USER_PROFILE_ADD_PROMPT_ENDPOINT;
 export const GET_POTENTIAL_MATCHES = "/user/profiles";
 export const USER_PROFILE_SEND_CONNECTION_REQUEST = "/user/profile/%s/connect";
+export const CHAT_GET_CONVERSATIONS = "/chat/chatrooms";
+export const CHAT_GET_MESSAGES = "/chat/messages";

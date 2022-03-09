@@ -7,14 +7,11 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
-import authReducer from "./Auth/authReducer";
-import userProfileReducer from "./UserProfile/userProfileReducer";
-import chatReducer from "./Chat/chatReducer";
+import authReducer from "./features/Auth/authReducer";
+import { DefaultOptions, QueryClient, QueryClientProvider } from "react-query";
 
 const reducers = combineReducers({
   auth: authReducer,
-  profile: userProfileReducer,
-  chat: chatReducer,
 });
 
 export const store = configureStore({
@@ -24,11 +21,23 @@ export const store = configureStore({
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
+const queryConfig: DefaultOptions = {
+  queries: {
+    useErrorBoundary: true,
+    refetchOnWindowFocus: false,
+    retry: false,
+  },
+};
+
+export const queryClient = new QueryClient({ defaultOptions: queryConfig });
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <App />
+        <QueryClientProvider client={queryClient}>
+          <App />
+        </QueryClientProvider>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>,
