@@ -1,16 +1,16 @@
 export interface BaseProfile {
-  name: string;
+  name?: string;
   avatar?: File;
-  about: string;
+  about?: string;
 }
 
 export interface UserProfile extends BaseProfile {
-  id: string;
-  profilePictureUrl: string;
-  medias: Array<any>;
-  interests: Array<any>;
-  prompts: Array<any>;
-  spotifyArtists: Array<any>;
+  id?: string;
+  profilePictureUrl?: string;
+  medias?: Array<any>;
+  interests?: Array<any>;
+  prompts?: Array<any>;
+  spotifyArtists?: Array<any>;
 }
 
 export type Prompt = {

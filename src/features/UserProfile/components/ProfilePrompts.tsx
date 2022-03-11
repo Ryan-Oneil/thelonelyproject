@@ -15,15 +15,13 @@ import {
 } from "@chakra-ui/react";
 import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
 import EditableCard from "./EditableCard";
-import { useAppSelector } from "../../../utils/hooks";
-import { Prompt, UserProfile } from "../types/Profile";
+import { Prompt } from "../types/Profile";
 import { usePrompts } from "../api/getPrompts";
 import { useAddPrompt, useDeletePrompt } from "../api/updateUserProfile";
+import { ProfileProps } from "../types/ProfileProps";
 
-const ProfilePrompts = ({ id, prompts = [] }: UserProfile) => {
-  const currentId = useAppSelector((state) => state.auth.user.uid);
-  const editMode = currentId === id;
-  const promptsQuery = usePrompts();
+const ProfilePrompts = ({ editMode, prompts = [] }: ProfileProps) => {
+  const { data, isSuccess } = usePrompts();
   const deletePrompt = useDeletePrompt();
 
   const userPromptIds = prompts.map((prompt) => prompt.promptId);
@@ -68,7 +66,7 @@ const ProfilePrompts = ({ id, prompts = [] }: UserProfile) => {
           }
         />
       ))}
-      {editMode && promptsQuery.data.lenght !== userPromptIds.length && (
+      {editMode && isSuccess && data.lenght !== userPromptIds.length && (
         <>
           <Center
             bg={"#fafafa"}
@@ -90,13 +88,13 @@ const ProfilePrompts = ({ id, prompts = [] }: UserProfile) => {
               <ModalCloseButton />
               <ModalBody>
                 <SimpleGrid spacing={10} minChildWidth={300} mb={4}>
-                  {promptsQuery.data
+                  {data
                     .filter(
                       (prompt: Prompt) =>
                         !userPromptIds.includes(prompt.promptId)
                     )
                     .map((prompt: Prompt) => (
-                      <SelectablePrompt {...prompt} />
+                      <SelectablePrompt {...prompt} key={prompt.promptName} />
                     ))}
                 </SimpleGrid>
               </ModalBody>

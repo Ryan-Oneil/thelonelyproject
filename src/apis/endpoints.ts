@@ -18,3 +18,7 @@ export const GET_POTENTIAL_MATCHES = "/user/profiles";
 export const USER_PROFILE_SEND_CONNECTION_REQUEST = "/user/profile/%s/connect";
 export const CHAT_GET_CONVERSATIONS = "/chat/chatrooms";
 export const CHAT_GET_MESSAGES = "/chat/messages";
+export const USER_PROFILE_ACCEPT_CONNECTION =
+  USER_PROFILE_SEND_CONNECTION_REQUEST + "/accept";
+export const USER_PROFILE_DENY_CONNECTION =
+  USER_PROFILE_SEND_CONNECTION_REQUEST + "/deny";

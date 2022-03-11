@@ -7,6 +7,7 @@ import {
   USER_PROFILE_MEDIA_DELETE_ENDPOINT,
   USER_PROFILE_MEDIA_UPLOAD_ENDPOINT,
   USER_PROFILE_REMOVE_INTEREST_ENDPOINT,
+  USER_PROFILE_SEND_CONNECTION_REQUEST,
   USER_PROFILE_UPDATE_ABOUT_ENDPOINT,
   USER_PROFILE_UPLOAD_PICTURE_ENDPOINT,
 } from "../../../apis/endpoints";
@@ -107,4 +108,30 @@ export const deletePromptFromProfile = (promptId: number) => {
 
 export const useDeletePrompt = () => {
   return useMutation(deletePromptFromProfile, config);
+};
+
+export const sendConnectRequest = (profileId: string) => {
+  return apiPostCall(
+    USER_PROFILE_SEND_CONNECTION_REQUEST.replace("%s", profileId)
+  );
+};
+
+export const useSendConnectionRequest = () => {
+  return useMutation(sendConnectRequest, config);
+};
+
+export const changeRequestStatus = ({
+  profileId,
+  status,
+}: {
+  profileId: string;
+  status: string;
+}) => {
+  return apiPostCall(
+    `${USER_PROFILE_SEND_CONNECTION_REQUEST.replace("%s", profileId)}/${status}`
+  );
+};
+
+export const useChangeRequestStatus = () => {
+  return useMutation(changeRequestStatus, config);
 };
