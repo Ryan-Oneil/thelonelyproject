@@ -19,3 +19,4 @@ export const GET_PENDING_MATCHES = "/user/profile/connections/pending";
 export const USER_PROFILE_SEND_CONNECTION_REQUEST = "/user/profile/%s/connect";
 export const CHAT_GET_CONVERSATIONS = "/chat/chatrooms";
 export const CHAT_GET_MESSAGES = "/chat/messages";
+export const CHAT_CREATE = "/chat/create";

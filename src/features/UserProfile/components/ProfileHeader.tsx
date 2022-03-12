@@ -7,6 +7,9 @@ import ProfilePicture from "./ProfilePicture";
 import React from "react";
 import { UserProfile } from "../types/Profile";
 import { useAppSelector } from "../../../utils/hooks";
+import { useCreateChat } from "../../Chat/api/createConversation";
+import { useNavigate } from "react-router-dom";
+import { CHAT_URL } from "../../../utils/urls";
 
 interface HeaderProps extends UserProfile {
   attemptingToConnect: boolean;
@@ -37,9 +40,22 @@ const ProfileHeader = ({
   const ProfileButton = () => {
     const connectRequest = useSendConnectionRequest();
     const changeRequestStatus = useChangeRequestStatus();
+    const createChat = useCreateChat();
+    const navigate = useNavigate();
 
     if (connectionStatus === "CONNECTED") {
-      return <Button {...buttonStyle}>Message</Button>;
+      return (
+        <Button
+          {...buttonStyle}
+          onClick={() =>
+            createChat
+              .mutateAsync(id)
+              .then((data) => navigate(`${CHAT_URL}/${data.id}`))
+          }
+        >
+          Message
+        </Button>
+      );
     }
 
     if (attemptingToConnect && !connector) {
