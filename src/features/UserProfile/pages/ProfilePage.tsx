@@ -1,17 +1,7 @@
 import React from "react";
-import {
-  Box,
-  Button,
-  Flex,
-  Heading,
-  SimpleGrid,
-  Spacer,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Heading, SimpleGrid, VStack } from "@chakra-ui/react";
 import AvatarTag from "../components/AvatarTag";
 import { useParams } from "react-router-dom";
-import AboutSection from "../components/AboutSection";
-import ProfilePicture from "../components/ProfilePicture";
 import ProfileCard from "../components/ProfileCard";
 import ProfileGallery from "../components/ProfileGallery";
 import ProfileInterests from "../components/ProfileInterests";
@@ -19,31 +9,30 @@ import ProfilePrompts from "../components/ProfilePrompts";
 import { useAppSelector } from "../../../utils/hooks";
 import BaseAppPage from "../../../Base/pages/BaseAppPage";
 import { useUserProfile } from "../api/getUserProfile";
+import ProfileHeader from "../components/ProfileHeader";
+import { UserProfile } from "../types/Profile";
+import EditableCard from "../components/EditableCard";
+import { useUpdateProfileAbout } from "../api/updateUserProfile";
 
 const ProfilePage = () => {
   const userId = useAppSelector((state) => state.auth.user.uid);
   const params = useParams();
   const profileId = params.userId || userId;
-  const userProfileQuery = useUserProfile(profileId);
+  const enableEdit = profileId === userId;
 
-  const ProfileHeader = () => {
-    return (
-      <Flex p={"100px 5% 0"} direction={{ base: "column", sm: "row" }}>
-        <ProfilePicture {...userProfileQuery.data} />
-        <Spacer />
-        <Button
-          backgroundColor="rgba(97, 94, 240, 0.1)"
-          color={"#444BD3"}
-          size={"lg"}
-          m={"auto"}
-          mt={{ base: "5", sm: "120" }}
-          _hover={{ backgroundColor: "#b6bbcd" }}
-        >
-          Connect
-        </Button>
-      </Flex>
-    );
+  const { data } = useUserProfile(profileId);
+  const {
+    about = "",
+    medias = [],
+    interests = [],
+    prompts = [],
+  } = (data as UserProfile) || {
+    about: "",
+    medias: [],
+    interests: [],
+    prompts: [],
   };
+  const updateAbout = useUpdateProfileAbout();
 
   return (
     <BaseAppPage>
@@ -54,7 +43,12 @@ const ProfilePage = () => {
         flexWrap={"wrap"}
         w={"100%"}
       >
-        <ProfileHeader />
+        <ProfileHeader
+          id={data?.id}
+          name={data?.name}
+          profilePictureUrl={data?.profilePictureUrl}
+          {...data?.connection}
+        />
         <SimpleGrid
           columns={{ base: 1, lg: 2 }}
           w={"100%"}
@@ -63,15 +57,23 @@ const ProfilePage = () => {
           spacing={10}
         >
           <VStack pt={10} spacing={10}>
-            <AboutSection {...userProfileQuery.data} />
-            <ProfileGallery {...userProfileQuery.data} />
+            <EditableCard
+              defaultValue={about}
+              title={"About me"}
+              submitAction={(nextValue: string) =>
+                updateAbout.mutate(nextValue)
+              }
+              showEditControls={enableEdit}
+              key={about}
+            />
+            <ProfileGallery medias={medias} editMode={enableEdit} />
           </VStack>
           <SimpleGrid
             pt={{ base: 0, lg: 10 }}
             spacing={10}
             columns={{ base: 1, xl: 2 }}
           >
-            <ProfileInterests {...userProfileQuery.data} />
+            <ProfileInterests editMode={enableEdit} interests={interests} />
             <ProfileCard>
               <Heading size={"md"}>Trending Artists</Heading>
               <SimpleGrid
@@ -84,7 +86,7 @@ const ProfilePage = () => {
                 ))}
               </SimpleGrid>
             </ProfileCard>
-            <ProfilePrompts {...userProfileQuery.data} />
+            <ProfilePrompts editMode={enableEdit} prompts={prompts} />
           </SimpleGrid>
         </SimpleGrid>
       </Box>

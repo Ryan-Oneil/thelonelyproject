@@ -1,5 +1,4 @@
 import React from "react";
-import { useAppSelector } from "../../../utils/hooks";
 import {
   Divider,
   Drawer,
@@ -19,17 +18,15 @@ import {
 import AvatarTag, { SelectAbleAvatarTag } from "./AvatarTag";
 import ProfileCard from "./ProfileCard";
 import { EditIcon } from "@chakra-ui/icons";
-import { UserProfile } from "../types/Profile";
 import { useInterests } from "../api/getInterests";
 import { CategoryInterest, Interest } from "../types/Interest";
 import {
   useAddProfileInterest,
   useDeleteProfileInterest,
 } from "../api/updateUserProfile";
+import { ProfileProps } from "../types/ProfileProps";
 
-const ProfileInterests = ({ id, interests = [] }: UserProfile) => {
-  const currentId = useAppSelector((state) => state.auth.user.uid);
-  const editMode = currentId === id;
+const ProfileInterests = ({ editMode, interests = [] }: ProfileProps) => {
   const addInterest = useAddProfileInterest();
   const deleteInterest = useDeleteProfileInterest();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -91,7 +88,7 @@ const ProfileInterests = ({ id, interests = [] }: UserProfile) => {
           <DrawerBody>
             {interestQuery.isSuccess &&
               interestQuery.data.map((category: CategoryInterest) => (
-                <InterestCategory {...category} />
+                <InterestCategory {...category} key={category.id} />
               ))}
           </DrawerBody>
         </DrawerContent>

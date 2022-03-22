@@ -9,20 +9,17 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import ProfileCard from "./ProfileCard";
-import { useAppSelector } from "../../../utils/hooks";
 import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
 import FileUploader from "./FileUploader";
-import { UserProfile } from "../types/Profile";
 import {
   useDeleteProfileMedia,
   useUploadProfileMedia,
 } from "../api/updateUserProfile";
+import { ProfileProps } from "../types/ProfileProps";
 
-const ProfileGallery = ({ id, medias = [] }: UserProfile) => {
+const ProfileGallery = ({ medias = [], editMode }: ProfileProps) => {
   const uploadMedia = useUploadProfileMedia();
   const deleteMedia = useDeleteProfileMedia();
-  const currentId = useAppSelector((state) => state.auth.user.uid);
-  const editMode = currentId === id;
 
   return (
     <ProfileCard>

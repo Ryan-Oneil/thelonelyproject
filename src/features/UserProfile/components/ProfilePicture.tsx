@@ -1,14 +1,18 @@
 import React from "react";
 import { Box, Heading, IconButton, Image, VStack } from "@chakra-ui/react";
-import { useAppSelector } from "../../../utils/hooks";
 import { EditIcon } from "@chakra-ui/icons";
 import FileUploader from "./FileUploader";
-import { UserProfile } from "../types/Profile";
 import { useUploadProfilePicture } from "../api/updateUserProfile";
 
-const ProfilePicture = ({ id, name, profilePictureUrl }: UserProfile) => {
-  const currentId = useAppSelector((state) => state.auth.user.uid);
-  const editMode = currentId === id;
+const ProfilePicture = ({
+  editMode,
+  name,
+  profilePictureUrl,
+}: {
+  editMode: boolean;
+  name: string;
+  profilePictureUrl: string;
+}) => {
   const profilePicture = useUploadProfilePicture();
 
   return (
