@@ -10,6 +10,7 @@ import {
   Image,
   Text,
   useColorModeValue,
+  Tooltip,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { USER_PROFILE_URL } from "../../../utils/urls";
@@ -51,10 +52,19 @@ const ProfileMatchCard = ({
 
         <Box p={4}>
           <Stack spacing={0} align={"center"} mb={5}>
-            <Heading fontSize={"2xl"} fontWeight={500} fontFamily={"body"}>
+            <Heading fontSize={"xl"} fontWeight={500} fontFamily={"body"}>
               {name}
             </Heading>
-            <Text color={"gray.500"}>{about}</Text>
+            <Tooltip label={about}>
+              <Text
+                color={"gray.500"}
+                textAlign={"center"}
+                isTruncated
+                maxW={"250px"}
+              >
+                {about}
+              </Text>
+            </Tooltip>
           </Stack>
           <Link to={`${USER_PROFILE_URL}/${id}`}>
             <Button
