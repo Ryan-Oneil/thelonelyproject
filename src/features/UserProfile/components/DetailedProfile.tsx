@@ -1,0 +1,146 @@
+import React from "react";
+import {
+  Avatar,
+  Box,
+  Button,
+  Center,
+  Flex,
+  Heading,
+  Stack,
+  Image,
+  Text,
+  ButtonGroup,
+  SimpleGrid,
+  SkeletonText,
+} from "@chakra-ui/react";
+import { UserProfile } from "../types/Profile";
+import ProfileInterests from "./ProfileInterests";
+import ProfilePrompts from "./ProfilePrompts";
+import { useUserProfile } from "../api/getUserProfile";
+import { useSendConnectionRequest } from "../api/updateUserProfile";
+
+interface Props extends UserProfile {
+  nextProfileAction: Function;
+}
+
+const DetailedProfile = ({
+  id = "",
+  name,
+  profilePictureUrl,
+  about,
+  nextProfileAction,
+}: Props) => {
+  const { data, isLoading, isSuccess } = useUserProfile(id);
+  const sendConnection = useSendConnectionRequest();
+
+  const BaseProfile = () => {
+    return (
+      <>
+        <Image
+          h={"170px"}
+          w={"full"}
+          src={
+            "https://images.unsplash.com/photo-1612865547334-09cb8cb455da?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
+          }
+          objectFit={"cover"}
+        />
+        <Flex justify={"center"} mt={-16}>
+          <Avatar
+            size={"2xl"}
+            src={profilePictureUrl}
+            css={{
+              border: "2px solid white",
+            }}
+          />
+        </Flex>
+
+        <Stack spacing={0} align={"center"} p={4}>
+          <Heading fontSize={"2xl"} fontWeight={500} fontFamily={"body"}>
+            {name}
+          </Heading>
+          <Text color={"gray.500"} textAlign={"center"}>
+            {about}
+          </Text>
+        </Stack>
+      </>
+    );
+  };
+
+  if (isLoading || !isSuccess) {
+    return (
+      <Box boxShadow="lg" bg="white" maxW={"900px"}>
+        <BaseProfile />
+        <SkeletonText p="4" noOfLines={4} spacing="4" />
+      </Box>
+    );
+  }
+
+  const { interests, medias, prompts } = data;
+
+  return (
+    <Center py={6}>
+      <Box
+        maxW={"1100px"}
+        w={"full"}
+        bg={"white"}
+        boxShadow={"2xl"}
+        rounded={"md"}
+      >
+        <BaseProfile />
+        <Box p={4}>
+          <SimpleGrid pb={4} spacing={10} columns={{ base: 1, xl: 2 }}>
+            <ProfileInterests editMode={false} interests={interests} />
+            <ProfilePrompts editMode={false} prompts={prompts} />
+          </SimpleGrid>
+          <SimpleGrid pb={4} minChildWidth={"250px"} spacing={2}>
+            {medias.map(({ url }: { url: string }) => (
+              <Box position="relative" key={url}>
+                <Image
+                  src={url}
+                  borderRadius={"lg"}
+                  width={"100%"}
+                  draggable={false}
+                  userSelect={"none"}
+                  maxH={180}
+                  objectFit="cover"
+                />
+              </Box>
+            ))}
+          </SimpleGrid>
+          <ButtonGroup>
+            <Button
+              w={"full"}
+              bg={"red"}
+              color={"white"}
+              rounded={"md"}
+              _hover={{
+                transform: "translateY(-2px)",
+                boxShadow: "lg",
+              }}
+              onClick={() => nextProfileAction()}
+            >
+              Skip
+            </Button>
+            <Button
+              w={"full"}
+              bg={"#151f21"}
+              color={"white"}
+              rounded={"md"}
+              _hover={{
+                transform: "translateY(-2px)",
+                boxShadow: "lg",
+              }}
+              onClick={() => {
+                sendConnection.mutateAsync(id).then(() => nextProfileAction());
+              }}
+            >
+              Connect
+            </Button>
+          </ButtonGroup>
+        </Box>
+      </Box>
+    </Center>
+  );
+};
+
+export default DetailedProfile;
