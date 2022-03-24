@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Box,
   Divider,
@@ -46,12 +46,31 @@ const ChatConversation = () => {
   const stompClient = useStomp();
   const { data, isLoading, isSuccess } = useMessages(activeConversationId);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesRender = messages.map((activeMessage: Message) => (
+    <ChatMessage
+      key={activeMessage.timestamp}
+      {...activeMessage}
+      type={MessageType.TEXT}
+    />
+  ));
 
   useEffect(() => {
     if (isSuccess) {
       setMessages(data.messages);
     }
   }, [data, isSuccess]);
+
+  //Scrolls to the bottom message once fully rendered
+  useEffect(() => {
+    if (isSuccess) {
+      messagesEndRef?.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "start",
+      });
+    }
+  }, [messagesRender, isSuccess, messagesEndRef]);
 
   useEffect(() => {
     if (!stompClient.active) {
@@ -130,13 +149,8 @@ const ChatConversation = () => {
         <Divider style={{ borderColor }} />
         <Box h={"88%"} overflow={"scroll"}>
           <VStack p={padding} justifyContent={"end"}>
-            {messages.map((activeMessage: Message) => (
-              <ChatMessage
-                key={activeMessage.timestamp}
-                {...activeMessage}
-                type={MessageType.TEXT}
-              />
-            ))}
+            {messagesRender}
+            <Box ref={messagesEndRef}></Box>
           </VStack>
         </Box>
         <HStack w={"100%"} px={padding}>
