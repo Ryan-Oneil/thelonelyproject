@@ -14,7 +14,7 @@ import { UserProfile } from "../types/Profile";
 import DetailedProfile from "../components/DetailedProfile";
 
 const FindMatchPage = () => {
-  const { data, isSuccess, isLoading } = useMatches();
+  const { data, isSuccess } = useMatches();
   const [activeProfile, setActiveProfile] = useState(0);
 
   return (

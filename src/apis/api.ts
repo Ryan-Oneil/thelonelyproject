@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from "axios";
+import axios, { AxiosError, AxiosRequestConfig } from "axios";
 import { getAuth } from "firebase/auth";
 
 export const BASE_URL = process.env.REACT_APP_API_URL;
@@ -40,4 +40,14 @@ export const apiPutCall = async (endpoint: string, data: any) => {
 
 export const apiDeleteCall = async (endpoint: string) => {
   return baseApi.delete(endpoint);
+};
+
+export const getApiError = (error: AxiosError) => {
+  if (error.response) {
+    return error.response.data.message;
+  } else if (error.request) {
+    return error.request;
+  } else {
+    return error.message;
+  }
 };
