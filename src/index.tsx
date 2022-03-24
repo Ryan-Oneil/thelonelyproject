@@ -9,6 +9,8 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import authReducer from "./features/Auth/authReducer";
 import { DefaultOptions, QueryClient, QueryClientProvider } from "react-query";
+import { createStandaloneToast } from "@chakra-ui/react";
+import { getApiError } from "./apis/api";
 
 const reducers = combineReducers({
   auth: authReducer,
@@ -26,6 +28,17 @@ const queryConfig: DefaultOptions = {
     useErrorBoundary: true,
     refetchOnWindowFocus: false,
     retry: false,
+    onError: (error: any) => {
+      const toast = createStandaloneToast();
+
+      toast({
+        title: "An error occurred.",
+        description: getApiError(error),
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
+    },
   },
 };
 
