@@ -25,19 +25,22 @@ export type AppDispatch = typeof store.dispatch;
 
 const queryConfig: DefaultOptions = {
   queries: {
-    useErrorBoundary: true,
     refetchOnWindowFocus: false,
     retry: false,
     onError: (error: any) => {
       const toast = createStandaloneToast();
+      const errorMessage = getApiError(error);
 
-      toast({
-        title: "An error occurred.",
-        description: getApiError(error),
-        status: "error",
-        duration: 2000,
-        isClosable: true,
-      });
+      if (!toast.isActive(errorMessage)) {
+        toast({
+          id: errorMessage,
+          title: "An error occurred.",
+          description: errorMessage,
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+        });
+      }
     },
   },
 };

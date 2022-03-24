@@ -20,6 +20,7 @@ type props = {
   showEditControls?: boolean;
   title: string;
   extraActionButtons?: React.ReactNode;
+  isLoading?: boolean;
 };
 
 const EditableCard = ({
@@ -28,6 +29,7 @@ const EditableCard = ({
   showEditControls,
   title,
   extraActionButtons,
+  isLoading,
 }: props) => {
   const EditableControls = () => {
     const {
@@ -66,7 +68,14 @@ const EditableCard = ({
   };
 
   return (
-    <ProfileCard>
+    <ProfileCard
+      isLoading={isLoading}
+      loadingHeader={
+        <Heading size={"md"} m={"auto"}>
+          {title}
+        </Heading>
+      }
+    >
       <Editable
         defaultValue={defaultValue}
         fontSize="2xl"

@@ -26,7 +26,11 @@ import {
 } from "../api/updateUserProfile";
 import { ProfileProps } from "../types/ProfileProps";
 
-const ProfileInterests = ({ editMode, interests = [] }: ProfileProps) => {
+const ProfileInterests = ({
+  editMode,
+  interests = [],
+  isLoading,
+}: ProfileProps) => {
   const addInterest = useAddProfileInterest();
   const deleteInterest = useDeleteProfileInterest();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -36,8 +40,10 @@ const ProfileInterests = ({ editMode, interests = [] }: ProfileProps) => {
   const InterestCategory = ({ name, interests }: CategoryInterest) => {
     return (
       <>
-        <Heading size={"md"}>{name}</Heading>
-        <SimpleGrid minChildWidth="80px" my={3} spacing={5}>
+        <Heading size={"md"} p={3}>
+          {name}
+        </Heading>
+        <SimpleGrid minChildWidth="150px" my={3} spacing={5}>
           {interests.map((interest: Interest) => (
             <SelectAbleAvatarTag
               description={interest.name}
@@ -55,31 +61,34 @@ const ProfileInterests = ({ editMode, interests = [] }: ProfileProps) => {
 
   return (
     <>
-      <ProfileCard>
-        <Flex>
-          <Heading size={"md"} m={"auto"}>
-            Interests
-          </Heading>
-          <Spacer />
-          {editMode && (
-            <Tooltip label={"Edit Interests"}>
-              <IconButton
-                size="sm"
-                icon={<EditIcon />}
-                aria-label={"Edit"}
-                onClick={onOpen}
-              />
-            </Tooltip>
-          )}
-        </Flex>
-
+      <ProfileCard
+        isLoading={isLoading}
+        header={
+          <Flex>
+            <Heading size={"md"} m={"auto"}>
+              Interests
+            </Heading>
+            <Spacer />
+            {editMode && (
+              <Tooltip label={"Edit Interests"}>
+                <IconButton
+                  size="sm"
+                  icon={<EditIcon />}
+                  aria-label={"Edit"}
+                  onClick={onOpen}
+                />
+              </Tooltip>
+            )}
+          </Flex>
+        }
+      >
         <SimpleGrid columns={{ base: 2, xl: 1, "2xl": 2 }} mt={3} spacing={5}>
           {interests.map((interest: Interest) => (
             <AvatarTag description={interest.name} key={interest.id} />
           ))}
         </SimpleGrid>
       </ProfileCard>
-      <Drawer isOpen={isOpen} placement="right" onClose={onClose} size={"md"}>
+      <Drawer isOpen={isOpen} placement="right" onClose={onClose} size={"lg"}>
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />

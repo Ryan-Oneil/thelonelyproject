@@ -46,7 +46,7 @@ export const getApiError = (error: AxiosError) => {
   if (error.response) {
     return error.response.data.message;
   } else if (error.request) {
-    return error.request;
+    return "Services are unreachable";
   } else {
     return error.message;
   }
