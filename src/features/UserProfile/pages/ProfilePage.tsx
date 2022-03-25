@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Heading, SimpleGrid, VStack } from "@chakra-ui/react";
+import { Box, Heading, SimpleGrid, Skeleton, VStack } from "@chakra-ui/react";
 import AvatarTag from "../components/AvatarTag";
 import { useParams } from "react-router-dom";
 import ProfileCard from "../components/ProfileCard";
@@ -20,7 +20,7 @@ const ProfilePage = () => {
   const profileId = params.userId || userId;
   const enableEdit = profileId === userId;
 
-  const { data } = useUserProfile(profileId);
+  const { data, isLoading } = useUserProfile(profileId);
   const {
     about = "",
     medias = [],
@@ -52,7 +52,7 @@ const ProfilePage = () => {
         <SimpleGrid
           columns={{ base: 1, lg: 2 }}
           w={"100%"}
-          p={"5%"}
+          px={"5%"}
           pt={0}
           spacing={10}
         >
@@ -65,15 +65,24 @@ const ProfilePage = () => {
               }
               showEditControls={enableEdit}
               key={about}
+              isLoading={isLoading}
             />
-            <ProfileGallery medias={medias} editMode={enableEdit} />
+            <ProfileGallery
+              medias={medias}
+              editMode={enableEdit}
+              isLoading={isLoading}
+            />
           </VStack>
           <SimpleGrid
             pt={{ base: 0, lg: 10 }}
             spacing={10}
             columns={{ base: 1, xl: 2 }}
           >
-            <ProfileInterests editMode={enableEdit} interests={interests} />
+            <ProfileInterests
+              editMode={enableEdit}
+              interests={interests}
+              isLoading={isLoading}
+            />
             <ProfileCard>
               <Heading size={"md"}>Trending Artists</Heading>
               <SimpleGrid

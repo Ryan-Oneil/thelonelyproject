@@ -19,7 +19,13 @@ const FindMatchPage = () => {
 
   return (
     <BaseAppPage>
-      <Tabs variant="soft-rounded" isLazy align={"center"}>
+      <Tabs
+        variant="soft-rounded"
+        isLazy
+        align={"center"}
+        overflow={"auto"}
+        h={"100vh"}
+      >
         <TabList pt={5}>
           <Tab>Single View</Tab>
           <Tab>Grid View</Tab>

@@ -1,8 +1,16 @@
 import React from "react";
-import { BoxProps } from "@chakra-ui/react";
+import { BoxProps, Skeleton } from "@chakra-ui/react";
 import { Card } from "../../../Base/components/Card";
 
-const ProfileCard = (props: BoxProps) => {
+interface Props extends BoxProps {
+  isLoading?: boolean;
+  header?: React.ReactNode;
+  loadingHeader?: React.ReactNode;
+}
+
+const ProfileCard = (props: Props) => {
+  const showLoadingHeader = props.loadingHeader && props.isLoading;
+
   const cardStyle = {
     border: "1px solid rgba(18, 17, 39, 0.12)",
     borderRadius: " 12px",
@@ -13,7 +21,11 @@ const ProfileCard = (props: BoxProps) => {
 
   return (
     <Card {...cardStyle} {...props}>
-      {props.children}
+      {showLoadingHeader && props.loadingHeader}
+      {!showLoadingHeader && props.header}
+      <Skeleton isLoaded={!props.isLoading} h={"80%"}>
+        {props.children}
+      </Skeleton>
     </Card>
   );
 };

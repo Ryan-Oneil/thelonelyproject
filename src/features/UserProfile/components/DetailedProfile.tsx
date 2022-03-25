@@ -12,12 +12,16 @@ import {
   ButtonGroup,
   SimpleGrid,
   SkeletonText,
+  createStandaloneToast,
 } from "@chakra-ui/react";
 import { UserProfile } from "../types/Profile";
 import ProfileInterests from "./ProfileInterests";
 import ProfilePrompts from "./ProfilePrompts";
 import { useUserProfile } from "../api/getUserProfile";
 import { useSendConnectionRequest } from "../api/updateUserProfile";
+import { USER_PROFILE_URL } from "../../../utils/urls";
+import { Link } from "react-router-dom";
+import { getApiError } from "../../../apis/api";
 
 interface Props extends UserProfile {
   nextProfileAction: Function;
@@ -121,6 +125,20 @@ const DetailedProfile = ({
             >
               Skip
             </Button>
+            <Link to={`${USER_PROFILE_URL}/${id}`}>
+              <Button
+                w={"full"}
+                bg={"#151f21"}
+                color={"white"}
+                rounded={"md"}
+                _hover={{
+                  transform: "translateY(-2px)",
+                  boxShadow: "lg",
+                }}
+              >
+                View profile
+              </Button>
+            </Link>
             <Button
               w={"full"}
               bg={"#151f21"}
@@ -131,7 +149,21 @@ const DetailedProfile = ({
                 boxShadow: "lg",
               }}
               onClick={() => {
-                sendConnection.mutateAsync(id).then(() => nextProfileAction());
+                sendConnection
+                  .mutateAsync(id)
+                  .then(() => nextProfileAction())
+                  .catch((error) => {
+                    const toast = createStandaloneToast();
+                    const errorMessage = getApiError(error);
+
+                    toast({
+                      title: "An error occurred.",
+                      description: errorMessage,
+                      status: "error",
+                      duration: 2000,
+                      isClosable: true,
+                    });
+                  });
               }}
             >
               Connect

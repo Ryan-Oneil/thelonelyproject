@@ -23,22 +23,30 @@ export const store = configureStore({
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
+const errorHandling = (error: any) => {
+  const toast = createStandaloneToast();
+  const errorMessage = getApiError(error);
+
+  if (!toast.isActive(errorMessage)) {
+    toast({
+      id: errorMessage,
+      title: "An error occurred.",
+      description: errorMessage,
+      status: "error",
+      duration: 2000,
+      isClosable: true,
+    });
+  }
+};
+
 const queryConfig: DefaultOptions = {
   queries: {
-    useErrorBoundary: true,
     refetchOnWindowFocus: false,
     retry: false,
-    onError: (error: any) => {
-      const toast = createStandaloneToast();
-
-      toast({
-        title: "An error occurred.",
-        description: getApiError(error),
-        status: "error",
-        duration: 2000,
-        isClosable: true,
-      });
-    },
+    onError: errorHandling,
+  },
+  mutations: {
+    onError: errorHandling,
   },
 };
 

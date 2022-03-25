@@ -17,15 +17,19 @@ import {
 } from "../api/updateUserProfile";
 import { ProfileProps } from "../types/ProfileProps";
 
-const ProfileGallery = ({ medias = [], editMode }: ProfileProps) => {
+const ProfileGallery = ({ medias = [], editMode, isLoading }: ProfileProps) => {
   const uploadMedia = useUploadProfileMedia();
   const deleteMedia = useDeleteProfileMedia();
 
   return (
-    <ProfileCard>
-      <Heading size={"md"} pb={3}>
-        Gallery
-      </Heading>
+    <ProfileCard
+      isLoading={isLoading}
+      header={
+        <Heading size={"md"} pb={3}>
+          Gallery
+        </Heading>
+      }
+    >
       <SimpleGrid
         columns={{ base: 1, md: 2, xl: 3 }}
         spacing={2}

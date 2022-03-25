@@ -1,5 +1,12 @@
 import React from "react";
-import { Box, Heading, IconButton, Image, VStack } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Heading,
+  IconButton,
+  Image,
+  VStack,
+} from "@chakra-ui/react";
 import { EditIcon } from "@chakra-ui/icons";
 import FileUploader from "./FileUploader";
 import { useUploadProfilePicture } from "../api/updateUserProfile";
@@ -24,6 +31,8 @@ const ProfilePicture = ({
           boxSize="200px"
           src={profilePictureUrl}
           alt={"User profile avatar"}
+          fallback={<Avatar size={"2xl"} mt={45} border={"2px solid white"} />}
+          border={"2px solid white"}
         />
         {editMode && (
           <FileUploader
