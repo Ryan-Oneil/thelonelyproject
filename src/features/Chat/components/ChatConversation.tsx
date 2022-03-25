@@ -147,7 +147,7 @@ const ChatConversation = () => {
           <ChatMenu />
         </Flex>
         <Divider style={{ borderColor }} />
-        <Box h={"88%"} overflow={"scroll"}>
+        <Box h={"88vh"} overflow={"scroll"}>
           <VStack p={padding} justifyContent={"end"}>
             {messagesRender}
             <Box ref={messagesEndRef}></Box>

@@ -52,7 +52,7 @@ const ProfilePage = () => {
         <SimpleGrid
           columns={{ base: 1, lg: 2 }}
           w={"100%"}
-          p={"5%"}
+          px={"5%"}
           pt={0}
           spacing={10}
         >
