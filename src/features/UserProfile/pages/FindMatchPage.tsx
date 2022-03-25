@@ -9,12 +9,13 @@ import {
 } from "@chakra-ui/react";
 import ProfileMatchCard from "../components/ProfileMatchCard";
 import BaseAppPage from "../../../Base/pages/BaseAppPage";
-import { useMatches } from "../api/getMatches";
+import { useAcceptedMatches, useMatches } from "../api/getMatches";
 import { UserProfile } from "../types/Profile";
 import DetailedProfile from "../components/DetailedProfile";
 
 const FindMatchPage = () => {
   const { data, isSuccess } = useMatches();
+  const acceptedMatches = useAcceptedMatches();
   const [activeProfile, setActiveProfile] = useState(0);
 
   return (
@@ -27,8 +28,8 @@ const FindMatchPage = () => {
         h={"100vh"}
       >
         <TabList pt={5}>
-          <Tab>Single View</Tab>
-          <Tab>Grid View</Tab>
+          <Tab>Matches</Tab>
+          <Tab>Previous Matches</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
@@ -43,8 +44,8 @@ const FindMatchPage = () => {
           </TabPanel>
           <TabPanel>
             <SimpleGrid spacing={1} minChildWidth={"350px"}>
-              {isSuccess &&
-                data.map((user: UserProfile) => (
+              {acceptedMatches.isSuccess &&
+                acceptedMatches.data.map((user: UserProfile) => (
                   <ProfileMatchCard {...user} key={user.id} />
                 ))}
             </SimpleGrid>
