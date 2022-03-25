@@ -39,10 +39,10 @@ export const slice = createSlice({
       state.status = AuthStage.LOGGED_OUT;
       state.user = initialState.user;
     },
-    setUserRole(state, action) {
-      state.user.role = action.payload;
+    registerCompleted(state) {
+      state.registeredStatus = RegisterStatus.REGISTERED;
     },
   },
 });
 export default slice.reducer;
-export const { login, logout, setUserRole } = slice.actions;
+export const { login, logout, registerCompleted } = slice.actions;
