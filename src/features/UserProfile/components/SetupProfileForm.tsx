@@ -16,18 +16,24 @@ import {
   TextAreaInput,
 } from "../../../Base/components/forms/Inputs";
 import { createUserProfile } from "../api/updateUserProfile";
+import { useAppDispatch } from "../../../utils/hooks";
+import { registerCompleted } from "../../Auth/authReducer";
 
 const SetupProfileForm = () => {
   const [avatarUrl, setAvatarUrl] = useState(
     "https://avataaars.io/?avatarStyle=Circle&topType=ShortHairDreads01&accessoriesType=Wayfarers&hairColor=Black&facialHairType=BeardLight&facialHairColor=Black&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Smile&skinColor=Light"
   );
+  const dispatch = useAppDispatch();
 
   const onSubmit = (
     formValues: BaseProfile,
     { setStatus }: { setStatus: Function }
   ) => {
     return createUserProfile(formValues)
-      .then(() => getAuth().currentUser?.getIdToken(true))
+      .then(() => {
+        getAuth().currentUser?.getIdToken(true);
+        dispatch(registerCompleted());
+      })
       .catch((error) => setStatus({ type: "error", message: error.message }));
   };
 

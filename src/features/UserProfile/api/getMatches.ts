@@ -1,6 +1,6 @@
 import { apiGetCall } from "../../../apis/api";
 import {
-  GET_PENDING_MATCHES,
+  GET_ACCEPTED_CONNECTIONS,
   GET_POTENTIAL_MATCHES,
 } from "../../../apis/endpoints";
 import { useQuery } from "react-query";
@@ -13,10 +13,10 @@ export const useMatches = () => {
   return useQuery(["matches"], getMatches);
 };
 
-export const getPendingMatches = () => {
-  return apiGetCall(GET_PENDING_MATCHES).then((response) => response.data);
+export const getAcceptedMatches = () => {
+  return apiGetCall(GET_ACCEPTED_CONNECTIONS).then((response) => response.data);
 };
 
-export const usePendingMatches = () => {
-  return useQuery(["pendingMatches"], getPendingMatches);
+export const useAcceptedMatches = () => {
+  return useQuery(["connectedMatches"], getAcceptedMatches);
 };

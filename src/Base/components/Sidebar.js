@@ -16,6 +16,7 @@ import React, { useState } from "react";
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
 import {
   CHAT_URL,
+  HOMEPAGE_URL,
   PROFILE_FIND_MATCHES,
   USER_PROFILE_URL,
 } from "../../utils/urls";
@@ -83,9 +84,11 @@ export const Sidebar = () => {
         boxShadow={"0px 0px 24px rgba(0, 0, 0, 0.08)"}
         display={{ base: "none", md: "block" }}
       >
-        <div className={styles.logoBox}>
-          <FaRegComments size={52} color={"white"} />
-        </div>
+        <Link to={HOMEPAGE_URL}>
+          <div className={styles.logoBox}>
+            <FaRegComments size={52} color={"white"} />
+          </div>
+        </Link>
         <NavMenu />
       </Box>
       <Box display={{ base: "block", md: "none" }} width={"100%"} p={5}>

@@ -1,8 +1,6 @@
 import React from "react";
-import { Box, Heading, SimpleGrid, Skeleton, VStack } from "@chakra-ui/react";
-import AvatarTag from "../components/AvatarTag";
+import { Box, SimpleGrid, VStack } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
-import ProfileCard from "../components/ProfileCard";
 import ProfileGallery from "../components/ProfileGallery";
 import ProfileInterests from "../components/ProfileInterests";
 import ProfilePrompts from "../components/ProfilePrompts";
@@ -83,18 +81,6 @@ const ProfilePage = () => {
               interests={interests}
               isLoading={isLoading}
             />
-            <ProfileCard>
-              <Heading size={"md"}>Trending Artists</Heading>
-              <SimpleGrid
-                columns={{ base: 2, xl: 1, "2xl": 2 }}
-                mt={3}
-                spacing={5}
-              >
-                {[{ name: "Test", url: "" }].map((artist) => (
-                  <AvatarTag description={artist.name} key={artist.url} />
-                ))}
-              </SimpleGrid>
-            </ProfileCard>
             <ProfilePrompts editMode={enableEdit} prompts={prompts} />
           </SimpleGrid>
         </SimpleGrid>
