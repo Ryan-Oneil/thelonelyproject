@@ -1,8 +1,6 @@
 import React from "react";
-import { Box, Heading, SimpleGrid, Skeleton, VStack } from "@chakra-ui/react";
-import AvatarTag from "../components/AvatarTag";
+import { Box, SimpleGrid, VStack } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
-import ProfileCard from "../components/ProfileCard";
 import ProfileGallery from "../components/ProfileGallery";
 import ProfileInterests from "../components/ProfileInterests";
 import ProfilePrompts from "../components/ProfilePrompts";
