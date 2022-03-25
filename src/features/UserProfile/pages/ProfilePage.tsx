@@ -83,18 +83,6 @@ const ProfilePage = () => {
               interests={interests}
               isLoading={isLoading}
             />
-            <ProfileCard>
-              <Heading size={"md"}>Trending Artists</Heading>
-              <SimpleGrid
-                columns={{ base: 2, xl: 1, "2xl": 2 }}
-                mt={3}
-                spacing={5}
-              >
-                {[{ name: "Test", url: "" }].map((artist) => (
-                  <AvatarTag description={artist.name} key={artist.url} />
-                ))}
-              </SimpleGrid>
-            </ProfileCard>
             <ProfilePrompts editMode={enableEdit} prompts={prompts} />
           </SimpleGrid>
         </SimpleGrid>
