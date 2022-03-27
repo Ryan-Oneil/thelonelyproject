@@ -3,7 +3,6 @@ import { Box, Center, Flex, IconButton, Spacer, Text } from "@chakra-ui/react";
 import { DownloadIcon } from "@chakra-ui/icons";
 import { useAppSelector } from "../../../utils/hooks";
 import { FaRegFileImage } from "react-icons/fa";
-import { MessageType } from "../enums/MessageType";
 
 const SharedMedia = ({ id }: { id: string }) => {
   // const { name, type, size } = useAppSelector(

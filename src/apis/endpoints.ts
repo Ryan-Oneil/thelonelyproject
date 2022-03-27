@@ -15,9 +15,9 @@ export const USER_PROFILE_ADD_PROMPT_ENDPOINT = "/user/profile/prompt";
 export const USER_PROFILE_DELETE_PROMPT_ENDPOINT =
   USER_PROFILE_ADD_PROMPT_ENDPOINT;
 export const GET_POTENTIAL_MATCHES = "/user/profile/matches ";
-export const GET_PENDING_MATCHES = "/user/profile/connections/pending";
 export const GET_ACCEPTED_CONNECTIONS = "/user/profile/connections/connected";
 export const USER_PROFILE_SEND_CONNECTION_REQUEST = "/user/profile/%s/connect";
 export const CHAT_GET_CONVERSATIONS = "/chat/chatrooms";
 export const CHAT_GET_MESSAGES = "/chat/messages";
 export const CHAT_CREATE = "/chat/create";
+export const CHAT_SEND_ATTACHMENT = "/chat/%s/message/media";

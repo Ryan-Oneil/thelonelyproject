@@ -1,17 +1,16 @@
 import React from "react";
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Link, Text } from "@chakra-ui/react";
 import { useAppSelector } from "../../../utils/hooks";
-import { MessageType } from "../enums/MessageType";
 import ImageModal from "./ImageModal";
+import { getMediaType, isValidUrl } from "../../../utils/helpers";
 
 type messageProps = {
   content: string;
   senderId?: string;
-  type: MessageType;
   timestamp: string;
 };
 
-const ChatMessage = ({ content, senderId, type, timestamp }: messageProps) => {
+const ChatMessage = ({ content, senderId, timestamp }: messageProps) => {
   const { uid } = useAppSelector((state) => state.auth.user);
   const isSender = senderId === undefined || senderId === uid;
   const date = new Date(timestamp);
@@ -31,10 +30,18 @@ const ChatMessage = ({ content, senderId, type, timestamp }: messageProps) => {
       };
 
   const MessageContent = () => {
-    if (type === MessageType.IMAGE) {
+    const isUrl = isValidUrl(content);
+
+    if (isUrl && getMediaType(content) === "img") {
       return <ImageModal imageUrl={content} />;
-    } else if (type === MessageType.VIDEO) {
-      return <video src={content} muted controls height={200} />;
+    } else if (isUrl && getMediaType(content) === "video") {
+      return <video src={content} muted controls width={200} />;
+    } else if (isUrl) {
+      return (
+        <Link href={content} isExternal>
+          {content}
+        </Link>
+      );
     }
     return <Text isTruncated>{content}</Text>;
   };
