@@ -26,7 +26,6 @@ import {
 import AvatarHeader from "./AvatarHeader";
 import ChatMessage from "./ChatMessage";
 import { useStomp } from "../../../hooks/useStomp";
-import { MessageType } from "../enums/MessageType";
 import { useParams } from "react-router-dom";
 import { useMessages } from "../api/getMessages";
 import ConversationInfoPanel from "./ConversationInfoPanel";
@@ -34,6 +33,8 @@ import { useAppSelector } from "../../../utils/hooks";
 import { IMessage } from "@stomp/stompjs";
 import { conversation } from "../type/conversation";
 import { Message } from "../type/message";
+import FileUploader from "../../UserProfile/components/FileUploader";
+import { useSendAttachment } from "../api/sendMedia";
 
 const ChatConversation = () => {
   const padding = 5;
@@ -47,12 +48,9 @@ const ChatConversation = () => {
   const { data, isLoading, isSuccess } = useMessages(activeConversationId);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const sendAttachment = useSendAttachment();
   const messagesRender = messages.map((activeMessage: Message) => (
-    <ChatMessage
-      key={activeMessage.timestamp}
-      {...activeMessage}
-      type={MessageType.TEXT}
-    />
+    <ChatMessage key={activeMessage.timestamp} {...activeMessage} />
   ));
 
   useEffect(() => {
@@ -154,12 +152,23 @@ const ChatConversation = () => {
           </VStack>
         </Box>
         <HStack w={"100%"} px={padding}>
-          <IconButton
-            icon={<AttachmentIcon />}
-            variant="ghost"
-            aria-label={"Attachment button"}
-            size={"lg"}
-          />
+          <FileUploader
+            uploadAction={(file: File) =>
+              sendAttachment.mutate({
+                chatId: activeConversationId,
+                attachment: file,
+              })
+            }
+            accept={"*"}
+          >
+            <IconButton
+              icon={<AttachmentIcon />}
+              variant="ghost"
+              aria-label={"Attachment button"}
+              sx={{ ":hover > svg": { transform: "scale(1.1)" } }}
+              size={"lg"}
+            />
+          </FileUploader>
           <InputGroup size={"lg"}>
             <Input
               placeholder="Type a message"
