@@ -16,6 +16,8 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   signInWithEmailAndPassword,
+  OAuthProvider,
+  TwitterAuthProvider,
 } from "firebase/auth";
 import { Field, Formik, FormikErrors } from "formik";
 import { LabelledInput } from "../../../Base/components/forms/Inputs";
@@ -23,8 +25,15 @@ import { User } from "../types/User";
 import { FaGoogle, FaMicrosoft, FaTwitter } from "react-icons/fa";
 
 const provider = new GoogleAuthProvider();
+const microsoftProvider = new OAuthProvider("microsoft.com");
+microsoftProvider.setCustomParameters({
+  tenant: "88685b40-800d-4d57-9b38-8438ec0f6e3d",
+});
+const twitterProvider = new TwitterAuthProvider();
 
 const LoginForm = () => {
+  const auth = getAuth();
+
   const onSubmit = (
     formValues: User,
     { setStatus }: { setStatus: Function }
@@ -61,7 +70,6 @@ const LoginForm = () => {
           leftIcon={<FaGoogle />}
           size={"lg"}
           onClick={() => {
-            const auth = getAuth();
             signInWithPopup(auth, provider);
           }}
         >
@@ -72,6 +80,9 @@ const LoginForm = () => {
             icon={<FaMicrosoft />}
             aria-label={"Microsoft Logo"}
             size={"lg"}
+            onClick={() => {
+              signInWithPopup(auth, microsoftProvider);
+            }}
           />
         </Tooltip>
         <Tooltip label={"Sign in with Twitter"}>
@@ -80,6 +91,9 @@ const LoginForm = () => {
             icon={<FaTwitter />}
             aria-label={"Twitter logo"}
             size={"lg"}
+            onClick={() => {
+              signInWithPopup(auth, twitterProvider);
+            }}
           />
         </Tooltip>
       </Flex>
