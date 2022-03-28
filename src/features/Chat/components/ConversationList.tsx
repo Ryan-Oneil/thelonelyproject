@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Divider,
@@ -15,9 +15,10 @@ import { conversation } from "../type/conversation";
 import Conversation from "./Conversation";
 
 const ConversationList = () => {
-  const conversationsQuery = useConversations();
+  const { isLoading, data } = useConversations();
+  const [filter, setFilter] = useState("");
 
-  if (conversationsQuery.isLoading) {
+  if (isLoading) {
     return <Spinner size="xl" />;
   }
 
@@ -33,11 +34,19 @@ const ConversationList = () => {
       <VStack p={5} spacing={4}>
         <InputGroup>
           <InputLeftElement children={<SearchIcon />} />
-          <Input variant="filled" placeholder="Search" />
+          <Input
+            variant="filled"
+            placeholder="Search"
+            onChange={(event) => setFilter(event.target.value)}
+          />
         </InputGroup>
-        {conversationsQuery.data.map((conversation: conversation) => (
-          <Conversation {...conversation} key={conversation.id} />
-        ))}
+        {data
+          .filter((conversation: conversation) =>
+            conversation.name.toLowerCase().includes(filter)
+          )
+          .map((conversation: conversation) => (
+            <Conversation {...conversation} key={conversation.id} />
+          ))}
       </VStack>
     </Box>
   );
