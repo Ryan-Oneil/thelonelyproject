@@ -19,6 +19,7 @@ export const useStomp = () => {
           });
       },
       reconnectDelay: 5000,
+      connectionTimeout: 4000,
     });
   }
   return stompClient;

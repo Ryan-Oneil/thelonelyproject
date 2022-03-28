@@ -4,7 +4,6 @@ import {
   Center,
   Heading,
   IconButton,
-  Image,
   SimpleGrid,
   Tooltip,
 } from "@chakra-ui/react";
@@ -16,6 +15,7 @@ import {
   useUploadProfileMedia,
 } from "../api/updateUserProfile";
 import { ProfileProps } from "../types/ProfileProps";
+import ImageModal from "../../Chat/components/ImageModal";
 
 const ProfileGallery = ({ medias = [], editMode, isLoading }: ProfileProps) => {
   const uploadMedia = useUploadProfileMedia();
@@ -38,7 +38,7 @@ const ProfileGallery = ({ medias = [], editMode, isLoading }: ProfileProps) => {
       >
         {medias.map((image) => (
           <Box position="relative" key={image.id}>
-            <Image
+            <ImageModal
               src={image.url}
               borderRadius={"lg"}
               width={"100%"}

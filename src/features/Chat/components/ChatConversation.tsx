@@ -35,6 +35,8 @@ import { conversation } from "../type/conversation";
 import { Message } from "../type/message";
 import FileUploader from "../../UserProfile/components/FileUploader";
 import { useSendAttachment } from "../api/sendMedia";
+import { AxiosError } from "axios";
+import ApiError from "../../Auth/components/ApiError";
 
 const ChatConversation = () => {
   const padding = 5;
@@ -43,15 +45,13 @@ const ChatConversation = () => {
   const activeConversationId = params.chatId as string;
   const userId = useAppSelector((state) => state.auth.user.uid);
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([] as Message[]);
   const stompClient = useStomp();
-  const { data, isLoading, isSuccess } = useMessages(activeConversationId);
+  const { data, isLoading, isSuccess, isError, error } =
+    useMessages(activeConversationId);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const sendAttachment = useSendAttachment();
-  const messagesRender = messages.map((activeMessage: Message) => (
-    <ChatMessage key={activeMessage.timestamp} {...activeMessage} />
-  ));
 
   useEffect(() => {
     if (isSuccess) {
@@ -59,16 +59,10 @@ const ChatConversation = () => {
     }
   }, [data, isSuccess]);
 
-  //Scrolls to the bottom message once fully rendered
+  //Scrolls to the bottom message
   useEffect(() => {
-    if (isSuccess) {
-      messagesEndRef?.current?.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest",
-        inline: "start",
-      });
-    }
-  }, [messagesRender, isSuccess, messagesEndRef]);
+    messagesEndRef?.current?.scrollTo(0, messagesEndRef?.current?.scrollHeight);
+  }, [messages]);
 
   useEffect(() => {
     if (!stompClient.active) {
@@ -88,7 +82,6 @@ const ChatConversation = () => {
     const receivedMessage = JSON.parse(msg.body) as conversation;
 
     if (receivedMessage.id === activeConversationId) {
-      // @ts-ignore
       setMessages((prevState) => [...prevState, ...receivedMessage.messages]);
     }
   };
@@ -131,6 +124,10 @@ const ChatConversation = () => {
     return <Spinner size="xl" />;
   }
 
+  if (isError) {
+    return <ApiError error={error as AxiosError} />;
+  }
+
   return (
     <>
       <Box borderRight={"1px solid"} flexGrow={1} borderColor={borderColor}>
@@ -145,10 +142,11 @@ const ChatConversation = () => {
           <ChatMenu />
         </Flex>
         <Divider style={{ borderColor }} />
-        <Box h={"88vh"} overflow={"scroll"}>
+        <Box h={"88vh"} overflow={"scroll"} ref={messagesEndRef}>
           <VStack p={padding} justifyContent={"end"}>
-            {messagesRender}
-            <Box ref={messagesEndRef}></Box>
+            {messages.map((activeMessage: Message) => (
+              <ChatMessage key={activeMessage.timestamp} {...activeMessage} />
+            ))}
           </VStack>
         </Box>
         <HStack w={"100%"} px={padding}>
