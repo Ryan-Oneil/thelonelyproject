@@ -33,7 +33,7 @@ const ChatMessage = ({ content, senderId, timestamp }: messageProps) => {
     const isUrl = isValidUrl(content);
 
     if (isUrl && getMediaType(content) === "img") {
-      return <ImageModal imageUrl={content} />;
+      return <ImageModal src={content} />;
     } else if (isUrl && getMediaType(content) === "video") {
       return <video src={content} muted controls width={200} />;
     } else if (isUrl) {
