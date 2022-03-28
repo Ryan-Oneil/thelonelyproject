@@ -194,6 +194,7 @@ const ChatConversation = () => {
           name={data.name}
           icon={data.icon}
           onClose={onClose}
+          about={data.about}
         />
       )}
     </>
