@@ -16,9 +16,12 @@ type props = {
   name: string;
   icon: string;
   onClose: Function;
+  about: string;
 };
 
-const ConversationInfoPanel = ({ name, icon, onClose }: props) => {
+const ConversationInfoPanel = ({ name, icon, onClose, about }: props) => {
+  const borderStyle = "rgba(0, 0, 0, 0.2)";
+
   return (
     <Box>
       <Flex p={6}>
@@ -28,7 +31,7 @@ const ConversationInfoPanel = ({ name, icon, onClose }: props) => {
         <Spacer />
         <CloseButton size="lg" m={"auto"} onClick={() => onClose()} />
       </Flex>
-      <Divider style={{ borderColor: "rgba(0, 0, 0, 0.2)" }} />
+      <Divider borderColor={borderStyle} />
       <Image
         borderRadius="full"
         boxSize="200px"
@@ -43,7 +46,12 @@ const ConversationInfoPanel = ({ name, icon, onClose }: props) => {
       <Heading fontSize={"2xl"} textAlign={"center"} pb={4}>
         {name}
       </Heading>
-      <Divider style={{ borderColor: "rgba(0, 0, 0, 0.2)" }} />
+      <Divider borderColor={borderStyle} />
+      <Box p={4}>
+        <Text fontWeight={"bold"}>About</Text>
+        <Text>{about}</Text>
+      </Box>
+      <Divider borderColor={borderStyle} />
       <Text p={4} fontWeight={"bold"}>
         Shared Media
       </Text>
