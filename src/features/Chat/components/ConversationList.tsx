@@ -22,10 +22,6 @@ const ConversationList = () => {
   const [filter, setFilter] = useState("");
   const profile = useUserProfile(userId);
 
-  if (isLoading) {
-    return <Spinner size="xl" />;
-  }
-
   return (
     <Box borderRight={"1px solid rgba(0, 0, 0, 0.2)"}>
       <AvatarHeader
@@ -44,6 +40,7 @@ const ConversationList = () => {
             onChange={(event) => setFilter(event.target.value)}
           />
         </InputGroup>
+        {isLoading && <Spinner size="xl" />}
         {isSuccess &&
           data
             .filter((conversation: conversation) =>
