@@ -13,10 +13,14 @@ import AvatarHeader from "./AvatarHeader";
 import { useConversations } from "../api/getConversations";
 import { conversation } from "../type/conversation";
 import Conversation from "./Conversation";
+import { useUserProfile } from "../../UserProfile/api/getUserProfile";
+import { useAppSelector } from "../../../utils/hooks";
 
 const ConversationList = () => {
-  const { isLoading, data } = useConversations();
+  const userId = useAppSelector((state) => state.auth.user.uid);
+  const { isLoading, data, isSuccess } = useConversations();
   const [filter, setFilter] = useState("");
+  const profile = useUserProfile(userId);
 
   if (isLoading) {
     return <Spinner size="xl" />;
@@ -25,10 +29,10 @@ const ConversationList = () => {
   return (
     <Box borderRight={"1px solid rgba(0, 0, 0, 0.2)"}>
       <AvatarHeader
-        name={"Ryan L"}
+        name={profile.data?.name}
         heading={"Conversations"}
         padding={5}
-        url={""}
+        url={profile.data?.profilePictureUrl}
       />
       <Divider style={{ borderColor: "rgba(0, 0, 0, 0.2)" }} />
       <VStack p={5} spacing={4}>
@@ -40,13 +44,14 @@ const ConversationList = () => {
             onChange={(event) => setFilter(event.target.value)}
           />
         </InputGroup>
-        {data
-          .filter((conversation: conversation) =>
-            conversation.name.toLowerCase().includes(filter)
-          )
-          .map((conversation: conversation) => (
-            <Conversation {...conversation} key={conversation.id} />
-          ))}
+        {isSuccess &&
+          data
+            .filter((conversation: conversation) =>
+              conversation.name.toLowerCase().includes(filter)
+            )
+            .map((conversation: conversation) => (
+              <Conversation {...conversation} key={conversation.id} />
+            ))}
       </VStack>
     </Box>
   );
