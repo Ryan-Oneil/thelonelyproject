@@ -37,7 +37,7 @@ const ProfilePage = () => {
       <Box
         backgroundImage={require("../../../assets/media/img.png")}
         backgroundRepeat={"no-repeat"}
-        backgroundSize={"100% 210px"}
+        backgroundSize={"100% 300px"}
         flexWrap={"wrap"}
         w={"100%"}
       >
