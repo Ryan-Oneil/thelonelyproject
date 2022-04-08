@@ -21,6 +21,8 @@ Live site deployed on Cloudflare pages [https://lonelyproject.org](https://lonel
 
 ### Running locally
 
+If you don't have one already you'll need a Firebase account and project setup [https://firebase.google.com/](https://firebase.google.com/)
+
 npm install
 
 npm start
@@ -40,6 +42,6 @@ REACT_APP_FIREBASE_APP_ID=
 
 REACT_APP_FIREBASE_MEASUREMENT_ID=
 
-REACT_APP_API_URL=
+REACT_APP_API_URL=http://localhost:8080
 
-REACT_APP_BROKER_URL=
+REACT_APP_BROKER_URL=ws://localhost:8080/ws
