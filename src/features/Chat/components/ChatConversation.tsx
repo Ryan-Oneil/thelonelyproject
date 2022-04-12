@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Divider,
@@ -18,7 +18,6 @@ import {
   Spacer,
   Spinner,
   useDisclosure,
-  VStack,
 } from "@chakra-ui/react";
 import {
   AttachmentIcon,
@@ -27,7 +26,6 @@ import {
   InfoOutlineIcon,
 } from "@chakra-ui/icons";
 import AvatarHeader from "./AvatarHeader";
-import ChatMessage from "./ChatMessage";
 import { useStomp } from "../../../hooks/useStomp";
 import { useParams } from "react-router-dom";
 import { useMessages } from "../api/getMessages";
@@ -43,6 +41,7 @@ import ApiError from "../../Auth/components/ApiError";
 import { Picker, BaseEmoji } from "emoji-mart";
 import "emoji-mart/css/emoji-mart.css";
 import { FaRegSmile } from "react-icons/fa";
+import ChatMessageList from "./ChatMessageList";
 
 const ChatConversation = () => {
   const padding = 5;
@@ -56,7 +55,6 @@ const ChatConversation = () => {
   const { data, isLoading, isSuccess, isError, error } =
     useMessages(activeConversationId);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const messagesEndRef = useRef<HTMLDivElement>(null);
   const sendAttachment = useSendAttachment();
 
   useEffect(() => {
@@ -64,11 +62,6 @@ const ChatConversation = () => {
       setMessages(data.messages);
     }
   }, [data, isSuccess]);
-
-  //Scrolls to the bottom message
-  useEffect(() => {
-    messagesEndRef?.current?.scrollTo(0, messagesEndRef?.current?.scrollHeight);
-  }, [messages]);
 
   useEffect(() => {
     if (!stompClient.active) {
@@ -103,7 +96,7 @@ const ChatConversation = () => {
     // @ts-ignore
     setMessages((prevState) => [
       ...prevState,
-      { content: message, timestamp: new Date() },
+      { content: message, timestamp: new Date().toISOString() },
     ]);
     setMessage("");
   };
@@ -148,15 +141,9 @@ const ChatConversation = () => {
           <ChatMenu />
         </Flex>
         <Divider style={{ borderColor }} />
-        <Box h={"88vh"} overflow={"scroll"} ref={messagesEndRef}>
-          <VStack p={padding} justifyContent={"end"}>
-            {messages.map((activeMessage: Message) => (
-              <ChatMessage key={activeMessage.timestamp} {...activeMessage} />
-            ))}
-          </VStack>
-        </Box>
+        <ChatMessageList messages={messages} />
         <HStack w={"100%"} px={padding}>
-          <Popover>
+          <Popover isLazy>
             <PopoverTrigger>
               <IconButton
                 icon={<FaRegSmile />}
