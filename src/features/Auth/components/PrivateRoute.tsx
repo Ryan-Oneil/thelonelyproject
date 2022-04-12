@@ -7,7 +7,7 @@ import { RegisterStatus } from "../enums/RegisterStatus";
 
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   const { status, registeredStatus } = useAppSelector((state) => state.auth);
-  const { pathname } = useLocation();
+  const { pathname, search, hash } = useLocation();
   const isUserLoggedIn = status === AuthStage.LOGGED_IN;
 
   if (
@@ -25,7 +25,7 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   return (
     <Navigate
       to={LOGIN_URL}
-      state={{ redirectBack: true, redirectTo: pathname }}
+      state={{ redirectBack: true, redirectTo: pathname + search + hash }}
     />
   );
 };

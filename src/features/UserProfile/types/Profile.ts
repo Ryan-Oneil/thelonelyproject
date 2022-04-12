@@ -10,11 +10,17 @@ export interface UserProfile extends BaseProfile {
   medias?: Array<any>;
   interests?: Array<any>;
   prompts?: Array<any>;
-  spotifyArtists?: Array<any>;
+  spotifyArtists?: Array<ProfileTrait>;
 }
 
 export type Prompt = {
   promptId: number;
   promptName: string;
   text: string;
+};
+
+export type ProfileTrait = {
+  id: number;
+  name: string;
+  icon: string;
 };
