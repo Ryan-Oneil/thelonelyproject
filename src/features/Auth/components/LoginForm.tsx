@@ -44,7 +44,8 @@ const LoginForm = () => {
       formValues.email.trim(),
       formValues.password.trim()
     ).catch((error) => {
-      setStatus(error.message);
+      const message = error.code || error.message;
+      setStatus(message.replace("auth/", "").replaceAll("-", " "));
     });
   };
 
@@ -139,7 +140,7 @@ const LoginForm = () => {
                 />
               </VStack>
               {status && (
-                <Alert status="error" mt={"5%"}>
+                <Alert status="error" mt={"5%"} textTransform={"capitalize"}>
                   <AlertIcon />
                   {status}
                 </Alert>
