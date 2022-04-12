@@ -12,6 +12,9 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
   Spacer,
   Spinner,
   useDisclosure,
@@ -37,6 +40,9 @@ import FileUploader from "../../UserProfile/components/FileUploader";
 import { useSendAttachment } from "../api/sendMedia";
 import { AxiosError } from "axios";
 import ApiError from "../../Auth/components/ApiError";
+import { Picker, BaseEmoji } from "emoji-mart";
+import "emoji-mart/css/emoji-mart.css";
+import { FaRegSmile } from "react-icons/fa";
 
 const ChatConversation = () => {
   const padding = 5;
@@ -150,6 +156,29 @@ const ChatConversation = () => {
           </VStack>
         </Box>
         <HStack w={"100%"} px={padding}>
+          <Popover>
+            <PopoverTrigger>
+              <IconButton
+                icon={<FaRegSmile />}
+                variant="ghost"
+                aria-label={"emojis"}
+                sx={{ ":hover > svg": { transform: "scale(1.1)" } }}
+                size={"lg"}
+              />
+            </PopoverTrigger>
+            <PopoverContent>
+              <Picker
+                showPreview={false}
+                showSkinTones={false}
+                native={true}
+                style={{ width: "inherit" }}
+                onSelect={(emoji: BaseEmoji) =>
+                  setMessage((prevState) => prevState + emoji.native)
+                }
+              />
+            </PopoverContent>
+          </Popover>
+
           <FileUploader
             uploadAction={(file: File) =>
               sendAttachment.mutate({
