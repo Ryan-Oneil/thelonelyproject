@@ -11,6 +11,7 @@ import ProfileHeader from "../components/ProfileHeader";
 import { UserProfile } from "../types/Profile";
 import EditableCard from "../components/EditableCard";
 import { useUpdateProfileAbout } from "../api/updateUserProfile";
+import SpotifyArtists from "../components/SpotifyArtists";
 
 const ProfilePage = () => {
   const userId = useAppSelector((state) => state.auth.user.uid);
@@ -24,11 +25,13 @@ const ProfilePage = () => {
     medias = [],
     interests = [],
     prompts = [],
+    spotifyArtists = [],
   } = (data as UserProfile) || {
     about: "",
     medias: [],
     interests: [],
     prompts: [],
+    spotifyArtists: [],
   };
   const updateAbout = useUpdateProfileAbout();
 
@@ -81,6 +84,9 @@ const ProfilePage = () => {
               interests={interests}
               isLoading={isLoading}
             />
+            {(enableEdit || spotifyArtists.length > 0) && (
+              <SpotifyArtists editMode={enableEdit} artists={spotifyArtists} />
+            )}
             <ProfilePrompts editMode={enableEdit} prompts={prompts} />
           </SimpleGrid>
         </SimpleGrid>

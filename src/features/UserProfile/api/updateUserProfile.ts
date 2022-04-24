@@ -8,6 +8,7 @@ import {
   USER_PROFILE_MEDIA_UPLOAD_ENDPOINT,
   USER_PROFILE_REMOVE_INTEREST_ENDPOINT,
   USER_PROFILE_SEND_CONNECTION_REQUEST,
+  USER_PROFILE_SYNC_SPOTIFY,
   USER_PROFILE_UPDATE_ABOUT_ENDPOINT,
   USER_PROFILE_UPLOAD_PICTURE_ENDPOINT,
 } from "../../../apis/endpoints";
@@ -134,4 +135,11 @@ export const changeRequestStatus = ({
 
 export const useChangeRequestStatus = () => {
   return useMutation(changeRequestStatus, config);
+};
+export const syncSpotifyTopListened = (authToken: string) => {
+  return apiPutCall(`${USER_PROFILE_SYNC_SPOTIFY}/${authToken}`);
+};
+
+export const useSyncSpotify = () => {
+  return useMutation(syncSpotifyTopListened, config);
 };

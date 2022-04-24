@@ -4,7 +4,7 @@ import { conversation } from "../type/conversation";
 import { Link, useParams } from "react-router-dom";
 import { CHAT_URL } from "../../../utils/urls";
 
-const Conversation = ({ id, name, messages, icon }: conversation) => {
+const ConversationContact = ({ id, name, messages, icon }: conversation) => {
   const params = useParams();
   const activeChat = params.chatId;
   const backgroundColor = "rgba(97, 94, 240, 0.06)";
@@ -36,4 +36,4 @@ const Conversation = ({ id, name, messages, icon }: conversation) => {
     </Box>
   );
 };
-export default Conversation;
+export default ConversationContact;

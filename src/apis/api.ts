@@ -34,7 +34,7 @@ export const apiPostCall = async (
   return baseApi.post(endpoint, data, options);
 };
 
-export const apiPutCall = async (endpoint: string, data: any) => {
+export const apiPutCall = async (endpoint: string, data?: any) => {
   return baseApi.put(endpoint, data);
 };
 

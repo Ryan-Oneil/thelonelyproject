@@ -27,6 +27,7 @@ import FindMatchPage from "./features/UserProfile/pages/FindMatchPage";
 import { RegisterStatus } from "./features/Auth/enums/RegisterStatus";
 import { login, logout } from "./features/Auth/authReducer";
 import Login from "./features/Auth/pages/Login";
+import SpotifySetup from "./features/UserProfile/pages/SpotifySetup";
 
 function App() {
   const dispatch = useDispatch();
@@ -81,6 +82,14 @@ function App() {
           }
         />
         <Route path={RESET_PASSWORD_URL} element={<ResetPasswordPage />} />
+        <Route
+          path={`${USER_PROFILE_URL}/spotify`}
+          element={
+            <PrivateRoute>
+              <SpotifySetup />
+            </PrivateRoute>
+          }
+        />
         <Route
           path={USER_PROFILE_URL}
           element={

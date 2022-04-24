@@ -12,7 +12,7 @@ import { SearchIcon } from "@chakra-ui/icons";
 import AvatarHeader from "./AvatarHeader";
 import { useConversations } from "../api/getConversations";
 import { conversation } from "../type/conversation";
-import Conversation from "./Conversation";
+import ConversationContact from "./ConversationContact";
 import { useUserProfile } from "../../UserProfile/api/getUserProfile";
 import { useAppSelector } from "../../../utils/hooks";
 
@@ -47,7 +47,7 @@ const ConversationList = () => {
               conversation.name.toLowerCase().includes(filter)
             )
             .map((conversation: conversation) => (
-              <Conversation {...conversation} key={conversation.id} />
+              <ConversationContact {...conversation} key={conversation.id} />
             ))}
       </VStack>
     </Box>

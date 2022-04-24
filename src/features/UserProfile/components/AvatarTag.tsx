@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Tag, TagLabel } from "@chakra-ui/react";
+import { Avatar, Tag, TagLabel } from "@chakra-ui/react";
 import { TagProps } from "@chakra-ui/tag/src/tag";
 
 interface AvatarProps extends TagProps {
   description: string;
+  icon?: string;
 }
 
 interface SelectAbleProps extends AvatarProps {
@@ -20,6 +21,9 @@ const AvatarTag = (props: AvatarProps) => {
       backgroundColor={"rgba(97, 94, 240, 0.1)"}
       {...props}
     >
+      {props.icon && (
+        <Avatar src={props.icon} size="sm" name={props.description} ml={-3} />
+      )}
       <TagLabel m={"auto"}>{props.description}</TagLabel>
     </Tag>
   );
@@ -30,6 +34,7 @@ export const SelectAbleAvatarTag = ({
   onSelected,
   onDeselected,
   defaultSelected,
+  icon,
 }: SelectAbleProps) => {
   const [isActive, setActive] = useState(defaultSelected);
   const style = {
@@ -54,6 +59,7 @@ export const SelectAbleAvatarTag = ({
         isActive ? { ...style, backgroundColor: "rgb(97 94 240 / 16%)" } : {}
       }
       onClick={onClick}
+      icon={icon}
     />
   );
 };
