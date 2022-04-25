@@ -80,7 +80,7 @@ export const Sidebar = () => {
     <>
       <Box
         p={5}
-        h={"100vh"}
+        minHeight={"100vh"}
         boxShadow={"0px 0px 24px rgba(0, 0, 0, 0.08)"}
         display={{ base: "none", md: "block" }}
       >
