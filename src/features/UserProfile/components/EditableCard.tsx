@@ -90,7 +90,7 @@ const EditableCard = ({
           {showEditControls && <EditableControls />}
         </Flex>
         <EditablePreview wordBreak={"break-word"} />
-        <EditableInput as={"textarea"} />
+        <EditableInput as={"textarea"} maxLength={250} />
       </Editable>
     </ProfileCard>
   );
