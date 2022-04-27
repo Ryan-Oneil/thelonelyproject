@@ -31,9 +31,9 @@ const ProfileGallery = ({ medias = [], editMode, isLoading }: ProfileProps) => {
       }
     >
       <SimpleGrid
-        columns={{ base: 1, md: 2, xl: 3 }}
+        columns={{ base: 1, md: 2, "2xl": 3 }}
         spacing={2}
-        maxH={"40vh"}
+        maxH={{base: "60vh", "2xl": "40vh"}}
         overflow={"auto"}
       >
         {medias.map((image) => (
