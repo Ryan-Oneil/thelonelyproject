@@ -22,6 +22,9 @@ import { useSendConnectionRequest } from "../api/updateUserProfile";
 import { USER_PROFILE_URL } from "../../../utils/urls";
 import { Link } from "react-router-dom";
 import { getApiError } from "../../../apis/api";
+import ImageModal from "../../Chat/components/ImageModal";
+import ProfileGallery from "./ProfileGallery";
+import SpotifyArtists from "./SpotifyArtists";
 
 interface Props extends UserProfile {
   nextProfileAction: Function;
@@ -79,7 +82,7 @@ const DetailedProfile = ({
     );
   }
 
-  const { interests, medias, prompts } = data;
+  const { interests, medias, prompts, spotifyArtists } = data;
 
   return (
     <Center py={6}>
@@ -95,21 +98,14 @@ const DetailedProfile = ({
           <SimpleGrid pb={4} spacing={10} columns={{ base: 1, xl: 2 }}>
             <ProfileInterests editMode={false} interests={interests} />
             <ProfilePrompts editMode={false} prompts={prompts} />
-          </SimpleGrid>
-          <SimpleGrid pb={4} minChildWidth={"250px"} spacing={2}>
-            {medias.map(({ url }: { url: string }) => (
-              <Box position="relative" key={url}>
-                <Image
-                  src={url}
-                  borderRadius={"lg"}
-                  width={"100%"}
-                  draggable={false}
-                  userSelect={"none"}
-                  maxH={180}
-                  objectFit="cover"
-                />
-              </Box>
-            ))}
+            {spotifyArtists.length > 0 && (
+              <SpotifyArtists editMode={false} artists={spotifyArtists} />
+            )}
+            <ProfileGallery
+              medias={medias}
+              editMode={false}
+              isLoading={isLoading}
+            />
           </SimpleGrid>
           <ButtonGroup>
             <Button
