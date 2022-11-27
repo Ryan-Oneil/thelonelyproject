@@ -12,7 +12,7 @@ A social media built for connecting users based off similar traits entered on a 
 
 ## Live demo
 
-Live site deployed on Cloudflare pages [https://lonelyproject.org](https://lonelyproject.org/).
+Live site deployed on Cloudflare pages [https://lonelyproject.ryanoneil.me/](https://lonelyproject.ryanoneil.me/).
 
 ## Features
 * Profile page customisation
