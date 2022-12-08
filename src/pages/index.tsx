@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "./Homepage.module.css";
 import {
   Box,
   Circle,
@@ -8,16 +7,24 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import BasePublicPage from "./BasePublicPage";
 import {
   FaAddressCard,
   FaPeopleArrows,
   FaSearch,
   FaSignInAlt,
 } from "react-icons/fa";
+import BasePublicPage from "@/features/Base/BasePublicPage";
 
-const Homepage = () => {
-  const GridStep = ({ headerText, descriptionText, icon }) => {
+const Index = () => {
+  const GridStep = ({
+    headerText,
+    descriptionText,
+    icon,
+  }: {
+    headerText: string;
+    descriptionText: string;
+    icon: JSX.Element;
+  }) => {
     return (
       <Stack
         spacing={{ base: "3", md: "6" }}
@@ -69,7 +76,14 @@ const Homepage = () => {
         px={{ base: "6", md: "8" }}
         backgroundColor={"white"}
       >
-        <h1 className={styles.stepsHeader}>Four Simple Steps</h1>
+        <Heading
+          fontWeight={800}
+          textAlign={"center"}
+          margin={"3%"}
+          fontSize={"2em"}
+        >
+          Four Simple Steps
+        </Heading>
         <SimpleGrid
           columns={{ base: 1, md: 2, xl: 4 }}
           spacingX="40"
@@ -100,4 +114,4 @@ const Homepage = () => {
     </BasePublicPage>
   );
 };
-export default Homepage;
+export default Index;

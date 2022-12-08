@@ -1,29 +1,35 @@
 import React from "react";
 import styles from "./BasePage.module.css";
 import { Box, Button, Flex, Heading, Spacer } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { AuthStage } from "../../features/Auth/enums/AuthStages";
-import { DASHBOARD_URL, HOMEPAGE_URL, LOGIN_URL } from "../../utils/urls";
+import { AuthStage } from "../Auth/enums/AuthStages";
+import { useAuth } from "../Auth/hooks/useAuth";
+import Link from "next/link";
+import { DASHBOARD_URL, HOMEPAGE_URL, LOGIN_URL } from "@/utils/urls";
 
-const BasePublicPage = ({ children, showLogin = false }) => {
-  const { status } = useSelector((state) => state.auth);
+const BasePublicPage = ({
+  children,
+  showLogin,
+}: {
+  children: React.ReactNode;
+  showLogin?: boolean;
+}) => {
+  const { status } = useAuth();
   const isAuthenticated = status === AuthStage.LOGGED_IN;
 
   return (
     <div className={styles.main}>
       <Flex flexWrap={"wrap"}>
         <Box p="4">
-          <Link to={HOMEPAGE_URL}>
+          <Link href={HOMEPAGE_URL}>
             <img
-              src={require("../../assets/media/logo.png")}
+              src={require("../../../public/logo.png")}
               alt={"Lonely project logo"}
               className={styles.logoImage}
             />
           </Link>
         </Box>
         <Box p={"4"} className={styles.centerItems}>
-          <Link to={HOMEPAGE_URL}>
+          <Link href={HOMEPAGE_URL}>
             <Heading size="xl" className={styles.logo}>
               Lonely Project
             </Heading>
@@ -32,7 +38,7 @@ const BasePublicPage = ({ children, showLogin = false }) => {
         <Spacer />
         {showLogin && (
           <Box p="4" className={styles.centerItems} m={"auto"}>
-            <Link to={isAuthenticated ? DASHBOARD_URL : LOGIN_URL}>
+            <Link href={isAuthenticated ? DASHBOARD_URL : LOGIN_URL}>
               <Button
                 size="lg"
                 colorScheme={"#0089ED"}

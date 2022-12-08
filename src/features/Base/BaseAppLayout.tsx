@@ -1,8 +1,8 @@
 import React from "react";
 import { Box, Flex } from "@chakra-ui/react";
-import { Sidebar } from "../components/Sidebar";
+import { Sidebar } from "./components/Sidebar";
 
-const BaseAppPage = ({ children }) => {
+const BaseAppPage = ({ children }: { children: React.ReactNode }) => {
   return (
     <Flex flexWrap={{ base: "wrap", md: "nowrap" }}>
       <Sidebar />

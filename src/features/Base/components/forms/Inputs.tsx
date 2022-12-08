@@ -7,8 +7,9 @@ import {
   Input,
   Textarea,
 } from "@chakra-ui/react";
+import { FieldAttributes } from "formik";
 
-export const LabelledInput = (props) => {
+export const LabelledInput = (props: FieldAttributes<any>) => {
   const { label, error, touched } = props;
   return (
     <FormControl isInvalid={error && touched}>
@@ -19,13 +20,13 @@ export const LabelledInput = (props) => {
   );
 };
 
-export const FileInput = (props) => {
+export const FileInput = (props: FieldAttributes<any>) => {
   const { error, touched, buttonText } = props;
-  const ref = useRef();
+  const ref = useRef<HTMLButtonElement>(null);
 
   return (
     <FormControl isInvalid={error && touched}>
-      <Button onClick={() => ref.current.click()}>{buttonText}</Button>
+      <Button onClick={() => ref.current?.click()}>{buttonText}</Button>
       <Input
         size="lg"
         {...props}
@@ -39,7 +40,7 @@ export const FileInput = (props) => {
   );
 };
 
-export const TextAreaInput = (props) => {
+export const TextAreaInput = (props: FieldAttributes<any>) => {
   const { error, touched, label } = props;
   const isInvalid = error && touched;
 

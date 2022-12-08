@@ -13,14 +13,13 @@ import {
   USER_PROFILE_UPLOAD_PICTURE_ENDPOINT,
 } from "../../../apis/endpoints";
 import { useMutation } from "react-query";
-import { queryClient } from "../../../index";
+import { queryClient } from "../../../pages/_app";
 import { BaseProfile, Prompt } from "../types/Profile";
 
 const config = {
-  onSuccess: () => {
+  onSuccess: () =>
     // Invalidate and refetch
-    queryClient.invalidateQueries("userProfile");
-  },
+    queryClient.invalidateQueries("userProfile"),
 };
 
 export const createUserProfile = (profile: BaseProfile) => {

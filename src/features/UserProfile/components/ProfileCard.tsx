@@ -1,6 +1,6 @@
 import React from "react";
 import { BoxProps, Skeleton } from "@chakra-ui/react";
-import { Card } from "../../../Base/components/Card";
+import { Card } from "../../Base/components/Card";
 
 interface Props extends BoxProps {
   isLoading?: boolean;

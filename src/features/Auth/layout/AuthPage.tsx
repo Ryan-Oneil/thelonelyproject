@@ -3,13 +3,15 @@ import {
   Container,
   Flex,
   GridItem,
-  Image,
   SimpleGrid,
   Stack,
   Text,
 } from "@chakra-ui/react";
-import BasePublicPage from "../../../Base/pages/BasePublicPage";
-import { Card } from "../../../Base/components/Card";
+import BasePublicPage from "../../Base/BasePublicPage";
+import { Card } from "../../Base/components/Card";
+import Image from "next/image";
+import loginImage from "@/public/headphone.png";
+import peopleImage from "@/public/people.png";
 
 const AuthPage = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -40,11 +42,7 @@ const AuthPage = ({ children }: { children: React.ReactNode }) => {
               </Text>
             </Container>
             <Flex>
-              <Image
-                alt={"Login Image"}
-                objectFit={"cover"}
-                src={require("../../../assets/media/headphone.png")}
-              />
+              <Image alt={"Login Image"} objectFit={"cover"} src={loginImage} />
             </Flex>
           </Stack>
         </GridItem>
@@ -54,10 +52,7 @@ const AuthPage = ({ children }: { children: React.ReactNode }) => {
           </Card>
         </GridItem>
         <GridItem>
-          <img
-            src={require("../../../assets/media/people.png")}
-            alt={"Person sitting at computer"}
-          />
+          <Image src={peopleImage} alt={"Person sitting at computer"} />
         </GridItem>
       </Container>
     </BasePublicPage>

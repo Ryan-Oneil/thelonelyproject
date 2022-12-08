@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import SetupProfileForm from "../components/SetupProfileForm";
-import AuthPage from "../../Auth/pages/AuthPage";
+import AuthPage from "../../Auth/layout/AuthPage";
 import { useNavigate } from "react-router-dom";
 import { RegisterStatus } from "../../Auth/enums/RegisterStatus";
-import { USER_PROFILE_URL } from "../../../utils/urls";
+import { USER_PROFILE_URL } from "@/utils/urls";
 import { useAppSelector } from "../../../utils/hooks";
 
 const SetupProfilePage = () => {

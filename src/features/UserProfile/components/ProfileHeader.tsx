@@ -9,7 +9,7 @@ import { UserProfile } from "../types/Profile";
 import { useAppSelector } from "../../../utils/hooks";
 import { useCreateChat } from "../../Chat/api/createConversation";
 import { useNavigate } from "react-router-dom";
-import { CHAT_URL } from "../../../utils/urls";
+import { CHAT_URL } from "@/utils/urls";
 
 interface HeaderProps extends UserProfile {
   attemptingToConnect: boolean;

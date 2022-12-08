@@ -19,7 +19,7 @@ import ProfileInterests from "./ProfileInterests";
 import ProfilePrompts from "./ProfilePrompts";
 import { useUserProfile } from "../api/getUserProfile";
 import { useSendConnectionRequest } from "../api/updateUserProfile";
-import { USER_PROFILE_URL } from "../../../utils/urls";
+import { USER_PROFILE_URL } from "@/utils/urls";
 import { Link } from "react-router-dom";
 import { getApiError } from "../../../apis/api";
 import ImageModal from "../../Chat/components/ImageModal";

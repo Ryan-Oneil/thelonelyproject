@@ -1,7 +1,7 @@
 import { apiPostCall } from "../../../apis/api";
 import { CHAT_SEND_ATTACHMENT } from "../../../apis/endpoints";
 import { useMutation } from "react-query";
-import { queryClient } from "../../../index";
+import { queryClient } from "../../../pages/_app";
 import { conversation } from "../type/conversation";
 
 export const sendChatAttachment = ({

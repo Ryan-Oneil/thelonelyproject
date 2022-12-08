@@ -1,11 +1,11 @@
 import React from "react";
 import { Flex, Heading, Spacer, Stack, Text } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
-import { REGISTER_URL } from "../../../utils/urls";
-import LoginForm from "../components/LoginForm";
-import AuthPage from "./AuthPage";
+import { LOGIN_URL } from "@/utils/urls";
+import AuthPage from "@/features/Auth/layout/AuthPage";
+import RegisterForm from "@/features/Auth/components/RegisterForm";
+import Link from "next/link";
 
-const Login = () => {
+const Register = () => {
   return (
     <AuthPage>
       <Flex direction={"row"}>
@@ -14,19 +14,19 @@ const Login = () => {
             Welcome to Lonely Project
           </Heading>
           <Heading fontSize={"5xl"} fontWeight={"bold"}>
-            Sign in
+            Sign Up
           </Heading>
         </Stack>
         <Spacer />
         <Stack color={"#0089ED"}>
           <Text fontSize={"md"} fontWeight={"medium"} color={"#8D8D8D"}>
-            No Account ?
+            Have an Account ?
           </Text>
-          <Link to={REGISTER_URL}>Register</Link>
+          <Link href={LOGIN_URL}>Sign in</Link>
         </Stack>
       </Flex>
-      <LoginForm />
+      <RegisterForm />
     </AuthPage>
   );
 };
-export default Login;
+export default Register;

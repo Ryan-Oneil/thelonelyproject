@@ -2,7 +2,7 @@ import React from "react";
 import { Flex } from "@chakra-ui/react";
 import ConversationList from "../components/ConversationList";
 import ChatConversation from "../components/ChatConversation";
-import BaseAppPage from "../../../Base/pages/BaseAppPage";
+import BaseAppPage from "../../Base/BaseAppLayout";
 import { useParams } from "react-router-dom";
 
 const ChatPage = () => {

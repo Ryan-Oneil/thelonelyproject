@@ -1,9 +1,9 @@
 import React from "react";
 import { Alert, AlertIcon, Button, VStack } from "@chakra-ui/react";
 import { Field, Formik, FormikErrors } from "formik";
-import { LabelledInput } from "../../../Base/components/forms/Inputs";
 import { sendPasswordResetEmail, getAuth } from "firebase/auth";
 import { User } from "../types/User";
+import { LabelledInput } from "@/features/Base/components/forms/Inputs";
 
 const ResetPasswordForm = () => {
   const onSubmit = (

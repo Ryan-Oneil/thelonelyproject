@@ -10,20 +10,17 @@ import {
 import { Field, Formik, FormikErrors } from "formik";
 import { BaseProfile } from "../types/Profile";
 import { getAuth } from "firebase/auth";
+import { createUserProfile } from "../api/updateUserProfile";
 import {
   FileInput,
   LabelledInput,
   TextAreaInput,
-} from "../../../Base/components/forms/Inputs";
-import { createUserProfile } from "../api/updateUserProfile";
-import { useAppDispatch } from "../../../utils/hooks";
-import { registerCompleted } from "../../Auth/authReducer";
+} from "@/features/Base/components/forms/Inputs";
 
 const SetupProfileForm = () => {
   const [avatarUrl, setAvatarUrl] = useState(
     "https://avataaars.io/?avatarStyle=Circle&topType=ShortHairDreads01&accessoriesType=Wayfarers&hairColor=Black&facialHairType=BeardLight&facialHairColor=Black&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Smile&skinColor=Light"
   );
-  const dispatch = useAppDispatch();
 
   const onSubmit = (
     formValues: BaseProfile,
@@ -32,7 +29,6 @@ const SetupProfileForm = () => {
     return createUserProfile(formValues)
       .then(() => {
         getAuth().currentUser?.getIdToken(true);
-        dispatch(registerCompleted());
       })
       .catch((error) => setStatus({ type: "error", message: error.message }));
   };

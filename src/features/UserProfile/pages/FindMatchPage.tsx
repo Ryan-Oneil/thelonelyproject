@@ -8,7 +8,7 @@ import {
   Tabs,
 } from "@chakra-ui/react";
 import ProfileMatchCard from "../components/ProfileMatchCard";
-import BaseAppPage from "../../../Base/pages/BaseAppPage";
+import BaseAppPage from "../../Base/BaseAppLayout";
 import { useAcceptedMatches, useMatches } from "../api/getMatches";
 import { UserProfile } from "../types/Profile";
 import DetailedProfile from "../components/DetailedProfile";

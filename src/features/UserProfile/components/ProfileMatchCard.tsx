@@ -13,7 +13,7 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { USER_PROFILE_URL } from "../../../utils/urls";
+import { USER_PROFILE_URL } from "@/utils/urls";
 import { UserProfile } from "../types/Profile";
 
 const ProfileMatchCard = ({

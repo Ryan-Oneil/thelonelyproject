@@ -1,23 +1,24 @@
 import React from "react";
 import { Box, SimpleGrid, VStack } from "@chakra-ui/react";
-import { useParams } from "react-router-dom";
-import ProfileGallery from "../components/ProfileGallery";
-import ProfileInterests from "../components/ProfileInterests";
-import ProfilePrompts from "../components/ProfilePrompts";
-import { useAppSelector } from "../../../utils/hooks";
-import BaseAppPage from "../../../Base/pages/BaseAppPage";
-import { useUserProfile } from "../api/getUserProfile";
-import ProfileHeader from "../components/ProfileHeader";
-import { UserProfile } from "../types/Profile";
-import EditableCard from "../components/EditableCard";
-import { useUpdateProfileAbout } from "../api/updateUserProfile";
-import SpotifyArtists from "../components/SpotifyArtists";
+import ProfileGallery from "@/features/UserProfile/components/ProfileGallery";
+import ProfileInterests from "@/features/UserProfile/components/ProfileInterests";
+import ProfilePrompts from "@/features/UserProfile/components/ProfilePrompts";
+import BaseAppPage from "@/features/Base/BaseAppLayout";
+import { useUserProfile } from "@/features/UserProfile/api/getUserProfile";
+import ProfileHeader from "@/features/UserProfile/components/ProfileHeader";
+import { UserProfile } from "@/features/UserProfile/types/Profile";
+import EditableCard from "@/features/UserProfile/components/EditableCard";
+import { useUpdateProfileAbout } from "@/features/UserProfile/api/updateUserProfile";
+import SpotifyArtists from "@/features/UserProfile/components/SpotifyArtists";
+import { useRouter } from "next/router";
+import { useRequireUser } from "@/features/Auth/hooks/useRequireUser";
+import { UserInfo } from "@firebase/auth-types";
 
 const ProfilePage = () => {
-  const userId = useAppSelector((state) => state.auth.user.uid);
-  const params = useParams();
-  const profileId = params.userId || userId;
-  const enableEdit = profileId === userId;
+  const user = useRequireUser() as UserInfo;
+  const router = useRouter();
+  const profileId = (router.query.uid as string) || user.uid;
+  const enableEdit = profileId === user.uid;
 
   const { data, isLoading } = useUserProfile(profileId);
   const {
@@ -38,7 +39,7 @@ const ProfilePage = () => {
   return (
     <BaseAppPage>
       <Box
-        backgroundImage={require("../../../assets/media/img.png")}
+        backgroundImage={require("@/public/img.png")}
         backgroundRepeat={"no-repeat"}
         backgroundSize={"100% 300px"}
         flexWrap={"wrap"}

@@ -1,6 +1,6 @@
 import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import { USER_PROFILE_URL } from "../../../utils/urls";
+import { USER_PROFILE_URL } from "@/utils/urls";
 
 const SpotifySetup = () => {
   const { hash } = useLocation();

@@ -1,19 +1,16 @@
 import React from "react";
 import { IconButton, Tooltip } from "@chakra-ui/react";
 import { getAuth, signOut } from "firebase/auth";
-
-import { useAppDispatch } from "../../../utils/hooks";
-import { logout } from "../authReducer";
 import { FaSignOutAlt } from "react-icons/fa";
+import { useRouter } from "next/router";
+import { HOMEPAGE_URL } from "@/utils/urls";
 
 const LogoutButton = () => {
-  const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const handleClick = () => {
     const auth = getAuth();
-    signOut(auth).then(() => {
-      dispatch(logout());
-    });
+    signOut(auth).then(() => router.push(HOMEPAGE_URL));
   };
 
   return (

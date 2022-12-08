@@ -2,7 +2,7 @@ import React from "react";
 import { Avatar, Box, Flex, Text } from "@chakra-ui/react";
 import { conversation } from "../type/conversation";
 import { Link, useParams } from "react-router-dom";
-import { CHAT_URL } from "../../../utils/urls";
+import { CHAT_URL } from "@/utils/urls";
 
 const ConversationContact = ({ id, name, messages, icon }: conversation) => {
   const params = useParams();

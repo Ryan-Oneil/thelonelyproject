@@ -1,9 +1,9 @@
 import React from "react";
 import { Flex, Heading, Stack } from "@chakra-ui/react";
-import AuthPage from "./AuthPage";
-import ResetPasswordForm from "../components/ResetPasswordForm";
+import AuthPage from "@/features/Auth/layout/AuthPage";
+import ResetPasswordForm from "@/features/Auth/components/ResetPasswordForm";
 
-const ResetPasswordPage = () => {
+const Forgotpassword = () => {
   return (
     <AuthPage>
       <Flex direction={"row"}>
@@ -20,4 +20,4 @@ const ResetPasswordPage = () => {
     </AuthPage>
   );
 };
-export default ResetPasswordPage;
+export default Forgotpassword;
