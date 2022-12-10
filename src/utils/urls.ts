@@ -5,5 +5,5 @@ export const RESET_PASSWORD_URL = "/forgotpassword";
 export const DASHBOARD_URL = "/dashboard";
 export const USER_PROFILE_URL = "/profile";
 export const CHAT_URL = "/chat";
-export const PROFILE_SETUP_URL = "/setup";
+export const PROFILE_SETUP_URL = "/profile/setup";
 export const PROFILE_FIND_MATCHES = "/profile/match";

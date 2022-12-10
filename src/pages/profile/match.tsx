@@ -7,13 +7,16 @@ import {
   TabPanels,
   Tabs,
 } from "@chakra-ui/react";
-import ProfileMatchCard from "../components/ProfileMatchCard";
-import BaseAppPage from "../../Base/BaseAppLayout";
-import { useAcceptedMatches, useMatches } from "../api/getMatches";
-import { UserProfile } from "../types/Profile";
-import DetailedProfile from "../components/DetailedProfile";
+import ProfileMatchCard from "@/features/UserProfile/components/ProfileMatchCard";
+import BaseAppPage from "@/features/Base/BaseAppLayout";
+import {
+  useAcceptedMatches,
+  useMatches,
+} from "@/features/UserProfile/api/getMatches";
+import { UserProfile } from "@/features/UserProfile/types/Profile";
+import DetailedProfile from "@/features/UserProfile/components/DetailedProfile";
 
-const FindMatchPage = () => {
+const Match = () => {
   const { data, isSuccess } = useMatches();
   const acceptedMatches = useAcceptedMatches();
   const [activeProfile, setActiveProfile] = useState(0);
@@ -55,4 +58,4 @@ const FindMatchPage = () => {
     </BaseAppPage>
   );
 };
-export default FindMatchPage;
+export default Match;

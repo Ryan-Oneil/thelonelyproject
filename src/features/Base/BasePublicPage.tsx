@@ -13,8 +13,8 @@ const BasePublicPage = ({
   children: React.ReactNode;
   showLogin?: boolean;
 }) => {
-  const { status } = useAuth();
-  const isAuthenticated = status === AuthStage.LOGGED_IN;
+  const { authStatus } = useAuth();
+  const isAuthenticated = authStatus === AuthStage.LOGGED_IN;
 
   return (
     <div className={styles.main}>
