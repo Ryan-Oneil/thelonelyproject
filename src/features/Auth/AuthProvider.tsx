@@ -59,7 +59,9 @@ export function AuthProvider({ children }: { children: JSX.Element }) {
     });
   }, []);
 
-  const updateRegisterStatus = (status: RegisterStatus) => {};
+  const updateRegisterStatus = (status: RegisterStatus) => {
+    setRegisterStatus(status);
+  };
 
   const value = {
     user,

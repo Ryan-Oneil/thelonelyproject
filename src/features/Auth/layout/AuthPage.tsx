@@ -7,11 +7,11 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import BasePublicPage from "../../Base/BasePublicPage";
-import { Card } from "../../Base/components/Card";
 import Image from "next/image";
 import loginImage from "@/public/headphone.png";
 import peopleImage from "@/public/people.png";
+import BasePublicPage from "@/features/Base/BasePublicPage";
+import {Card} from "@/features/Base/components/Card";
 
 const AuthPage = ({ children }: { children: React.ReactNode }) => {
   return (
