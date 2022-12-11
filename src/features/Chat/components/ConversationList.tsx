@@ -8,16 +8,16 @@ import {
   InputLeftElement,
   Spinner,
 } from "@chakra-ui/react";
-import { SearchIcon } from "@chakra-ui/icons";
 import AvatarHeader from "./AvatarHeader";
 import { useConversations } from "../api/getConversations";
 import { conversation } from "../type/conversation";
 import ConversationContact from "./ConversationContact";
 import { useUserProfile } from "../../UserProfile/api/getUserProfile";
-import { useAppSelector } from "../../../utils/hooks";
+import {useRequireUser} from "@/features/Auth/hooks/useRequireUser";
+import {MdSearch} from "react-icons/md";
 
 const ConversationList = () => {
-  const userId = useAppSelector((state) => state.auth.user.uid);
+  const userId = useRequireUser().uid;
   const { isLoading, data, isSuccess } = useConversations();
   const [filter, setFilter] = useState("");
   const profile = useUserProfile(userId);
@@ -33,7 +33,9 @@ const ConversationList = () => {
       <Divider style={{ borderColor: "rgba(0, 0, 0, 0.2)" }} />
       <VStack p={5} spacing={4}>
         <InputGroup>
-          <InputLeftElement children={<SearchIcon />} />
+          <InputLeftElement>
+              <MdSearch />
+          </InputLeftElement>
           <Input
             variant="filled"
             placeholder="Search"

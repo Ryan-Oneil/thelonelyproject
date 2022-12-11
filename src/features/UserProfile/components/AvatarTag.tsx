@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Avatar, Tag, TagLabel } from "@chakra-ui/react";
-import { TagProps } from "@chakra-ui/tag/src/tag";
+import {Avatar, Tag, TagLabel, TagProps} from "@chakra-ui/react";
 
 interface AvatarProps extends TagProps {
   description: string;

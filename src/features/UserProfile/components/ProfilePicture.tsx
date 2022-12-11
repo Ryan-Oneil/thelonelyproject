@@ -7,9 +7,9 @@ import {
   Image,
   VStack,
 } from "@chakra-ui/react";
-import { EditIcon } from "@chakra-ui/icons";
 import FileUploader from "./FileUploader";
 import { useUploadProfilePicture } from "../api/updateUserProfile";
+import { FaRegEdit } from "react-icons/fa";
 
 const ProfilePicture = ({
   editMode,
@@ -46,7 +46,7 @@ const ProfilePicture = ({
               _hover={{ transform: "scale(1.1)" }}
               sx={{ ":hover > svg": { transform: "scale(1.1)" } }}
               transition="all 0.15s ease"
-              icon={<EditIcon transition="all 0.15s ease" />}
+              icon={<FaRegEdit />}
               boxShadow="base"
               position="absolute"
               bottom="4"

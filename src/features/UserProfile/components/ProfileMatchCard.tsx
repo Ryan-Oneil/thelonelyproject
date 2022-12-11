@@ -12,9 +12,9 @@ import {
   useColorModeValue,
   Tooltip,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
 import { USER_PROFILE_URL } from "@/utils/urls";
 import { UserProfile } from "../types/Profile";
+import Link from "next/link";
 
 const ProfileMatchCard = ({
   id,
@@ -59,14 +59,14 @@ const ProfileMatchCard = ({
               <Text
                 color={"gray.500"}
                 textAlign={"center"}
-                isTruncated
+                noOfLines={2}
                 maxW={"250px"}
               >
                 {about}
               </Text>
             </Tooltip>
           </Stack>
-          <Link to={`${USER_PROFILE_URL}/${id}`}>
+          <Link href={`${USER_PROFILE_URL}/${id}`}>
             <Button
               w={"full"}
               bg={useColorModeValue("#151f21", "gray.900")}

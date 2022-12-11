@@ -8,7 +8,6 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import ProfileCard from "./ProfileCard";
-import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
 import FileUploader from "./FileUploader";
 import {
   useDeleteProfileMedia,
@@ -16,6 +15,8 @@ import {
 } from "../api/updateUserProfile";
 import { ProfileProps } from "../types/ProfileProps";
 import ImageModal from "../../Chat/components/ImageModal";
+import { FiPlus } from "react-icons/fi";
+import { MdDelete } from "react-icons/md";
 
 const ProfileGallery = ({ medias = [], editMode, isLoading }: ProfileProps) => {
   const uploadMedia = useUploadProfileMedia();
@@ -57,7 +58,7 @@ const ProfileGallery = ({ medias = [], editMode, isLoading }: ProfileProps) => {
                   sx={{ ":hover > svg": { transform: "scale(1.1)" } }}
                   transition="all 0.15s ease"
                   icon={
-                    <DeleteIcon transition="all 0.15s ease" color={"red"} />
+                    <MdDelete color={"red"} />
                   }
                   position="absolute"
                   top="1"
@@ -83,7 +84,7 @@ const ProfileGallery = ({ medias = [], editMode, isLoading }: ProfileProps) => {
               minH={150}
               minW={150}
             >
-              <AddIcon />
+              <FiPlus />
             </Center>
           </FileUploader>
         )}

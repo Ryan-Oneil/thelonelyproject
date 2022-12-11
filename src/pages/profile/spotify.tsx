@@ -1,11 +1,12 @@
 import React from "react";
-import { Navigate, useLocation } from "react-router-dom";
 import { USER_PROFILE_URL } from "@/utils/urls";
+import {useRouter} from "next/router";
+import {Spinner} from "@chakra-ui/react";
 
-const SpotifySetup = () => {
-  const { hash } = useLocation();
+const Spotify = () => {
+  const {asPath, push} = useRouter();
 
-  const token = hash
+  const token = asPath
     .replace("#", "")
     .split("&")
     .filter(
@@ -23,7 +24,8 @@ const SpotifySetup = () => {
     );
   }
   window.close();
+  push(USER_PROFILE_URL);
 
-  return <Navigate to={USER_PROFILE_URL} />;
+  return <Spinner />;
 };
-export default SpotifySetup;
+export default Spotify;

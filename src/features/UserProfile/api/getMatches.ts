@@ -1,8 +1,8 @@
-import { apiGetCall } from "../../../apis/api";
+import { apiGetCall } from "@/apis/api";
 import {
   GET_ACCEPTED_CONNECTIONS,
   GET_POTENTIAL_MATCHES,
-} from "../../../apis/endpoints";
+} from "@/apis/endpoints";
 import { useQuery } from "react-query";
 
 export const getMatches = () => {

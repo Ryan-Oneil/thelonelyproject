@@ -1,4 +1,4 @@
-import { AUTH_HEADER } from "../apis/api";
+import { AUTH_HEADER } from "@/apis/api";
 import { getAuth } from "firebase/auth";
 import { Client } from "@stomp/stompjs";
 

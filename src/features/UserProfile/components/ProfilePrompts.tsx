@@ -13,12 +13,13 @@ import {
   Tooltip,
   useDisclosure,
 } from "@chakra-ui/react";
-import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
 import EditableCard from "./EditableCard";
 import { Prompt } from "../types/Profile";
 import { usePrompts } from "../api/getPrompts";
 import { useAddPrompt, useDeletePrompt } from "../api/updateUserProfile";
 import { ProfileProps } from "../types/ProfileProps";
+import { MdDelete } from "react-icons/md";
+import {FiPlus} from "react-icons/fi";
 
 const ProfilePrompts = ({ editMode, prompts = [] }: ProfileProps) => {
   const { data, isSuccess } = usePrompts();
@@ -58,7 +59,7 @@ const ProfilePrompts = ({ editMode, prompts = [] }: ProfileProps) => {
             <Tooltip label={"Delete"}>
               <IconButton
                 aria-label={"Delete prompt"}
-                icon={<DeleteIcon />}
+                icon={<MdDelete />}
                 colorScheme={"red"}
                 onClick={() => deletePrompt.mutate(prompt.promptId)}
               />
@@ -79,7 +80,7 @@ const ProfilePrompts = ({ editMode, prompts = [] }: ProfileProps) => {
             onClick={onOpen}
           >
             <Text mr={2}>Add a prompt</Text>
-            <AddIcon />
+            <FiPlus />
           </Center>
           <Modal onClose={onClose} size={"6xl"} isOpen={isOpen}>
             <ModalOverlay />

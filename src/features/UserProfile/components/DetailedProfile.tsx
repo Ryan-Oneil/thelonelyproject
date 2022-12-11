@@ -20,11 +20,10 @@ import ProfilePrompts from "./ProfilePrompts";
 import { useUserProfile } from "../api/getUserProfile";
 import { useSendConnectionRequest } from "../api/updateUserProfile";
 import { USER_PROFILE_URL } from "@/utils/urls";
-import { Link } from "react-router-dom";
 import { getApiError } from "../../../apis/api";
-import ImageModal from "../../Chat/components/ImageModal";
 import ProfileGallery from "./ProfileGallery";
 import SpotifyArtists from "./SpotifyArtists";
+import Link from "next/link";
 
 interface Props extends UserProfile {
   nextProfileAction: Function;
@@ -121,7 +120,7 @@ const DetailedProfile = ({
             >
               Skip
             </Button>
-            <Link to={`${USER_PROFILE_URL}/${id}`}>
+            <Link href={`${USER_PROFILE_URL}/${id}`}>
               <Button
                 w={"full"}
                 bg={"#151f21"}
@@ -149,7 +148,7 @@ const DetailedProfile = ({
                   .mutateAsync(id)
                   .then(() => nextProfileAction())
                   .catch((error) => {
-                    const toast = createStandaloneToast();
+                    const {toast} = createStandaloneToast();
                     const errorMessage = getApiError(error);
 
                     toast({

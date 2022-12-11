@@ -1,4 +1,4 @@
-import { apiDeleteCall, apiPostCall, apiPutCall } from "../../../apis/api";
+import { apiDeleteCall, apiPostCall, apiPutCall } from "@/apis/api";
 import {
   USER_PROFILE_ADD_INTEREST_ENDPOINT,
   USER_PROFILE_ADD_PROMPT_ENDPOINT,
@@ -11,7 +11,7 @@ import {
   USER_PROFILE_SYNC_SPOTIFY,
   USER_PROFILE_UPDATE_ABOUT_ENDPOINT,
   USER_PROFILE_UPLOAD_PICTURE_ENDPOINT,
-} from "../../../apis/endpoints";
+} from "@/apis/endpoints";
 import { useMutation } from "react-query";
 import { queryClient } from "../../../pages/_app";
 import { BaseProfile, Prompt } from "../types/Profile";

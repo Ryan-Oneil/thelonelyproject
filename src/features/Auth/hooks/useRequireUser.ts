@@ -10,6 +10,8 @@ export const useRequireUser = () => {
 
   if (authStatus !== AuthStage.LOGGED_IN || !user) {
     router.push(LOGIN_URL + "?redirect=" + router.pathname);
+
+    return {uid: ""};
   }
 
   if (
