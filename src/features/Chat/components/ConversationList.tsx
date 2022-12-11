@@ -13,10 +13,13 @@ import { useConversations } from "../api/getConversations";
 import { conversation } from "../type/conversation";
 import ConversationContact from "./ConversationContact";
 import { useUserProfile } from "../../UserProfile/api/getUserProfile";
-import {useRequireUser} from "@/features/Auth/hooks/useRequireUser";
-import {MdSearch} from "react-icons/md";
+import { useRequireUser } from "@/features/Auth/hooks/useRequireUser";
+import { MdSearch } from "react-icons/md";
 
-const ConversationList = () => {
+type ConversationListProps = {
+  activeConversationId: string;
+};
+const ConversationList = ({ activeConversationId }: ConversationListProps) => {
   const userId = useRequireUser().uid;
   const { isLoading, data, isSuccess } = useConversations();
   const [filter, setFilter] = useState("");
@@ -34,7 +37,7 @@ const ConversationList = () => {
       <VStack p={5} spacing={4}>
         <InputGroup>
           <InputLeftElement>
-              <MdSearch />
+            <MdSearch />
           </InputLeftElement>
           <Input
             variant="filled"
@@ -49,7 +52,11 @@ const ConversationList = () => {
               conversation.name.toLowerCase().includes(filter)
             )
             .map((conversation: conversation) => (
-              <ConversationContact {...conversation} key={conversation.id} />
+              <ConversationContact
+                {...conversation}
+                key={conversation.id}
+                isChatOpen={conversation.id === activeConversationId}
+              />
             ))}
       </VStack>
     </Box>

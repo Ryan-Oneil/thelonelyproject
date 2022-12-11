@@ -1,8 +1,8 @@
 import React from "react";
 import { Box, Link, Text } from "@chakra-ui/react";
-import { useAppSelector } from "../../../utils/hooks";
 import ImageModal from "./ImageModal";
-import { getMediaType, isValidUrl } from "../../../utils/helpers";
+import { getMediaType, isValidUrl } from "@/utils/helpers";
+import { useRequireUser } from "@/features/Auth/hooks/useRequireUser";
 
 type messageProps = {
   content: string;
@@ -11,7 +11,7 @@ type messageProps = {
 };
 
 const ChatMessage = ({ content, senderId, timestamp }: messageProps) => {
-  const { uid } = useAppSelector((state) => state.auth.user);
+  const { uid } = useRequireUser();
   const isSender = senderId === undefined || senderId === uid;
   const date = new Date(timestamp);
 
@@ -43,7 +43,7 @@ const ChatMessage = ({ content, senderId, timestamp }: messageProps) => {
         </Link>
       );
     }
-    return <Text isTruncated>{content}</Text>;
+    return <Text noOfLines={6}>{content}</Text>;
   };
 
   return (

@@ -21,6 +21,7 @@
       "@/utils/*": ["src/utils/*"],
       "@/public/*": ["public/*"],
       "@/apis/*": ["src/apis/*"],
+      "@/hooks/*": ["src/hooks/*"],
     }
   },
   "include": [
