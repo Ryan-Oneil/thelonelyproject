@@ -30,7 +30,6 @@ import FileUploader from "../../UserProfile/components/FileUploader";
 import { useSendAttachment } from "../api/sendMedia";
 import { AxiosError } from "axios";
 import ApiError from "../../Auth/components/ApiError";
-import "emoji-mart/css/emoji-mart.css";
 import { FaRegSmile } from "react-icons/fa";
 import ChatMessageList from "./ChatMessageList";
 import { useRequireUser } from "@/features/Auth/hooks/useRequireUser";

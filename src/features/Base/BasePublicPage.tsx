@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./BasePage.module.css";
-import { Box, Button, Flex, Heading, Spacer } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, HStack, Spacer } from "@chakra-ui/react";
 import { AuthStage } from "../Auth/enums/AuthStages";
 import { useAuth } from "../Auth/hooks/useAuth";
 import Link from "next/link";
@@ -21,24 +21,21 @@ const BasePublicPage = ({
   return (
     <div className={styles.main}>
       <Flex flexWrap={"wrap"} as={"header"}>
-        <Box p="4">
-          <Link href={HOMEPAGE_URL}>
+        <Link href={HOMEPAGE_URL}>
+          <HStack p={4} as={"section"} gap={4}>
             <Image
               src={Logo}
               alt={"Lonely project logo"}
               className={styles.logoImage}
               width={64}
               height={64}
+              placeholder={"blur"}
             />
-          </Link>
-        </Box>
-        <Box p={"4"} className={styles.centerItems}>
-          <Link href={HOMEPAGE_URL}>
             <Heading size="xl" className={styles.logo}>
               Lonely Project
             </Heading>
-          </Link>
-        </Box>
+          </HStack>
+        </Link>
         <Spacer />
         {showLogin && (
           <Box p="4" className={styles.centerItems} m={"auto"}>
@@ -58,7 +55,7 @@ const BasePublicPage = ({
       </Flex>
       <div className={styles.content}>{children}</div>
       <footer className={styles.footer}>
-        © 2021 Lonely Project. All rights reserved
+        © 2023 Lonely Project. All rights reserved
       </footer>
     </div>
   );

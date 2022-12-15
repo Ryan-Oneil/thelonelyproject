@@ -38,7 +38,6 @@ const LoginForm = () => {
     formValues: User,
     { setStatus }: { setStatus: Function }
   ) => {
-    const auth = getAuth();
     return signInWithEmailAndPassword(
       auth,
       formValues.email.trim(),

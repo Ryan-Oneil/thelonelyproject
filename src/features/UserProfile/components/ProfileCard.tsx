@@ -8,8 +8,14 @@ interface Props extends BoxProps {
   loadingHeader?: React.ReactNode;
 }
 
-const ProfileCard = (props: Props) => {
-  const showLoadingHeader = props.loadingHeader && props.isLoading;
+const ProfileCard = ({
+  loadingHeader,
+  isLoading,
+  header,
+  children,
+  ...rest
+}: Props) => {
+  const showLoadingHeader = loadingHeader && isLoading;
 
   const cardStyle = {
     border: "1px solid rgba(18, 17, 39, 0.12)",
@@ -20,11 +26,11 @@ const ProfileCard = (props: Props) => {
   };
 
   return (
-    <Card {...cardStyle} {...props}>
-      {showLoadingHeader && props.loadingHeader}
-      {!showLoadingHeader && props.header}
-      <Skeleton isLoaded={!props.isLoading} h={"80%"}>
-        {props.children}
+    <Card {...cardStyle} {...rest}>
+      {showLoadingHeader && loadingHeader}
+      {!showLoadingHeader && header}
+      <Skeleton isLoaded={!isLoading} h={"80%"}>
+        {children}
       </Skeleton>
     </Card>
   );
