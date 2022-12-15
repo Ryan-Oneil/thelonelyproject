@@ -20,7 +20,8 @@ const LogoutButton = () => {
         aria-label={"Sign out"}
         fontSize="20px"
         onClick={handleClick}
-        icon={<FaSignOutAlt size={32} />}
+        icon={<FaSignOutAlt size={24} />}
+        color={"red"}
       />
     </Tooltip>
   );
