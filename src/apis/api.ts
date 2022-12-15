@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosRequestConfig } from "axios";
 import { getAuth } from "firebase/auth";
 
-export const BASE_URL = process.env.REACT_APP_API_URL;
+export const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 export const AUTH_HEADER = "X-Authorization-Firebase";
 
 const baseApi = axios.create({

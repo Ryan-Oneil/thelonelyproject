@@ -1,9 +1,8 @@
 import React from "react";
 import "../index.css";
 import { DefaultOptions, QueryClient, QueryClientProvider } from "react-query";
-import { createStandaloneToast } from "@chakra-ui/react";
-import { getApiError } from "../apis/api";
-import { ChakraProvider } from "@chakra-ui/provider";
+import { createStandaloneToast, ChakraProvider } from "@chakra-ui/react";
+import { getApiError } from "@/apis/api";
 import { AppProps } from "next/app";
 import { AuthProvider } from "@/features/Auth/AuthProvider";
 

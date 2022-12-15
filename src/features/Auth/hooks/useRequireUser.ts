@@ -3,23 +3,27 @@ import { AuthStage } from "@/features/Auth/enums/AuthStages";
 import { useRouter } from "next/router";
 import { LOGIN_URL, PROFILE_SETUP_URL } from "@/utils/urls";
 import { RegisterStatus } from "@/features/Auth/enums/RegisterStatus";
+import { useEffect } from "react";
 
 export const useRequireUser = () => {
   const { user, authStatus, registerStatus } = useAuth();
   const router = useRouter();
 
-  if (authStatus !== AuthStage.LOGGED_IN || !user) {
-    router.push(LOGIN_URL + "?redirect=" + router.pathname);
+  useEffect(() => {
+    if (authStatus !== AuthStage.LOGGED_IN || !user) {
+      router.push(LOGIN_URL + "?redirect=" + router.pathname);
+    }
 
+    if (
+      authStatus === AuthStage.LOGGED_IN &&
+      registerStatus !== RegisterStatus.REGISTERED
+    ) {
+      router.push(PROFILE_SETUP_URL);
+    }
+  });
+
+  if (!user) {
     return { uid: "" };
   }
-
-  if (
-    authStatus === AuthStage.LOGGED_IN &&
-    registerStatus !== RegisterStatus.REGISTERED
-  ) {
-    router.push(PROFILE_SETUP_URL);
-  }
-
   return user;
 };

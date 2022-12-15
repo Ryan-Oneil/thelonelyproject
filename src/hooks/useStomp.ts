@@ -3,7 +3,7 @@ import { getAuth } from "firebase/auth";
 import { Client } from "@stomp/stompjs";
 
 let stompClient: Client;
-const BROKER_URL = process.env.REACT_APP_BROKER_URL;
+const BROKER_URL = process.env.NEXT_PUBLIC_BROKER_URL;
 
 export const useStomp = () => {
   if (!stompClient) {

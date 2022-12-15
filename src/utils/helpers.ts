@@ -22,8 +22,8 @@ export const getMediaType = (urlContent: string) => {
 
   const extension = url.pathname.split(".");
 
-  for (let i = 0; i < extension.length; i++) {
-    const found = types.get(extension[i]);
+  for (const element of extension) {
+    const found = types.get(element);
 
     if (found) {
       return found;

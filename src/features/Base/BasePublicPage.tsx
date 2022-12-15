@@ -5,6 +5,8 @@ import { AuthStage } from "../Auth/enums/AuthStages";
 import { useAuth } from "../Auth/hooks/useAuth";
 import Link from "next/link";
 import { DASHBOARD_URL, HOMEPAGE_URL, LOGIN_URL } from "@/utils/urls";
+import Logo from "@/public/logo.png";
+import Image from "next/image";
 
 const BasePublicPage = ({
   children,
@@ -18,13 +20,15 @@ const BasePublicPage = ({
 
   return (
     <div className={styles.main}>
-      <Flex flexWrap={"wrap"}>
+      <Flex flexWrap={"wrap"} as={"header"}>
         <Box p="4">
           <Link href={HOMEPAGE_URL}>
-            <img
-              src={require("../../../public/logo.png")}
+            <Image
+              src={Logo}
               alt={"Lonely project logo"}
               className={styles.logoImage}
+              width={64}
+              height={64}
             />
           </Link>
         </Box>
@@ -53,9 +57,9 @@ const BasePublicPage = ({
         )}
       </Flex>
       <div className={styles.content}>{children}</div>
-      <div className={styles.footer}>
+      <footer className={styles.footer}>
         © 2021 Lonely Project. All rights reserved
-      </div>
+      </footer>
     </div>
   );
 };

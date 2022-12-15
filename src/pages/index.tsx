@@ -60,7 +60,7 @@ const Index = () => {
           </Heading>
           <Text
             mt="8"
-            fontSize={{ base: "4xl", sm: "1xl", md: "5xl", lg: "6xl" }}
+            fontSize={{ base: "4xl", sm: "1xl", md: "3xl", "2xl": "6xl" }}
             fontWeight="extrabold"
           >
             A new platform designed to help you get connected with like minded

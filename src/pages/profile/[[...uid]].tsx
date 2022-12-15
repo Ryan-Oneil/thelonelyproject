@@ -39,7 +39,7 @@ const ProfilePage = () => {
   return (
     <BaseAppPage>
       <Box
-        backgroundImage={require("@/public/img.png")}
+        backgroundImage={"/img.png"}
         backgroundRepeat={"no-repeat"}
         backgroundSize={"100% 300px"}
         flexWrap={"wrap"}

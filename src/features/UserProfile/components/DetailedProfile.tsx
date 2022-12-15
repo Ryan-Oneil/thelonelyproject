@@ -20,7 +20,7 @@ import ProfilePrompts from "./ProfilePrompts";
 import { useUserProfile } from "../api/getUserProfile";
 import { useSendConnectionRequest } from "../api/updateUserProfile";
 import { USER_PROFILE_URL } from "@/utils/urls";
-import { getApiError } from "../../../apis/api";
+import { getApiError } from "@/apis/api";
 import ProfileGallery from "./ProfileGallery";
 import SpotifyArtists from "./SpotifyArtists";
 import Link from "next/link";
@@ -148,7 +148,7 @@ const DetailedProfile = ({
                   .mutateAsync(id)
                   .then(() => nextProfileAction())
                   .catch((error) => {
-                    const {toast} = createStandaloneToast();
+                    const { toast } = createStandaloneToast();
                     const errorMessage = getApiError(error);
 
                     toast({

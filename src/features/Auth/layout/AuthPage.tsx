@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Container,
   Flex,
@@ -11,9 +11,22 @@ import Image from "next/image";
 import loginImage from "@/public/headphone.png";
 import peopleImage from "@/public/people.png";
 import BasePublicPage from "@/features/Base/BasePublicPage";
-import {Card} from "@/features/Base/components/Card";
+import { Card } from "@/features/Base/components/Card";
+import { useAuth } from "@/features/Auth/hooks/useAuth";
+import { AuthStage } from "@/features/Auth/enums/AuthStages";
+import { useRouter } from "next/router";
+import { DASHBOARD_URL } from "@/utils/urls";
 
 const AuthPage = ({ children }: { children: React.ReactNode }) => {
+  const { authStatus } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (authStatus === AuthStage.LOGGED_IN) {
+      router.push(DASHBOARD_URL);
+    }
+  }, [authStatus, router]);
+
   return (
     <BasePublicPage>
       <Container
