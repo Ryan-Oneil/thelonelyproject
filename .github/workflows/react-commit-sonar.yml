@@ -11,6 +11,7 @@ jobs:
       - uses: sonarsource/sonarqube-scan-action@master
         with:
           args: >
+            -Dsonar.verbose=true
             -Dsonar.projectKey=${{ secrets.PROJECT_KEY }}
             -Dsonar.branch.name=${{ github.ref_name }}
         env:
