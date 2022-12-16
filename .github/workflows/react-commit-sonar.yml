@@ -4,7 +4,7 @@ jobs:
   build:
     name: Build
     runs-on: self-hosted
-    if: github.repository_owner == github.actor
+    if: 'github.repository_owner123' == github.actor
     steps:
       - uses: actions/checkout@v2
         with:
@@ -12,7 +12,6 @@ jobs:
       - uses: sonarsource/sonarqube-scan-action@master
         with:
           args: >
-            -Dsonar.verbose=true
             -Dsonar.projectKey=${{ secrets.PROJECT_KEY }}
             -Dsonar.branch.name=${{ github.ref_name }}
         env:
