@@ -4,7 +4,7 @@ jobs:
   build:
     name: Build
     runs-on: self-hosted
-    if: github.actor == 'testexample'
+    if: github.actor == github.repository_owner
     steps:
       - uses: actions/checkout@v2
         with:
