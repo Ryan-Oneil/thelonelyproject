@@ -8,7 +8,7 @@ import {
   Tabs,
 } from "@chakra-ui/react";
 import ProfileMatchCard from "@/features/UserProfile/components/ProfileMatchCard";
-import BaseAppPage from "@/features/Base/BaseAppLayout";
+import BaseAppLayout from "@/features/Base/BaseAppLayout";
 import {
   useAcceptedMatches,
   useMatches,
@@ -22,7 +22,7 @@ const Match = () => {
   const [activeProfile, setActiveProfile] = useState(0);
 
   return (
-    <BaseAppPage>
+    <BaseAppLayout title={"Match"}>
       <Tabs
         variant="soft-rounded"
         isLazy
@@ -55,7 +55,7 @@ const Match = () => {
           </TabPanel>
         </TabPanels>
       </Tabs>
-    </BaseAppPage>
+    </BaseAppLayout>
   );
 };
 export default Match;

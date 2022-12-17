@@ -3,7 +3,7 @@ import { Box, SimpleGrid, VStack } from "@chakra-ui/react";
 import ProfileGallery from "@/features/UserProfile/components/ProfileGallery";
 import ProfileInterests from "@/features/UserProfile/components/ProfileInterests";
 import ProfilePrompts from "@/features/UserProfile/components/ProfilePrompts";
-import BaseAppPage from "@/features/Base/BaseAppLayout";
+import BaseAppLayout from "@/features/Base/BaseAppLayout";
 import { useUserProfile } from "@/features/UserProfile/api/getUserProfile";
 import ProfileHeader from "@/features/UserProfile/components/ProfileHeader";
 import { UserProfile } from "@/features/UserProfile/types/Profile";
@@ -37,7 +37,7 @@ const ProfilePage = () => {
   const updateAbout = useUpdateProfileAbout();
 
   return (
-    <BaseAppPage>
+    <BaseAppLayout title={"Profile"}>
       <Box
         backgroundImage={"/img.png"}
         backgroundRepeat={"no-repeat"}
@@ -92,7 +92,7 @@ const ProfilePage = () => {
           </SimpleGrid>
         </SimpleGrid>
       </Box>
-    </BaseAppPage>
+    </BaseAppLayout>
   );
 };
 export default ProfilePage;

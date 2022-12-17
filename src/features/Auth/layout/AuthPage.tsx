@@ -55,7 +55,12 @@ const AuthPage = ({ children }: { children: React.ReactNode }) => {
               </Text>
             </Container>
             <Flex>
-              <Image alt={"Login Image"} objectFit={"cover"} src={loginImage} />
+              <Image
+                alt={"Login Image"}
+                objectFit={"cover"}
+                src={loginImage}
+                placeholder={"blur"}
+              />
             </Flex>
           </Stack>
         </GridItem>
@@ -65,7 +70,11 @@ const AuthPage = ({ children }: { children: React.ReactNode }) => {
           </Card>
         </GridItem>
         <GridItem>
-          <Image src={peopleImage} alt={"Person sitting at computer"} />
+          <Image
+            src={peopleImage}
+            alt={"Person sitting at computer"}
+            placeholder={"blur"}
+          />
         </GridItem>
       </Container>
     </BasePublicPage>
