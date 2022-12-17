@@ -4,13 +4,21 @@ import { getAuth, UserInfo } from "@firebase/auth";
 import { AuthStage } from "@/features/Auth/enums/AuthStages";
 import { RegisterStatus } from "@/features/Auth/enums/RegisterStatus";
 
+const emptyUser = {
+  uid: "",
+  email: "",
+  displayName: "",
+  phoneNumber: "",
+  photoURL: "",
+  providerId: "",
+};
 export const AuthContext = React.createContext<{
-  user: UserInfo | null;
+  user: UserInfo;
   authStatus: AuthStage;
   registerStatus: RegisterStatus;
   setRegisterStatus: (status: RegisterStatus) => void;
 }>({
-  user: null,
+  user: emptyUser,
   authStatus: AuthStage.INIT,
   registerStatus: RegisterStatus.NOT_REGISTERED,
   setRegisterStatus: () => {},
@@ -19,7 +27,7 @@ export const AuthContext = React.createContext<{
 let firebaseApp: FirebaseApp;
 
 export function AuthProvider({ children }: { children: JSX.Element }) {
-  const [user, setUser] = useState<UserInfo | null>(null);
+  const [user, setUser] = useState<UserInfo>(emptyUser);
   const [authStatus, setAuthStatus] = useState<AuthStage>(AuthStage.INIT);
   const [registerStatus, setRegisterStatus] = useState<RegisterStatus>(
     RegisterStatus.NOT_REGISTERED
@@ -49,12 +57,12 @@ export function AuthProvider({ children }: { children: JSX.Element }) {
           ? RegisterStatus.REGISTERED
           : RegisterStatus.NOT_REGISTERED;
 
-        setRegisterStatus(registeredStatus);
         setUser(authUser);
+        setRegisterStatus(registeredStatus);
         setAuthStatus(AuthStage.LOGGED_IN);
       } else {
-        setUser(null);
         setAuthStatus(AuthStage.LOGGED_OUT);
+        setUser(emptyUser);
       }
     });
   }, []);
