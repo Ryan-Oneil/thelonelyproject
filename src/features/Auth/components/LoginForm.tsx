@@ -9,8 +9,7 @@ import {
   Tooltip,
   VStack,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
-import { RESET_PASSWORD_URL } from "../../../utils/urls";
+import { RESET_PASSWORD_URL } from "@/utils/urls";
 import {
   getAuth,
   signInWithPopup,
@@ -20,9 +19,10 @@ import {
   TwitterAuthProvider,
 } from "firebase/auth";
 import { Field, Formik, FormikErrors } from "formik";
-import { LabelledInput } from "../../../Base/components/forms/Inputs";
+import { LabelledInput } from "@/features/Base/components/forms/Inputs";
 import { User } from "../types/User";
 import { FaGoogle, FaMicrosoft, FaTwitter } from "react-icons/fa";
+import Link from "next/link";
 
 const provider = new GoogleAuthProvider();
 const microsoftProvider = new OAuthProvider("microsoft.com");
@@ -38,7 +38,6 @@ const LoginForm = () => {
     formValues: User,
     { setStatus }: { setStatus: Function }
   ) => {
-    const auth = getAuth();
     return signInWithEmailAndPassword(
       auth,
       formValues.email.trim(),
@@ -70,9 +69,7 @@ const LoginForm = () => {
           bg={"#E9F1FF"}
           leftIcon={<FaGoogle />}
           size={"lg"}
-          onClick={() => {
-            signInWithPopup(auth, provider);
-          }}
+          onClick={() => signInWithPopup(auth, provider)}
         >
           Sign in with Google
         </Button>
@@ -81,9 +78,7 @@ const LoginForm = () => {
             icon={<FaMicrosoft />}
             aria-label={"Microsoft Logo"}
             size={"lg"}
-            onClick={() => {
-              signInWithPopup(auth, microsoftProvider);
-            }}
+            onClick={() => signInWithPopup(auth, microsoftProvider)}
           />
         </Tooltip>
         <Tooltip label={"Sign in with Twitter"}>
@@ -92,9 +87,7 @@ const LoginForm = () => {
             icon={<FaTwitter />}
             aria-label={"Twitter logo"}
             size={"lg"}
-            onClick={() => {
-              signInWithPopup(auth, twitterProvider);
-            }}
+            onClick={() => signInWithPopup(auth, twitterProvider)}
           />
         </Tooltip>
       </Flex>
@@ -147,7 +140,7 @@ const LoginForm = () => {
               )}
               <Stack mt={"5%"}>
                 <Link
-                  to={RESET_PASSWORD_URL}
+                  href={RESET_PASSWORD_URL}
                   style={{ textAlign: "end", color: "#4285F4" }}
                 >
                   Forgot Password?

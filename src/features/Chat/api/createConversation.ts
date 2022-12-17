@@ -1,5 +1,5 @@
-import { apiPostCall } from "../../../apis/api";
-import { CHAT_CREATE } from "../../../apis/endpoints";
+import { apiPostCall } from "@/apis/api";
+import { CHAT_CREATE } from "@/apis/endpoints";
 import { useMutation } from "react-query";
 
 export const createChatRoomWithUser = (targetId: string) => {

@@ -1,0 +1,9 @@
+export const HOMEPAGE_URL = "/";
+export const LOGIN_URL = "/login";
+export const REGISTER_URL = "/register";
+export const RESET_PASSWORD_URL = "/forgotpassword";
+export const USER_PROFILE_URL = "/profile";
+export const DASHBOARD_URL = USER_PROFILE_URL;
+export const CHAT_URL = "/chat";
+export const PROFILE_SETUP_URL = "/profile/setup";
+export const PROFILE_FIND_MATCHES = "/profile/match";

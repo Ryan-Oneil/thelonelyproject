@@ -6,10 +6,10 @@ import { Button, Flex, Spacer } from "@chakra-ui/react";
 import ProfilePicture from "./ProfilePicture";
 import React from "react";
 import { UserProfile } from "../types/Profile";
-import { useAppSelector } from "../../../utils/hooks";
 import { useCreateChat } from "../../Chat/api/createConversation";
-import { useNavigate } from "react-router-dom";
-import { CHAT_URL } from "../../../utils/urls";
+import { CHAT_URL } from "@/utils/urls";
+import {useRequireUser} from "@/features/Auth/hooks/useRequireUser";
+import {useRouter} from "next/router";
 
 interface HeaderProps extends UserProfile {
   attemptingToConnect: boolean;
@@ -25,7 +25,7 @@ const ProfileHeader = ({
   attemptingToConnect = false,
   connector = false,
 }: HeaderProps) => {
-  const userId = useAppSelector((state) => state.auth.user.uid);
+  const userId = useRequireUser().uid;
   const ownsProfile = id === userId;
 
   const buttonStyle = {
@@ -41,7 +41,7 @@ const ProfileHeader = ({
     const connectRequest = useSendConnectionRequest();
     const changeRequestStatus = useChangeRequestStatus();
     const createChat = useCreateChat();
-    const navigate = useNavigate();
+    const router = useRouter();
 
     if (connectionStatus === "CONNECTED") {
       return (
@@ -50,7 +50,7 @@ const ProfileHeader = ({
           onClick={() =>
             createChat
               .mutateAsync(id)
-              .then((data) => navigate(`${CHAT_URL}/${data.id}`))
+              .then((data) => router.push(`${CHAT_URL}/${data.id}`))
           }
         >
           Message

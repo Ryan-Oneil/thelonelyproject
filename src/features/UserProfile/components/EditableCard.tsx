@@ -12,7 +12,8 @@ import {
   useEditableControls,
 } from "@chakra-ui/react";
 import ProfileCard from "./ProfileCard";
-import { CheckIcon, CloseIcon, EditIcon } from "@chakra-ui/icons";
+import { FaRegEdit } from "react-icons/fa";
+import {MdClose, MdOutlineCheck} from "react-icons/md";
 
 type props = {
   defaultValue: string;
@@ -42,12 +43,12 @@ const EditableCard = ({
     return isEditing ? (
       <ButtonGroup justifyContent="center" size="sm">
         <IconButton
-          icon={<CheckIcon />}
+          icon={<MdOutlineCheck />}
           {...getSubmitButtonProps()}
           aria-label={"Submit"}
         />
         <IconButton
-          icon={<CloseIcon />}
+          icon={<MdClose />}
           {...getCancelButtonProps()}
           aria-label={"Cancel"}
         />
@@ -57,7 +58,7 @@ const EditableCard = ({
         <Tooltip label={"Edit"}>
           <IconButton
             size="sm"
-            icon={<EditIcon />}
+            icon={<FaRegEdit />}
             {...getEditButtonProps()}
             aria-label={"Edit"}
           />

@@ -1,8 +1,7 @@
 import React from "react";
 import { Box, Center, Flex, IconButton, Spacer, Text } from "@chakra-ui/react";
-import { DownloadIcon } from "@chakra-ui/icons";
-import { useAppSelector } from "../../../utils/hooks";
 import { FaRegFileImage } from "react-icons/fa";
+import { FiDownload } from "react-icons/fi";
 
 const SharedMedia = ({ id }: { id: string }) => {
   // const { name, type, size } = useAppSelector(
@@ -21,14 +20,14 @@ const SharedMedia = ({ id }: { id: string }) => {
         <FaRegFileImage size={32} />
       </Center>
       <Box ml={6}>
-        <Text fontWeight={"bold"} isTruncated>
+        <Text fontWeight={"bold"} noOfLines={1}>
           {/*{name}*/}
         </Text>
         <Text
           color={"rgba(0, 0, 0, 0.4)"}
           fontWeight={"bold"}
           style={{ wordSpacing: 10 }}
-          isTruncated
+          noOfLines={1}
         >
           {/*{MessageType[type]} {size}*/}
         </Text>
@@ -37,7 +36,7 @@ const SharedMedia = ({ id }: { id: string }) => {
       <IconButton
         bg="rgba(97, 94, 240, 0.1)"
         aria-label="Download Media"
-        icon={<DownloadIcon />}
+        icon={<FiDownload />}
         borderRadius={"full"}
         size={"lg"}
         color={"#2249B3"}

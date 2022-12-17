@@ -1,5 +1,5 @@
-import { apiGetCall } from "../../../apis/api";
-import { USER_PROFILE_INFO_ENDPOINT } from "../../../apis/endpoints";
+import { apiGetCall } from "@/apis/api";
+import { USER_PROFILE_INFO_ENDPOINT } from "@/apis/endpoints";
 import { useQuery } from "react-query";
 
 export const getUserProfile = (userId: string) => {

@@ -19,18 +19,10 @@ import {
   Spinner,
   useDisclosure,
 } from "@chakra-ui/react";
-import {
-  AttachmentIcon,
-  ChatIcon,
-  HamburgerIcon,
-  InfoOutlineIcon,
-} from "@chakra-ui/icons";
 import AvatarHeader from "./AvatarHeader";
-import { useStomp } from "../../../hooks/useStomp";
-import { useParams } from "react-router-dom";
+import { useStomp } from "@/hooks/useStomp";
 import { useMessages } from "../api/getMessages";
 import ConversationInfoPanel from "./ConversationInfoPanel";
-import { useAppSelector } from "../../../utils/hooks";
 import { IMessage } from "@stomp/stompjs";
 import { conversation } from "../type/conversation";
 import { Message } from "../type/message";
@@ -38,17 +30,23 @@ import FileUploader from "../../UserProfile/components/FileUploader";
 import { useSendAttachment } from "../api/sendMedia";
 import { AxiosError } from "axios";
 import ApiError from "../../Auth/components/ApiError";
-import { Picker, BaseEmoji } from "emoji-mart";
-import "emoji-mart/css/emoji-mart.css";
 import { FaRegSmile } from "react-icons/fa";
 import ChatMessageList from "./ChatMessageList";
+import { useRequireUser } from "@/features/Auth/hooks/useRequireUser";
+import { FiInfo, FiMenu } from "react-icons/fi";
+import emojiData from "@emoji-mart/data";
+// @ts-ignore
+import Picker from "@emoji-mart/react";
+import { ImAttachment } from "react-icons/im";
+import { RxChatBubble } from "react-icons/rx";
 
-const ChatConversation = () => {
+type ChatConversationProps = {
+  activeConversationId: string;
+};
+const ChatConversation = ({ activeConversationId }: ChatConversationProps) => {
   const padding = 5;
   const borderColor = "rgba(0, 0, 0, 0.2)";
-  const params = useParams();
-  const activeConversationId = params.chatId as string;
-  const userId = useAppSelector((state) => state.auth.user.uid);
+  const userId = useRequireUser().uid;
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([] as Message[]);
   const stompClient = useStomp();
@@ -107,11 +105,11 @@ const ChatConversation = () => {
         <MenuButton
           as={IconButton}
           aria-label="Options"
-          icon={<HamburgerIcon />}
+          icon={<FiMenu />}
           variant="outline"
         />
         <MenuList>
-          <MenuItem icon={<InfoOutlineIcon />} onClick={onOpen}>
+          <MenuItem icon={<FiInfo />} onClick={onOpen}>
             View Info
           </MenuItem>
         </MenuList>
@@ -155,11 +153,12 @@ const ChatConversation = () => {
             </PopoverTrigger>
             <PopoverContent>
               <Picker
+                data={emojiData}
                 showPreview={false}
                 showSkinTones={false}
                 native={true}
                 style={{ width: "inherit" }}
-                onSelect={(emoji: BaseEmoji) =>
+                onSelect={(emoji: any) =>
                   setMessage((prevState) => prevState + emoji.native)
                 }
               />
@@ -176,7 +175,7 @@ const ChatConversation = () => {
             accept={"*"}
           >
             <IconButton
-              icon={<AttachmentIcon />}
+              icon={<ImAttachment />}
               variant="ghost"
               aria-label={"Attachment button"}
               sx={{ ":hover > svg": { transform: "scale(1.1)" } }}
@@ -196,7 +195,7 @@ const ChatConversation = () => {
             />
             <InputRightElement>
               <IconButton
-                icon={<ChatIcon />}
+                icon={<RxChatBubble />}
                 variant="ghost"
                 aria-label={"Send icon"}
                 onClick={sendMessageToActiveConversation}

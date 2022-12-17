@@ -12,7 +12,7 @@ const AvatarHeader = ({ url, name, heading, padding }: AvatarProps) => {
   return (
     <HStack spacing={4} padding={padding}>
       <Avatar name={name} src={url} />
-      <Heading fontSize={"xl"} m={"auto"} isTruncated>
+      <Heading fontSize={"xl"} m={"auto"} noOfLines={1}>
         {heading}
       </Heading>
     </HStack>

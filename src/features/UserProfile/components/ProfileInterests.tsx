@@ -17,7 +17,6 @@ import {
 } from "@chakra-ui/react";
 import AvatarTag, { SelectAbleAvatarTag } from "./AvatarTag";
 import ProfileCard from "./ProfileCard";
-import { EditIcon } from "@chakra-ui/icons";
 import { useInterests } from "../api/getInterests";
 import { CategoryInterest, Interest } from "../types/Interest";
 import {
@@ -25,6 +24,7 @@ import {
   useDeleteProfileInterest,
 } from "../api/updateUserProfile";
 import { ProfileProps } from "../types/ProfileProps";
+import {FaRegEdit} from "react-icons/fa";
 
 const ProfileInterests = ({
   editMode,
@@ -73,7 +73,7 @@ const ProfileInterests = ({
               <Tooltip label={"Edit Interests"}>
                 <IconButton
                   size="sm"
-                  icon={<EditIcon />}
+                  icon={<FaRegEdit />}
                   aria-label={"Edit"}
                   onClick={onOpen}
                 />
