@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Link, Text } from "@chakra-ui/react";
 import ImageModal from "./ImageModal";
 import { getMediaType, isValidUrl } from "@/utils/helpers";
-import { useRequireUser } from "@/features/Auth/hooks/useRequireUser";
+import { useAuth } from "@/features/Auth/hooks/useAuth";
 
 type messageProps = {
   content: string;
@@ -11,8 +11,8 @@ type messageProps = {
 };
 
 const ChatMessage = ({ content, senderId, timestamp }: messageProps) => {
-  const { uid } = useRequireUser();
-  const isSender = senderId === undefined || senderId === uid;
+  const { user } = useAuth();
+  const isSender = senderId === undefined || senderId === user.uid;
   const date = new Date(timestamp);
 
   const styleProps = isSender

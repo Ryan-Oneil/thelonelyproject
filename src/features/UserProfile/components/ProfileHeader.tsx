@@ -8,8 +8,8 @@ import React from "react";
 import { UserProfile } from "../types/Profile";
 import { useCreateChat } from "../../Chat/api/createConversation";
 import { CHAT_URL } from "@/utils/urls";
-import {useRequireUser} from "@/features/Auth/hooks/useRequireUser";
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
+import { useAuth } from "@/features/Auth/hooks/useAuth";
 
 interface HeaderProps extends UserProfile {
   attemptingToConnect: boolean;
@@ -25,8 +25,8 @@ const ProfileHeader = ({
   attemptingToConnect = false,
   connector = false,
 }: HeaderProps) => {
-  const userId = useRequireUser().uid;
-  const ownsProfile = id === userId;
+  const { user } = useAuth();
+  const ownsProfile = id === user.uid;
 
   const buttonStyle = {
     backgroundColor: "rgba(97, 94, 240, 0.1)",

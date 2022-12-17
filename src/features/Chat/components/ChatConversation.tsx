@@ -32,13 +32,13 @@ import { AxiosError } from "axios";
 import ApiError from "../../Auth/components/ApiError";
 import { FaRegSmile } from "react-icons/fa";
 import ChatMessageList from "./ChatMessageList";
-import { useRequireUser } from "@/features/Auth/hooks/useRequireUser";
 import { FiInfo, FiMenu } from "react-icons/fi";
 import emojiData from "@emoji-mart/data";
 // @ts-ignore
 import Picker from "@emoji-mart/react";
 import { ImAttachment } from "react-icons/im";
 import { RxChatBubble } from "react-icons/rx";
+import { useAuth } from "@/features/Auth/hooks/useAuth";
 
 type ChatConversationProps = {
   activeConversationId: string;
@@ -46,7 +46,7 @@ type ChatConversationProps = {
 const ChatConversation = ({ activeConversationId }: ChatConversationProps) => {
   const padding = 5;
   const borderColor = "rgba(0, 0, 0, 0.2)";
-  const userId = useRequireUser().uid;
+  const userId = useAuth().user.uid;
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([] as Message[]);
   const stompClient = useStomp();

@@ -11,11 +11,10 @@ import EditableCard from "@/features/UserProfile/components/EditableCard";
 import { useUpdateProfileAbout } from "@/features/UserProfile/api/updateUserProfile";
 import SpotifyArtists from "@/features/UserProfile/components/SpotifyArtists";
 import { useRouter } from "next/router";
-import { useRequireUser } from "@/features/Auth/hooks/useRequireUser";
-import { UserInfo } from "@firebase/auth-types";
+import { useAuth } from "@/features/Auth/hooks/useAuth";
 
 const ProfilePage = () => {
-  const user = useRequireUser() as UserInfo;
+  const { user } = useAuth();
   const router = useRouter();
   const profileId = (router.query.uid as string) || user.uid;
   const enableEdit = profileId === user.uid;
