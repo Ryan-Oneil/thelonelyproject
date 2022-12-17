@@ -23,6 +23,10 @@ const BasePublicPage = ({
     <div className={styles.main}>
       <Head>
         <title>Lonely Project</title>
+        <meta
+          name="description"
+          content="The lonely project a social network dedicated to getting users connected with like minded people"
+        />
       </Head>
       <Flex flexWrap={"wrap"} as={"header"}>
         <Link href={HOMEPAGE_URL}>
