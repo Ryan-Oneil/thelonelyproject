@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { Fragment, useEffect, useMemo, useRef } from "react";
 import { Message } from "../type/message";
 import { Box, VStack, Text } from "@chakra-ui/react";
 import ChatMessage from "./ChatMessage";
@@ -34,19 +34,14 @@ const ChatMessageList = ({ messages }: { messages: Message[] }) => {
     () =>
       splitMessagesByDate(messages).map((messageByDate) => {
         return (
-          <>
-            <Text
-              borderRadius={"xl"}
-              p={2}
-              backgroundColor={"lightgrey"}
-              key={messageByDate.date}
-            >
+          <Fragment key={messageByDate.date}>
+            <Text borderRadius={"xl"} p={2} backgroundColor={"lightgrey"}>
               {messageByDate.date}
             </Text>
             {messageByDate.messages.map((activeMessage: Message) => (
               <ChatMessage key={activeMessage.timestamp} {...activeMessage} />
             ))}
-          </>
+          </Fragment>
         );
       }),
     [messages]
