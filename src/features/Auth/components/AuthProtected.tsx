@@ -31,6 +31,6 @@ const AuthProtected = ({ children }: Props) => {
   ) {
     return children;
   }
-  return <LoadingPage />;
+  return <LoadingPage loadingMessage={"Lets get you connected"} />;
 };
 export default AuthProtected;
