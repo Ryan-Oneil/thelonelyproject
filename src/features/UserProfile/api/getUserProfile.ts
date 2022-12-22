@@ -11,5 +11,6 @@ export const getUserProfile = (userId: string) => {
 export const useUserProfile = (userId: string) => {
   return useQuery(["userProfile", userId], () => getUserProfile(userId), {
     enabled: !!userId,
+    retry: 3,
   });
 };
