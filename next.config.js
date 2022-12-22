@@ -7,7 +7,6 @@ let nextConfig = {
   images: {
     unoptimized: true,
   },
-  trailingSlash: true,
 };
 
 if (shouldAnalyzeBundles) {

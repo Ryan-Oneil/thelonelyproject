@@ -5,9 +5,9 @@ import ChatConversation from "@/features/Chat/components/ChatConversation";
 import BaseAppLayout from "@/features/Base/BaseAppLayout";
 import { useRouter } from "next/router";
 
-const ChatId = () => {
+const Index = () => {
   const router = useRouter();
-  const activeConversationId = (router.query.chatId as string) || "";
+  const activeConversationId = (router.query.id as string) || "";
 
   return (
     <BaseAppLayout title={"Chat"}>
@@ -20,4 +20,4 @@ const ChatId = () => {
     </BaseAppLayout>
   );
 };
-export default ChatId;
+export default Index;

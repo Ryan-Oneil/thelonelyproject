@@ -24,7 +24,7 @@ const ConversationContact = ({
       borderRadius={"xl"}
       padding={2}
     >
-      <Link href={`${CHAT_URL}/${id}`}>
+      <Link href={`${CHAT_URL}?id=${id}`}>
         <Flex>
           <Avatar name={name} src={icon} />
           <Box ml={3}>

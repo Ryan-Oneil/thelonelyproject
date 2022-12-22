@@ -120,7 +120,7 @@ const DetailedProfile = ({
             >
               Skip
             </Button>
-            <Link href={`${USER_PROFILE_URL}/${id}`}>
+            <Link href={`${USER_PROFILE_URL}?uid=${id}`}>
               <Button
                 w={"full"}
                 bg={"#151f21"}
