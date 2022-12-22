@@ -66,7 +66,7 @@ const ProfileMatchCard = ({
               </Text>
             </Tooltip>
           </Stack>
-          <Link href={`${USER_PROFILE_URL}/${id}`}>
+          <Link href={`${USER_PROFILE_URL}?uid=${id}`}>
             <Button
               w={"full"}
               bg={useColorModeValue("#151f21", "gray.900")}

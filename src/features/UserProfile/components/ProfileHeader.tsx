@@ -50,7 +50,7 @@ const ProfileHeader = ({
           onClick={() =>
             createChat
               .mutateAsync(id)
-              .then((data) => router.push(`${CHAT_URL}/${data.id}`))
+              .then((data) => router.push(`${CHAT_URL}?id=${data.id}`))
           }
         >
           Message
