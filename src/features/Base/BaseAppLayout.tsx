@@ -15,6 +15,10 @@ const BaseAppLayout = ({ title, children }: Props) => {
       <Flex flexWrap={{ base: "wrap", md: "nowrap" }}>
         <Head>
           <title>{title} - Lonely Project</title>
+            <meta
+                name="description"
+                content="The lonely project a social network dedicated to getting users connected with like minded people"
+            />
         </Head>
         <Sidebar />
         <Box w={"100%"} maxH={"100vh"} overflow={"auto"}>
