@@ -44,8 +44,9 @@ const ProfilePage = () => {
           <Image
             src={profileBanner}
             alt={"Profile banner"}
-            layout={"fill"}
             placeholder={"blur"}
+            objectFit={"cover"}
+            layout={"fill"}
           />
         </Box>
         <ProfileHeader
