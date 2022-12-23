@@ -13,17 +13,17 @@ import { useConversations } from "../api/getConversations";
 import { conversation } from "../type/conversation";
 import ConversationContact from "./ConversationContact";
 import { useUserProfile } from "../../UserProfile/api/getUserProfile";
-import { useRequireUser } from "@/features/Auth/hooks/useRequireUser";
 import { MdSearch } from "react-icons/md";
+import { useAuth } from "@/features/Auth/hooks/useAuth";
 
 type ConversationListProps = {
   activeConversationId: string;
 };
 const ConversationList = ({ activeConversationId }: ConversationListProps) => {
-  const userId = useRequireUser().uid;
+  const { user } = useAuth();
   const { isLoading, data, isSuccess } = useConversations();
   const [filter, setFilter] = useState("");
-  const profile = useUserProfile(userId);
+  const profile = useUserProfile(user.uid);
 
   return (
     <Box borderRight={"1px solid rgba(0, 0, 0, 0.2)"}>

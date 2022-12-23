@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { USER_PROFILE_URL } from "@/utils/urls";
 import { useRouter } from "next/router";
-import { Spinner } from "@chakra-ui/react";
+import LoadingPage from "@/features/Base/components/LoadingPage";
 
 const Spotify = () => {
   const { asPath, push } = useRouter();
@@ -33,6 +33,6 @@ const Spotify = () => {
     push(USER_PROFILE_URL);
   }, []);
 
-  return <Spinner />;
+  return <LoadingPage loadingMessage={"Syncing with Spotify"} />;
 };
 export default Spotify;

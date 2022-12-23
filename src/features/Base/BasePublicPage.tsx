@@ -8,6 +8,7 @@ import { DASHBOARD_URL, HOMEPAGE_URL, LOGIN_URL } from "@/utils/urls";
 import Logo from "@/public/logo.png";
 import Image from "next/image";
 import Head from "next/head";
+import LogoHeader from "@/features/Base/components/LogoHeader";
 
 const BasePublicPage = ({
   children,
@@ -30,19 +31,7 @@ const BasePublicPage = ({
       </Head>
       <Flex flexWrap={"wrap"} as={"header"}>
         <Link href={HOMEPAGE_URL}>
-          <HStack p={4} as={"section"} gap={4} _hover={{ cursor: "pointer" }}>
-            <Image
-              src={Logo}
-              alt={"Lonely project logo"}
-              className={styles.logoImage}
-              width={64}
-              height={63}
-              placeholder={"blur"}
-            />
-            <Heading size="xl" className={styles.logo}>
-              Lonely Project
-            </Heading>
-          </HStack>
+          <LogoHeader style={{ cursor: "pointer" }} />
         </Link>
         <Spacer />
         {showLogin && (

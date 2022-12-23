@@ -12,9 +12,6 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
   Spacer,
   Spinner,
   useDisclosure,
@@ -30,23 +27,24 @@ import FileUploader from "../../UserProfile/components/FileUploader";
 import { useSendAttachment } from "../api/sendMedia";
 import { AxiosError } from "axios";
 import ApiError from "../../Auth/components/ApiError";
-import { FaRegSmile } from "react-icons/fa";
 import ChatMessageList from "./ChatMessageList";
-import { useRequireUser } from "@/features/Auth/hooks/useRequireUser";
 import { FiInfo, FiMenu } from "react-icons/fi";
-import emojiData from "@emoji-mart/data";
-// @ts-ignore
-import Picker from "@emoji-mart/react";
 import { ImAttachment } from "react-icons/im";
 import { RxChatBubble } from "react-icons/rx";
+import { useAuth } from "@/features/Auth/hooks/useAuth";
+import dynamic from "next/dynamic";
 
 type ChatConversationProps = {
   activeConversationId: string;
 };
+
+const DynamicEmojiPicker = dynamic(() => import("./EmojiPicker"), {
+  loading: () => <Spinner />,
+});
 const ChatConversation = ({ activeConversationId }: ChatConversationProps) => {
   const padding = 5;
   const borderColor = "rgba(0, 0, 0, 0.2)";
-  const userId = useRequireUser().uid;
+  const userId = useAuth().user.uid;
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([] as Message[]);
   const stompClient = useStomp();
@@ -73,7 +71,7 @@ const ChatConversation = ({ activeConversationId }: ChatConversationProps) => {
       });
       stompClient.activate();
     }
-  }, []);
+  }, [stompClient]);
 
   const onMessageReceived = (msg: IMessage) => {
     const receivedMessage = JSON.parse(msg.body) as conversation;
@@ -141,29 +139,11 @@ const ChatConversation = ({ activeConversationId }: ChatConversationProps) => {
         <Divider style={{ borderColor }} />
         <ChatMessageList messages={messages} />
         <HStack w={"100%"} px={padding}>
-          <Popover isLazy>
-            <PopoverTrigger>
-              <IconButton
-                icon={<FaRegSmile />}
-                variant="ghost"
-                aria-label={"emojis"}
-                sx={{ ":hover > svg": { transform: "scale(1.1)" } }}
-                size={"lg"}
-              />
-            </PopoverTrigger>
-            <PopoverContent>
-              <Picker
-                data={emojiData}
-                showPreview={false}
-                showSkinTones={false}
-                native={true}
-                style={{ width: "inherit" }}
-                onSelect={(emoji: any) =>
-                  setMessage((prevState) => prevState + emoji.native)
-                }
-              />
-            </PopoverContent>
-          </Popover>
+          <DynamicEmojiPicker
+            onEmojiSelected={(emoji: any) =>
+              setMessage((prevState) => prevState + emoji.native)
+            }
+          />
 
           <FileUploader
             uploadAction={(file: File) =>
@@ -187,7 +167,7 @@ const ChatConversation = ({ activeConversationId }: ChatConversationProps) => {
               placeholder="Type a message"
               value={message}
               onChange={(event) => setMessage(event.target.value)}
-              onKeyPress={(event) => {
+              onKeyDown={(event) => {
                 if (event.key === "Enter") {
                   sendMessageToActiveConversation();
                 }
