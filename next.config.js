@@ -7,10 +7,6 @@ let nextConfig = {
   images: {
     unoptimized: true,
   },
-  i18n: {
-    locales: ["en"],
-    defaultLocale: "en",
-  },
 };
 
 if (shouldAnalyzeBundles) {
