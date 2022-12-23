@@ -82,7 +82,7 @@ const ProfileHeader = ({
   };
 
   return (
-    <Flex p={"190px 5% 0"} direction={{ base: "column", sm: "row" }}>
+    <Flex px={"5%"} direction={{ base: "column", sm: "row" }}>
       <ProfilePicture
         editMode={ownsProfile}
         profilePictureUrl={profilePictureUrl}

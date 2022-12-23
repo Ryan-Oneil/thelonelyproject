@@ -12,6 +12,8 @@ import { useUpdateProfileAbout } from "@/features/UserProfile/api/updateUserProf
 import SpotifyArtists from "@/features/UserProfile/components/SpotifyArtists";
 import { useRouter } from "next/router";
 import { useAuth } from "@/features/Auth/hooks/useAuth";
+import Image from "next/image";
+import profileBanner from "@/public/img.png";
 
 const ProfilePage = () => {
   const { user } = useAuth();
@@ -37,13 +39,15 @@ const ProfilePage = () => {
 
   return (
     <BaseAppLayout title={"Profile"}>
-      <Box
-        backgroundImage={"/img.png"}
-        backgroundRepeat={"no-repeat"}
-        backgroundSize={"100% 300px"}
-        flexWrap={"wrap"}
-        w={"100%"}
-      >
+      <Box flexWrap={"wrap"} w={"100%"}>
+        <Box height={"300px"} position={"relative"} mb={"-110px"}>
+          <Image
+            src={profileBanner}
+            alt={"Profile banner"}
+            layout={"fill"}
+            placeholder={"blur"}
+          />
+        </Box>
         <ProfileHeader
           id={data?.id}
           name={data?.name}
