@@ -24,6 +24,7 @@ import LogoutButton from "../../Auth/components/LogoutButton";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { FiMenu, FiSearch } from "react-icons/fi";
+import { useIsDesktop } from "@/features/Base/hooks/useIsDesktop";
 
 type NavItemProps = {
   url: string;
@@ -70,7 +71,7 @@ const NavItem = ({ url, icon, text, label }: NavItemProps) => {
 };
 export const Sidebar = () => {
   const [showDrawer, setShowDrawer] = useState(false);
-  const isDesktop = useBreakpointValue({ base: false, md: true });
+  const isDesktop = useIsDesktop();
   const urls = [
     { url: USER_PROFILE_URL, icon: <FaRegUserCircle />, title: "Profile" },
     { url: PROFILE_FIND_MATCHES, icon: <FiSearch />, title: "Find Matches" },
@@ -110,13 +111,14 @@ export const Sidebar = () => {
     <>
       {isDesktop && <NavMenu />}
       {!isDesktop && (
-        <Box width={"100%"} p={5} position={"absolute"} bg={"white"} zIndex={1}>
+        <Box p={5} position={"absolute"} zIndex={1}>
           <IconButton
             fontSize={"4xl"}
             icon={<FiMenu />}
             variant="outline"
             onClick={() => setShowDrawer(true)}
             aria-label={"Menu label"}
+            bg={"white"}
           />
         </Box>
       )}
