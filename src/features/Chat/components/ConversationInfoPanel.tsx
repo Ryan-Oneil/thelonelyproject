@@ -14,7 +14,7 @@ import {
 import SharedMedia from "./SharedMedia";
 import { useChatConversation } from "@/features/Chat/api/getMessages";
 
-interface props extends BoxProps {
+interface ConversationInfoPanelProps extends BoxProps {
   onClose: Function;
   activeConversationId: string;
 }
@@ -23,7 +23,7 @@ const ConversationInfoPanel = ({
   onClose,
   activeConversationId,
   ...rest
-}: props) => {
+}: ConversationInfoPanelProps) => {
   const borderStyle = "rgba(0, 0, 0, 0.2)";
   const { data } = useChatConversation(activeConversationId);
 
