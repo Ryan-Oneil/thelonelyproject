@@ -48,7 +48,7 @@ const ChatMessageList = ({ messages }: { messages: Message[] }) => {
   );
 
   return (
-    <Box h={"88vh"} overflow={"scroll"} ref={messagesEndRef}>
+    <Box overflow={"scroll"} ref={messagesEndRef} w={"100%"} flex={1}>
       <VStack p={5} justifyContent={"end"}>
         {messagesByDate}
       </VStack>

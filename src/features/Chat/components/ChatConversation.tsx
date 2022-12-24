@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
-  Box,
   Divider,
   Flex,
   HStack,
@@ -14,15 +13,9 @@ import {
   MenuList,
   Spacer,
   Spinner,
-  useDisclosure,
+  VStack,
 } from "@chakra-ui/react";
 import AvatarHeader from "./AvatarHeader";
-import { useStomp } from "@/hooks/useStomp";
-import { useMessages } from "../api/getMessages";
-import ConversationInfoPanel from "./ConversationInfoPanel";
-import { IMessage } from "@stomp/stompjs";
-import { conversation } from "../type/conversation";
-import { Message } from "../type/message";
 import FileUploader from "../../UserProfile/components/FileUploader";
 import { useSendAttachment } from "../api/sendMedia";
 import { AxiosError } from "axios";
@@ -31,69 +24,42 @@ import ChatMessageList from "./ChatMessageList";
 import { FiInfo, FiMenu } from "react-icons/fi";
 import { ImAttachment } from "react-icons/im";
 import { RxChatBubble } from "react-icons/rx";
-import { useAuth } from "@/features/Auth/hooks/useAuth";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
+import { CHAT_URL } from "@/utils/urls";
+import { useChatClient } from "@/features/Chat/hooks/useChatClient";
+import { MdClose } from "react-icons/md";
+import { StackProps } from "@chakra-ui/layout";
 
-type ChatConversationProps = {
+interface ChatConversationProps extends StackProps {
   activeConversationId: string;
-};
+  openConversationInfo: () => void;
+}
 
 const DynamicEmojiPicker = dynamic(() => import("./EmojiPicker"), {
   loading: () => <Spinner />,
 });
-const ChatConversation = ({ activeConversationId }: ChatConversationProps) => {
+const ChatConversation = ({
+  activeConversationId,
+  openConversationInfo,
+  ...rest
+}: ChatConversationProps) => {
   const padding = 5;
   const borderColor = "rgba(0, 0, 0, 0.2)";
-  const userId = useAuth().user.uid;
+  const {
+    sendMessageToActiveConversation,
+    messages,
+    chatDetails,
+    isLoading,
+    isError,
+    error,
+  } = useChatClient({ activeConversationId });
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([] as Message[]);
-  const stompClient = useStomp();
-  const { data, isLoading, isSuccess, isError, error } =
-    useMessages(activeConversationId);
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const sendAttachment = useSendAttachment();
+  const router = useRouter();
 
-  useEffect(() => {
-    if (isSuccess) {
-      setMessages(data.messages);
-    }
-  }, [data, isSuccess]);
-
-  useEffect(() => {
-    if (!stompClient.active) {
-      stompClient.configure({
-        onConnect: () => {
-          stompClient.subscribe(
-            `/user/${userId}/queue/messages`,
-            onMessageReceived
-          );
-        },
-      });
-      stompClient.activate();
-    }
-  }, [stompClient]);
-
-  const onMessageReceived = (msg: IMessage) => {
-    const receivedMessage = JSON.parse(msg.body) as conversation;
-
-    if (receivedMessage.id === activeConversationId) {
-      setMessages((prevState) => [...prevState, ...receivedMessage.messages]);
-    }
-  };
-
-  const sendMessageToActiveConversation = () => {
-    if (!message || !message.trim()) {
-      return;
-    }
-    stompClient.publish({
-      destination: `/app/chat/${activeConversationId}`,
-      body: JSON.stringify({ content: message }),
-    });
-    // @ts-ignore
-    setMessages((prevState) => [
-      ...prevState,
-      { content: message, timestamp: new Date().toISOString() },
-    ]);
+  const sendMessage = () => {
+    sendMessageToActiveConversation(message);
     setMessage("");
   };
 
@@ -107,8 +73,14 @@ const ChatConversation = ({ activeConversationId }: ChatConversationProps) => {
           variant="outline"
         />
         <MenuList>
-          <MenuItem icon={<FiInfo />} onClick={onOpen}>
+          <MenuItem icon={<FiInfo />} onClick={openConversationInfo}>
             View Info
+          </MenuItem>
+          <MenuItem
+            icon={<MdClose color={"red"} />}
+            onClick={() => router.push(CHAT_URL)}
+          >
+            Close Chat
           </MenuItem>
         </MenuList>
       </Menu>
@@ -124,75 +96,72 @@ const ChatConversation = ({ activeConversationId }: ChatConversationProps) => {
   }
 
   return (
-    <>
-      <Box borderRight={"1px solid"} flexGrow={1} borderColor={borderColor}>
-        <Flex p={padding}>
-          <AvatarHeader
-            name={data.name}
-            heading={data.name}
-            padding={0}
-            url={data.icon}
-          />
-          <Spacer />
-          <ChatMenu />
-        </Flex>
-        <Divider style={{ borderColor }} />
-        <ChatMessageList messages={messages} />
-        <HStack w={"100%"} px={padding}>
-          <DynamicEmojiPicker
-            onEmojiSelected={(emoji: any) =>
-              setMessage((prevState) => prevState + emoji.native)
-            }
-          />
-
-          <FileUploader
-            uploadAction={(file: File) =>
-              sendAttachment.mutate({
-                chatId: activeConversationId,
-                attachment: file,
-              })
-            }
-            accept={"*"}
-          >
-            <IconButton
-              icon={<ImAttachment />}
-              variant="ghost"
-              aria-label={"Attachment button"}
-              sx={{ ":hover > svg": { transform: "scale(1.1)" } }}
-              size={"lg"}
-            />
-          </FileUploader>
-          <InputGroup size={"lg"}>
-            <Input
-              placeholder="Type a message"
-              value={message}
-              onChange={(event) => setMessage(event.target.value)}
-              onKeyDown={(event) => {
-                if (event.key === "Enter") {
-                  sendMessageToActiveConversation();
-                }
-              }}
-            />
-            <InputRightElement>
-              <IconButton
-                icon={<RxChatBubble />}
-                variant="ghost"
-                aria-label={"Send icon"}
-                onClick={sendMessageToActiveConversation}
-              />
-            </InputRightElement>
-          </InputGroup>
-        </HStack>
-      </Box>
-      {isOpen && (
-        <ConversationInfoPanel
-          name={data.name}
-          icon={data.icon}
-          onClose={onClose}
-          about={data.about}
+    <VStack
+      borderRight={"1px solid"}
+      flexGrow={1}
+      borderColor={borderColor}
+      spacing={0}
+      alignItems={"stretch"}
+      {...rest}
+    >
+      <Flex p={padding}>
+        <AvatarHeader
+          name={chatDetails.name}
+          heading={chatDetails.name}
+          padding={0}
+          url={chatDetails.icon}
         />
-      )}
-    </>
+        <Spacer />
+        <ChatMenu />
+      </Flex>
+      <Divider style={{ borderColor }} />
+      <ChatMessageList messages={messages} />
+      <HStack py={2} px={padding}>
+        <DynamicEmojiPicker
+          onEmojiSelected={(emoji: any) =>
+            setMessage((prevState) => prevState + emoji.native)
+          }
+        />
+
+        <FileUploader
+          uploadAction={(file: File) =>
+            sendAttachment.mutate({
+              chatId: activeConversationId,
+              attachment: file,
+            })
+          }
+          accept={"*"}
+        >
+          <IconButton
+            icon={<ImAttachment />}
+            variant="ghost"
+            aria-label={"Attachment button"}
+            sx={{ ":hover > svg": { transform: "scale(1.1)" } }}
+            size={"lg"}
+          />
+        </FileUploader>
+        <InputGroup size={"lg"}>
+          <Input
+            placeholder="Type a message"
+            value={message}
+            onChange={(event) => setMessage(event.target.value)}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") {
+                sendMessage();
+              }
+            }}
+          />
+          <InputRightElement>
+            <IconButton
+              icon={<RxChatBubble />}
+              variant="ghost"
+              aria-label={"Send icon"}
+              onClick={sendMessage}
+            />
+          </InputRightElement>
+        </InputGroup>
+      </HStack>
+    </VStack>
   );
 };
 export default ChatConversation;

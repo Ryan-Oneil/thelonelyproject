@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Box,
+  BoxProps,
   CloseButton,
   Divider,
   Flex,
@@ -11,19 +12,23 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import SharedMedia from "./SharedMedia";
+import { useChatConversation } from "@/features/Chat/api/getMessages";
 
-type props = {
-  name: string;
-  icon: string;
+interface ConversationInfoPanelProps extends BoxProps {
   onClose: Function;
-  about: string;
-};
+  activeConversationId: string;
+}
 
-const ConversationInfoPanel = ({ name, icon, onClose, about }: props) => {
+const ConversationInfoPanel = ({
+  onClose,
+  activeConversationId,
+  ...rest
+}: ConversationInfoPanelProps) => {
   const borderStyle = "rgba(0, 0, 0, 0.2)";
+  const { data } = useChatConversation(activeConversationId);
 
   return (
-    <Box>
+    <Box {...rest}>
       <Flex p={6}>
         <Heading fontSize={"xl"} m={"auto"}>
           Info
@@ -35,21 +40,21 @@ const ConversationInfoPanel = ({ name, icon, onClose, about }: props) => {
       <Image
         borderRadius="full"
         boxSize="200px"
-        src={icon}
+        src={data.icon}
         fallbackSrc={
           "https://avataaars.io/?avatarStyle=Circle&topType=ShortHairDreads01&accessoriesType=Wayfarers&hairColor=Black&facialHairType=BeardLight&facialHairColor=Black&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Smile&skinColor=Light'"
         }
         alt="User profile picture"
         my={4}
-        mx={20}
+        mx={{ base: "auto", md: 20 }}
       />
       <Heading fontSize={"2xl"} textAlign={"center"} pb={4}>
-        {name}
+        {data.name}
       </Heading>
       <Divider borderColor={borderStyle} />
       <Box p={4}>
         <Text fontWeight={"bold"}>About</Text>
-        <Text>{about}</Text>
+        <Text>{data.about}</Text>
       </Box>
       <Divider borderColor={borderStyle} />
       <Text p={4} fontWeight={"bold"}>

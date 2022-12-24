@@ -8,8 +8,13 @@ export const fetchChatMessages = (roomId: string) => {
   );
 };
 
-export const useMessages = (roomId: string) => {
-  return useQuery(["messages", roomId], () => fetchChatMessages(roomId), {
-    enabled: !!roomId,
-  });
+export const useChatConversation = (roomId: string) => {
+  return useQuery(
+    ["chatConversation", roomId],
+    () => fetchChatMessages(roomId),
+    {
+      enabled: !!roomId,
+      staleTime: 30000,
+    }
+  );
 };

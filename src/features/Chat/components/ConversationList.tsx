@@ -7,6 +7,7 @@ import {
   InputGroup,
   InputLeftElement,
   Spinner,
+  BoxProps,
 } from "@chakra-ui/react";
 import AvatarHeader from "./AvatarHeader";
 import { useConversations } from "../api/getConversations";
@@ -16,17 +17,20 @@ import { useUserProfile } from "../../UserProfile/api/getUserProfile";
 import { MdSearch } from "react-icons/md";
 import { useAuth } from "@/features/Auth/hooks/useAuth";
 
-type ConversationListProps = {
+interface ConversationListProps extends BoxProps {
   activeConversationId: string;
-};
-const ConversationList = ({ activeConversationId }: ConversationListProps) => {
+}
+const ConversationList = ({
+  activeConversationId,
+  ...rest
+}: ConversationListProps) => {
   const { user } = useAuth();
   const { isLoading, data, isSuccess } = useConversations();
   const [filter, setFilter] = useState("");
   const profile = useUserProfile(user.uid);
 
   return (
-    <Box borderRight={"1px solid rgba(0, 0, 0, 0.2)"}>
+    <Box borderRight={"1px solid rgba(0, 0, 0, 0.2)"} {...rest}>
       <AvatarHeader
         name={profile.data?.name}
         heading={"Conversations"}
