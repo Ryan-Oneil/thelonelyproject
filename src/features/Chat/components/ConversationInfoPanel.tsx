@@ -7,6 +7,7 @@ import {
   Flex,
   Heading,
   Image,
+  Skeleton,
   Spacer,
   Text,
   VStack,
@@ -25,7 +26,7 @@ const ConversationInfoPanel = ({
   ...rest
 }: ConversationInfoPanelProps) => {
   const borderStyle = "rgba(0, 0, 0, 0.2)";
-  const { data } = useChatConversation(activeConversationId);
+  const { data, isLoading } = useChatConversation(activeConversationId);
 
   return (
     <Box {...rest}>
@@ -40,7 +41,7 @@ const ConversationInfoPanel = ({
       <Image
         borderRadius="full"
         boxSize="200px"
-        src={data.icon}
+        src={data?.icon}
         fallbackSrc={
           "https://avataaars.io/?avatarStyle=Circle&topType=ShortHairDreads01&accessoriesType=Wayfarers&hairColor=Black&facialHairType=BeardLight&facialHairColor=Black&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Smile&skinColor=Light'"
         }
@@ -48,14 +49,19 @@ const ConversationInfoPanel = ({
         my={4}
         mx={{ base: "auto", md: 20 }}
       />
-      <Heading fontSize={"2xl"} textAlign={"center"} pb={4}>
-        {data.name}
-      </Heading>
+      <Skeleton isLoaded={!isLoading}>
+        <Heading fontSize={"2xl"} textAlign={"center"} pb={4}>
+          {data?.name}
+        </Heading>
+      </Skeleton>
       <Divider borderColor={borderStyle} />
       <Box p={4}>
         <Text fontWeight={"bold"}>About</Text>
-        <Text>{data.about}</Text>
+        <Skeleton isLoaded={!isLoading}>
+          <Text>{data?.about}</Text>
+        </Skeleton>
       </Box>
+
       <Divider borderColor={borderStyle} />
       <Text p={4} fontWeight={"bold"}>
         Shared Media

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {Avatar, Tag, TagLabel, TagProps} from "@chakra-ui/react";
+import { Avatar, Tag, TagLabel, TagProps } from "@chakra-ui/react";
 
 interface AvatarProps extends TagProps {
   description: string;
@@ -21,9 +21,17 @@ const AvatarTag = (props: AvatarProps) => {
       {...props}
     >
       {props.icon && (
-        <Avatar src={props.icon} size="sm" name={props.description} ml={-3} />
+        <Avatar
+          src={props.icon}
+          size="sm"
+          name={props.description}
+          ml={-3}
+          mr={1}
+        />
       )}
-      <TagLabel m={"auto"}>{props.description}</TagLabel>
+      <TagLabel m={"auto"} title={props.description}>
+        {props.description}
+      </TagLabel>
     </Tag>
   );
 };

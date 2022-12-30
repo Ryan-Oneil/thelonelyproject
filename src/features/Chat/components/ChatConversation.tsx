@@ -11,6 +11,7 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  Skeleton,
   Spacer,
   Spinner,
   VStack,
@@ -87,10 +88,6 @@ const ChatConversation = ({
     );
   };
 
-  if (isLoading) {
-    return <Spinner size="xl" />;
-  }
-
   if (isError) {
     return <ApiError error={error as AxiosError} />;
   }
@@ -105,12 +102,14 @@ const ChatConversation = ({
       {...rest}
     >
       <Flex p={padding}>
-        <AvatarHeader
-          name={chatDetails.name}
-          heading={chatDetails.name}
-          padding={0}
-          url={chatDetails.icon}
-        />
+        <Skeleton isLoaded={!isLoading}>
+          <AvatarHeader
+            name={chatDetails?.name}
+            heading={chatDetails?.name}
+            padding={0}
+            url={chatDetails?.icon}
+          />
+        </Skeleton>
         <Spacer />
         <ChatMenu />
       </Flex>
