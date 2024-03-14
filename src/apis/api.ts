@@ -8,8 +8,15 @@ const baseApi = axios.create({
   baseURL: BASE_URL,
 });
 
+type ApiError = {
+  timestamp: string;
+  status: number;
+  error: string;
+  path: string;
+};
+
 baseApi.interceptors.request.use(
-  async (config: AxiosRequestConfig) => {
+  async (config) => {
     // @ts-ignore
     config.headers[AUTH_HEADER] = await getAuth()?.currentUser?.getIdToken();
     return config;
@@ -42,9 +49,9 @@ export const apiDeleteCall = async (endpoint: string) => {
   return baseApi.delete(endpoint);
 };
 
-export const getApiError = (error: AxiosError) => {
+export const getApiError = (error: AxiosError<ApiError>) => {
   if (error.response) {
-    return error.response.data.message;
+    return error.response.data.error;
   } else if (error.request) {
     return "Services are unreachable";
   } else {
