@@ -10,18 +10,18 @@ import {
 import { FieldAttributes } from "formik";
 
 export const LabelledInput = (props: FieldAttributes<any>) => {
-  const { label, error, touched } = props;
+  const { label, error, touched, ...rest } = props;
   return (
     <FormControl isInvalid={error && touched}>
       <FormLabel>{label}</FormLabel>
-      <Input size="lg" {...props} />
+      <Input size="lg" {...rest} />
       {error && touched && <FormErrorMessage>{error}</FormErrorMessage>}
     </FormControl>
   );
 };
 
 export const FileInput = (props: FieldAttributes<any>) => {
-  const { error, touched, buttonText } = props;
+  const { error, touched, buttonText, ...rest } = props;
   const ref = useRef<HTMLButtonElement>(null);
 
   return (
@@ -29,7 +29,7 @@ export const FileInput = (props: FieldAttributes<any>) => {
       <Button onClick={() => ref.current?.click()}>{buttonText}</Button>
       <Input
         size="lg"
-        {...props}
+        {...rest}
         type={"file"}
         ref={ref}
         display={"none"}
@@ -41,13 +41,13 @@ export const FileInput = (props: FieldAttributes<any>) => {
 };
 
 export const TextAreaInput = (props: FieldAttributes<any>) => {
-  const { error, touched, label } = props;
+  const { error, touched, label, ...rest } = props;
   const isInvalid = error && touched;
 
   return (
     <FormControl isInvalid={isInvalid}>
       <FormLabel>{label}</FormLabel>
-      <Textarea size="lg" {...props} isInvalid={isInvalid} />
+      <Textarea size="lg" {...rest} isInvalid={isInvalid} />
       {error && touched && <FormErrorMessage>{error}</FormErrorMessage>}
     </FormControl>
   );
