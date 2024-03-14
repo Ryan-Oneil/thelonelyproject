@@ -49,7 +49,7 @@ export function AuthProvider({ children }: { children: JSX.Element }) {
   useEffect(() => {
     const firebaseAuth = getAuth(firebaseApp);
 
-    firebaseAuth.onAuthStateChanged(async (authUser) => {
+    firebaseAuth.onIdTokenChanged(async (authUser) => {
       if (authUser) {
         const token = await authUser.getIdTokenResult();
 
