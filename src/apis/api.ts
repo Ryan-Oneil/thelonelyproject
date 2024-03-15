@@ -8,7 +8,7 @@ const baseApi = axios.create({
   baseURL: BASE_URL,
 });
 
-type ApiError = {
+export type ApiError = {
   timestamp: string;
   status: number;
   error: string;

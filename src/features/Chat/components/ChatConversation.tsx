@@ -89,7 +89,7 @@ const ChatConversation = ({
   };
 
   if (isError) {
-    return <ApiError error={error as AxiosError} />;
+    return <ApiError error={error as AxiosError<ApiError>} />;
   }
 
   return (

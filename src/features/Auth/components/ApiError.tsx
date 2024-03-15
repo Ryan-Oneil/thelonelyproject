@@ -5,10 +5,10 @@ import {
   AlertIcon,
   AlertTitle,
 } from "@chakra-ui/react";
-import { getApiError } from "@/apis/api";
+import { getApiError, ApiError } from "@/apis/api";
 import { AxiosError } from "axios";
 
-const ApiError = ({ error }: { error: AxiosError }) => {
+const ApiError = ({ error }: { error: AxiosError<ApiError> }) => {
   return (
     <Alert
       status="error"
