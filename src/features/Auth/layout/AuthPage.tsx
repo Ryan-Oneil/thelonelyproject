@@ -15,17 +15,24 @@ import { Card } from "@/features/Base/components/Card";
 import { useAuth } from "@/features/Auth/hooks/useAuth";
 import { AuthStage } from "@/features/Auth/enums/AuthStages";
 import { useRouter } from "next/router";
-import { DASHBOARD_URL } from "@/utils/urls";
+import { DASHBOARD_URL, PROFILE_SETUP_URL } from "@/utils/urls";
+import { RegisterStatus } from "@/features/Auth/enums/RegisterStatus";
 
 const AuthPage = ({ children }: { children: React.ReactNode }) => {
-  const { authStatus } = useAuth();
+  const { authStatus, registerStatus } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (authStatus === AuthStage.LOGGED_IN) {
-      router.push(DASHBOARD_URL);
+    if (authStatus !== AuthStage.LOGGED_IN) {
+      return;
     }
-  }, [authStatus, router]);
+
+    if (registerStatus === RegisterStatus.REGISTERED) {
+      router.push(DASHBOARD_URL);
+    } else {
+      router.push(PROFILE_SETUP_URL);
+    }
+  }, [authStatus]);
 
   return (
     <BasePublicPage>

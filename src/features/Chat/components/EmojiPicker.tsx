@@ -33,7 +33,7 @@ const EmojiPicker = ({ onEmojiSelected }: Props) => {
           showSkinTones={false}
           native={true}
           style={{ width: "inherit" }}
-          onSelect={onEmojiSelected}
+          onEmojiSelect={onEmojiSelected}
         />
       </PopoverContent>
     </Popover>

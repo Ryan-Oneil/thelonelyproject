@@ -14,7 +14,7 @@ const Setup = () => {
     if (registerStatus === RegisterStatus.REGISTERED) {
       router.push(USER_PROFILE_URL);
     }
-  }, [registerStatus, router]);
+  }, [registerStatus]);
 
   return (
     <AuthPage>
