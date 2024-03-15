@@ -7,6 +7,7 @@ let nextConfig = {
   images: {
     unoptimized: true,
   },
+  output: "export",
 };
 
 if (shouldAnalyzeBundles) {
